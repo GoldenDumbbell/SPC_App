@@ -1,4 +1,5 @@
 import 'package:webspc/resource/account_page.dart';
+import 'package:webspc/resource/forgot_password.dart';
 import 'package:webspc/resource/home_page.dart';
 import 'package:webspc/resource/login_page.dart';
 import 'package:webspc/resource/topup_page.dart';
@@ -21,6 +22,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => UserInforScreen(context));
     case TopupScreen.routeName:
       return MaterialPageRoute(builder: (context) => TopupScreen(context));
+      // case ForgotPasswordScreen.routeName:
+      // return MaterialPageRoute(builder: (context) => ForgotPasswordScreen(context));
     default:
       return MaterialPageRoute(
           builder: (context) => UndefinedView(name: settings.name.toString()));

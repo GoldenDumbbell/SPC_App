@@ -40,12 +40,22 @@ dependencies:
   google_fonts: ^2.3.2
   animate_do: ^2.1.0
   custom_navigation_bar: ^0.8.2
-  sql_conn: ^0.0.3
+  http: ^0.13.4
+  simple_animations: ^4.0.2
+  supercharged: ^2.1.1
+  build_web_compilers: ^3.2.3
+  pin_code_fields: ^7.4.0
+  json_annotation: ^4.8.1
+  
+  
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: ^2.1.11
+  json_serializable: ^6.6.2
+ 
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
