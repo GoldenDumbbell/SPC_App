@@ -6,13 +6,14 @@ import 'package:webspc/resource/topup_page.dart';
 import 'package:webspc/resource/undefined_view.dart';
 import 'package:flutter/material.dart';
 import 'package:webspc/resource/userinfor_page.dart';
+import 'package:webspc/styles/plash_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   final arg = settings.arguments;
   switch (settings.name) {
+    // case "/":
+    //   return MaterialPageRoute(builder: (context)=> const SplashScreen());
     case "/":
-      return MaterialPageRoute(builder: (context) => LoginScreen(context));
-    case "/loginScreen":
       return MaterialPageRoute(builder: (context) => LoginScreen(context));
     case HomeScreen.routeName:
       return MaterialPageRoute(builder: (context) => HomeScreen(context));

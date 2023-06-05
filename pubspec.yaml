@@ -37,15 +37,18 @@ dependencies:
   cupertino_icons: ^1.0.2
   # font_awesome_flutter: ^8.8.1
   rounded_loading_button: ^2.0.8
-  google_fonts: ^2.3.2
+  google_fonts: ^4.0.4
   animate_do: ^2.1.0
   custom_navigation_bar: ^0.8.2
   http: ^0.13.4
-  simple_animations: ^4.0.2
+  simple_animations: ^4.0.4
   supercharged: ^2.1.1
   build_web_compilers: ^3.2.3
   pin_code_fields: ^7.4.0
   json_annotation: ^4.8.1
+  video_player: ^2.4.5
+  flutter_native_splash: ^2.2.3
+  google_nav_bar: ^5.0.6
   
   
 

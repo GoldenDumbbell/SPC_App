@@ -22,7 +22,7 @@ class AccountPageState extends State<AccountPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          // height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -78,9 +78,9 @@ class AccountPageState extends State<AccountPage> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   style: buttonPrimary,
-                  onPressed: () { 
+                  onPressed: () {
                     Navigator.pushNamed(context, UserInforScreen.routeName);
-                    },
+                  },
                   child: Text('User Information'),
                 ),
               ),
@@ -96,7 +96,9 @@ class AccountPageState extends State<AccountPage> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   style: buttonPrimary,
-                  onPressed: () {Navigator.pushNamed(context, TopupScreen.routeName);},
+                  onPressed: () {
+                    Navigator.pushNamed(context, TopupScreen.routeName);
+                  },
                   child: Text('Top Up'),
                 ),
               ),

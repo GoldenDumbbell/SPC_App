@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:webspc/DTO/section.dart';
 import 'package:webspc/DTO/user.dart';
 import 'package:webspc/resource/forgot_password.dart';
 import 'register_page.dart';
@@ -22,49 +22,51 @@ class LoginScreen extends StatefulWidget {
   LoginPageState createState() => LoginPageState();
 }
 
-
-
 class LoginPageState extends State<LoginScreen> {
-  final RoundedLoadingButtonController _btnLogin = RoundedLoadingButtonController();
+  final RoundedLoadingButtonController _btnLogin =
+      RoundedLoadingButtonController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
- 
-  
 
-    Future<List<loginUser>> login(String inputemail, inputpassword) async {
-      bool check = false;
+  @override
+  String loggedInUser = '';
+
+  Future<List<loginUser>> login(String inputemail, inputpassword) async {
+    bool check = false;
     final response = await get(
-      Uri.parse('https://spsapiservice.azurewebsites.net/api/TbUsers'),
-      );
-        if(response.statusCode == 200){
-        var data = json.decode(response.body);
-        List<loginUser> listAccount=[];
-        for(var list in data){
-        loginUser Luser = 
-             loginUser( email: list['email'], pass: list['pass']);
+      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers'),
+    );
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      List<loginUser> listAccount = [];
+      for (var list in data) {
+        loginUser Luser = loginUser(email: list['email'], pass: list['pass']);
         listAccount.add(Luser);
-        
+      }
+      for (int i = 0; i < listAccount.length; i++) {
+        loginUser list1 = listAccount[i];
+        if (inputemail == listAccount[i].email &&
+            inputpassword == listAccount[i].pass) {
+          check = true;
+          break;
+        } else {
+          check = false;
         }
-          for(int i=0; i<listAccount.length;i++){
-          loginUser list1 = listAccount[i];   
-          if(inputemail == listAccount[i].email && inputpassword == listAccount[i].pass){
-           check = true;
-           break;
-          }else{
-            check = false;
-          }}
-          if(check == true){
-            _onLoginPress();
-          }else{
-            _btnLogin.reset();
-            emailController.clear();
-            passwordController.clear();
-          }
-         return listAccount;
-         }else{
-          throw Exception('fail');
-         }
-     }
+      }
+      if (check == true) {
+        Checksection.setLoggecInUser(inputemail);
+        _onLoginPress();
+      } else {
+        _btnLogin.reset();
+        emailController.clear();
+        passwordController.clear();
+      }
+      return listAccount;
+    } else {
+      throw Exception('fail');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -179,7 +181,7 @@ class LoginPageState extends State<LoginScreen> {
                         controller: _btnLogin,
                         // onPressed: _onLoginPress,
                         onPressed: () {
-                          login(emailController.text,passwordController.text);
+                          login(emailController.text, passwordController.text);
                         },
                         // borderRadius: MediaQuery.of(context).size.height * 0.04,
                       ),
@@ -227,39 +229,35 @@ class LoginPageState extends State<LoginScreen> {
 
   //   var data = jsonDecode(response.body);
 
-    // User user = User(email: data['email'], pass: data['pass']);
-    
+  // User user = User(email: data['email'], pass: data['pass']);
 
-    // for(int i=0; i< data.size(); i++){
-    //   User user = data.get(i);
-    //   print(user);
-    // }
+  // for(int i=0; i< data.size(); i++){
+  //   User user = data.get(i);
+  //   print(user);
+  // }
 
-          
-      // String email = emailController.toString();
-      // String password = passwordController.toString();
-      //   if( email == user.Getemail&& password == user.Getpassword){
-      //     print('ok');
-      //   }else{
-      //     print('fail');
-      //   }
-      // print(data);
-   
-      
+  // String email = emailController.toString();
+  // String password = passwordController.toString();
+  //   if( email == user.Getemail&& password == user.Getpassword){
+  //     print('ok');
+  //   }else{
+  //     print('fail');
+  //   }
+  // print(data);
+
   //   }catch(e){
   //     print(e);
   //   }
   //  }
-        // if (email == email1 && password == password1){
-        //   print('Login successfully');
-        // Navigator.pushNamed(
-        //   widget.context,
-        //   HomeScreen.routeName,
-        // );
-        // }else{
-        //   print('fail');
-        // }
-  
+  // if (email == email1 && password == password1){
+  //   print('Login successfully');
+  // Navigator.pushNamed(
+  //   widget.context,
+  //   HomeScreen.routeName,
+  // );
+  // }else{
+  //   print('fail');
+  // }
 
   _onLoginPress() async {
     Timer(const Duration(seconds: 2), () {

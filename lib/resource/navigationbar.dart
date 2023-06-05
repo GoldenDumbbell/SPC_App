@@ -1,6 +1,7 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'home_page.dart';
 import 'account_page.dart';
 
@@ -14,9 +15,11 @@ Widget buildBottomNavigationBar(int _currentIndex, BuildContext context) {
     items: [
       CustomNavigationBarItem(
         icon: const Icon(Icons.home),
+        title: const Text("Home"),
       ),
       CustomNavigationBarItem(
         icon: const Icon(Icons.account_circle),
+         title: const Text("Profile"),
       ),
     ],
     currentIndex: _currentIndex,
@@ -29,4 +32,5 @@ Widget buildBottomNavigationBar(int _currentIndex, BuildContext context) {
       }
     },
   );
+
 }

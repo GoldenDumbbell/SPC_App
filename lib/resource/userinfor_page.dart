@@ -1,5 +1,10 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:webspc/DTO/section.dart';
+
+import '../DTO/user.dart';
 
 class UserInforScreen extends StatefulWidget {
   static const routeName = '/userScreen';
@@ -12,6 +17,56 @@ class UserInforScreen extends StatefulWidget {
 }
 
 class UserInforPageState extends State<UserInforScreen> {
+  loginUser? Users;
+  String? name;
+  String? email;
+  String? phone;
+  String? identity;
+  List<User> users = [];
+  List<sectionAccount> acc = [];
+  bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    fecthUser();
+  }
+
+  @override
+  String loggedInUser = '';
+
+  Future fecthUser() async {
+    final response = await get(
+      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers'),
+    );
+    if (response.statusCode == 200) {
+      setState(() {
+        var items = json.decode(response.body);
+        for (var list in items) {
+          User user = User(
+            userId: list['userId'],
+            email: list['email'],
+            phoneNumber: list['phoneNumber'],
+            fullname: list['fullname'],
+            pass: list['pass'],
+            identitiCard: list['identitiCard'],
+            // familyId: list['familyId']
+          );
+          users.add(user);
+        }
+        String checkemail = Checksection.getLoggedInUser();
+        for (int i = 0; i < users.length; i++) {
+          if (users[i].email == checkemail) {
+            name = users[i].fullname.toString();
+            email = users[i].email.toString();
+            phone = users[i].phoneNumber.toString();
+            identity = users[i].identitiCard.toString();
+          }
+        }
+      });
+    }
+  }
+
   int selectedIndex = 0;
   int selectedCatIndex = 0;
   final RoundedLoadingButtonController _btnController =
@@ -19,6 +74,7 @@ class UserInforPageState extends State<UserInforScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var time = DateTime.now();
+    fecthUser();
     return Scaffold(
       body: Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -133,7 +189,20 @@ class UserInforPageState extends State<UserInforScreen> {
                         width: 250,
                         child: TextField(
                           decoration: InputDecoration(
-                            labelText: 'Email',
+                              labelText: email, icon: Icon(Icons.email_sharp)
+                              // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
+                              ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        width: 250,
+                        child: TextField(
+                          decoration: InputDecoration(
+                            labelText: name,
+                            icon: Icon(Icons.account_box),
                             // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
                           ),
                         ),
@@ -145,9 +214,9 @@ class UserInforPageState extends State<UserInforScreen> {
                         width: 250,
                         child: TextField(
                           decoration: InputDecoration(
-                            labelText: 'Full Name',
-                            // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
-                          ),
+                              labelText: phone, icon: Icon(Icons.phone_android)
+                              // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
+                              ),
                         ),
                       ),
                       SizedBox(
@@ -157,21 +226,10 @@ class UserInforPageState extends State<UserInforScreen> {
                         width: 250,
                         child: TextField(
                           decoration: InputDecoration(
-                            labelText: 'Phone Number',
-                            // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        width: 250,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: 'Identity',
-                            // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
-                          ),
+                              labelText: identity,
+                              icon: Icon(Icons.perm_identity_sharp)
+                              // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
+                              ),
                         ),
                       ),
                     ],
