@@ -22,14 +22,18 @@ class UserInforPageState extends State<UserInforScreen> {
   String? email;
   String? phone;
   String? identity;
+  String? familyID;
+
+  String? familyIDcar;
+  String? CarName;
+  String? Carplate;
   List<User> users = [];
-  List<sectionAccount> acc = [];
   bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
-    fecthUser();
+    this.fecthUser();
   }
 
   @override
@@ -39,31 +43,46 @@ class UserInforPageState extends State<UserInforScreen> {
     final response = await get(
       Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers'),
     );
-    if (response.statusCode == 200) {
-      setState(() {
-        var items = json.decode(response.body);
-        for (var list in items) {
-          User user = User(
-            userId: list['userId'],
-            email: list['email'],
-            phoneNumber: list['phoneNumber'],
-            fullname: list['fullname'],
-            pass: list['pass'],
-            identitiCard: list['identitiCard'],
-            // familyId: list['familyId']
-          );
-          users.add(user);
-        }
-        String checkemail = Checksection.getLoggedInUser();
-        for (int i = 0; i < users.length; i++) {
-          if (users[i].email == checkemail) {
-            name = users[i].fullname.toString();
-            email = users[i].email.toString();
-            phone = users[i].phoneNumber.toString();
-            identity = users[i].identitiCard.toString();
+    final responsecar = await get(
+      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbCars'),
+    );
+    if (response.statusCode == 200 || responsecar.statusCode == 200) {
+      if (this.mounted) {
+        setState(() {
+          var items = json.decode(response.body);
+          String checkemail = Checksection.getLoggedInUser();
+          for (int i = 0; i < items.length; i++) {
+            if (items[i]['email'] == checkemail) {
+              name = items[i]['fullname'].toString();
+              email = items[i]['email'].toString();
+              phone = items[i]['phoneNumber'].toString();
+              identity = items[i]['identitiCard'].toString();
+              familyID = items[i]['familyId'].toString();
+            }
           }
-        }
-      });
+
+          var itemscar = json.decode(responsecar.body);
+          for (int u = 0; u < itemscar.length; u++) {
+            if (familyID == itemscar[u]['familyId']) {
+              print(familyID);
+              print(itemscar[u]);
+              CarName = itemscar[u]['carName'];
+              Carplate = itemscar[u]['carPlate'];
+            }
+          }
+          // for (var list in items) {
+          //   User user = User(
+          //       userId: list['userId'],
+          //       email: list['email'],
+          //       phoneNumber: list['phoneNumber'],
+          //       fullname: list['fullname'],
+          //       pass: list['pass'],
+          //       identitiCard: list['identitiCard'],
+          //       familyId: list['familyId']);
+          //   users.add(user);
+          // }
+        });
+      }
     }
   }
 
@@ -74,7 +93,6 @@ class UserInforPageState extends State<UserInforScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     var time = DateTime.now();
-    fecthUser();
     return Scaffold(
       body: Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -153,20 +171,21 @@ class UserInforPageState extends State<UserInforScreen> {
                             // ),
                             borderRadius: BorderRadius.circular(10)),
                       ),
-                      Text('Toyota',
+                      Text('${CarName}',
                           style: TextStyle(
                               decoration: TextDecoration.none,
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 20)),
-                      //Spacer(),
-                      Text('61A-1234.5',
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text('${Carplate}',
                           style: TextStyle(
                               decoration: TextDecoration.none,
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
                               fontSize: 20)),
-
                       Text(
                         '--------------------------------------------------------------------------------',
                         style: TextStyle(
@@ -176,7 +195,7 @@ class UserInforPageState extends State<UserInforScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text(
+                      const Text(
                         'USER INFORMATION',
                         style: TextStyle(
                             decoration: TextDecoration.none,
@@ -184,7 +203,6 @@ class UserInforPageState extends State<UserInforScreen> {
                             fontWeight: FontWeight.bold,
                             color: Colors.red),
                       ),
-
                       Container(
                         width: 250,
                         child: TextField(

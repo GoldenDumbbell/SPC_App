@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-// part 'user_son.dart';
 
 // @JsonSerializable()
 
@@ -25,24 +24,23 @@ class User {
   late final String pass;
   late final String identitiCard;
   // late final bool paymentStatus;
-  // late final String familyId;
+  late final String familyId;
 
-  User({
-    required this.userId,
-    required this.email,
-    required this.phoneNumber,
-    required this.fullname,
-    required this.pass,
-    required this.identitiCard,
-    // required this.familyId
-  });
+  User(
+      {required this.userId,
+      required this.email,
+      required this.phoneNumber,
+      required this.fullname,
+      required this.pass,
+      required this.identitiCard,
+      required this.familyId});
   get GetuserId => userId;
   String get Getemail => email;
   String get GetphoneNumber => phoneNumber;
   String get Getfullname => fullname;
   String get Getpass => pass;
   String get GetIdentity => identitiCard;
-  // String get GetablockId => familyId;
+  String get GetFamilyId => familyId;
 
   set SetuserId(String _userId) {
     userId = _userId;
@@ -68,9 +66,9 @@ class User {
     identitiCard = _IdentitiCard;
   }
 
-  // set SetablockId(String _ablockId) {
-  //   familyId = _ablockId;
-  // }
+  set SetFamilyId(String _FamilyId) {
+    familyId = _FamilyId;
+  }
 
   // Map<String, dynamic> toJson() => _$UserToJson(this);
 
