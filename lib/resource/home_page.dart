@@ -90,43 +90,44 @@ class HomePageState extends State<HomeScreen> {
         child: Column(
           children: <Widget>[
             Container(
-              height: size.height * 0.2,
-              child: Stack(
+              padding: EdgeInsets.only(top: 20),
+              child: Image(image: AssetImage('images/iconsy.png')),
+            ),
+            Container(
+                padding: EdgeInsets.only(top: 10),
+                child: Text(
+                  '----------------------------------------------------------------------------------------------------',
+                  style: TextStyle(
+                      decoration: TextDecoration.none,
+                      color: Color.fromARGB(100, 161, 125, 17)),
+                )),
+            Container(
+              height: 50,
+              padding: EdgeInsets.only(right: 170, top: 20),
+              // child: Text('Hello, ' + namehome,
+              //     style: TextStyle(
+              //         color: Colors.white,
+              //         fontWeight: FontWeight.bold,
+              //         fontSize: 20)),
+              child: Row(
                 children: <Widget>[
-                  Container(
-                    padding: EdgeInsets.only(
-                      left: 15,
-                      right: 15,
-                      top: 5,
-                    ),
-                    height: size.height * 0.2 - 27,
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(100, 161, 125, 17),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(36),
-                        bottomRight: Radius.circular(36),
-                      ),
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        Text('Hello ' + namehome,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20)),
-                        Spacer(),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Image.asset(
-                            'images/user.png',
-                            fit: BoxFit.cover,
-                            width: 70,
-                            height: 70,
-                          ),
-                        )
-                      ],
-                    ),
+                  SizedBox(
+                    width: 10,
                   ),
+                  GestureDetector(
+                      onTap: () {},
+                      child: Icon(
+                        Icons.favorite_sharp,
+                        color: Color.fromARGB(100, 161, 125, 17),
+                      )),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Text('Hello, ' + namehome,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20)),
                 ],
               ),
             ),
@@ -326,6 +327,4 @@ class HomePageState extends State<HomeScreen> {
       bottomNavigationBar: buildBottomNavigationBar(selectedCatIndex, context),
     );
   }
-
-  generateQRcode() {}
 }

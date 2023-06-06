@@ -58,6 +58,7 @@ class LoginPageState extends State<LoginScreen> {
         _btnLogin.reset();
         emailController.clear();
         passwordController.clear();
+        showError('please input correct email or password');
       }
       return listAccount;
     } else {
@@ -219,43 +220,25 @@ class LoginPageState extends State<LoginScreen> {
     );
   }
 
-  //  void login() async {
-  //   try{
-  //   Response response = await get(
-  //     Uri.parse('https://spsapiservice.azurewebsites.net/api/TbUsers'),
-  //   );
-
-  //   var data = jsonDecode(response.body);
-
-  // User user = User(email: data['email'], pass: data['pass']);
-
-  // for(int i=0; i< data.size(); i++){
-  //   User user = data.get(i);
-  //   print(user);
-  // }
-
-  // String email = emailController.toString();
-  // String password = passwordController.toString();
-  //   if( email == user.Getemail&& password == user.Getpassword){
-  //     print('ok');
-  //   }else{
-  //     print('fail');
-  //   }
-  // print(data);
-
-  //   }catch(e){
-  //     print(e);
-  //   }
-  //  }
-  // if (email == email1 && password == password1){
-  //   print('Login successfully');
-  // Navigator.pushNamed(
-  //   widget.context,
-  //   HomeScreen.routeName,
-  // );
-  // }else{
-  //   print('fail');
-  // }
+  void showError(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   _onLoginPress() async {
     Timer(const Duration(seconds: 2), () {
