@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:webspc/DTO/section.dart';
+import 'package:webspc/styles/button.dart';
 
 import '../DTO/user.dart';
 
@@ -155,7 +156,7 @@ class UserInforPageState extends State<UserInforScreen> {
                             decoration: TextDecoration.none,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.red),
+                            color: Colors.blue),
                       ),
                       SizedBox(
                         height: 5,
@@ -201,27 +202,32 @@ class UserInforPageState extends State<UserInforScreen> {
                             decoration: TextDecoration.none,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.red),
+                            color: Colors.blue),
                       ),
                       Container(
-                        width: 250,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              labelText: email, icon: Icon(Icons.email_sharp)
-                              // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
-                              ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Container(
-                        width: 250,
-                        child: TextField(
-                          decoration: InputDecoration(
-                            labelText: name,
-                            icon: Icon(Icons.account_box),
-                            // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
+                        child: TextButton(
+                          onPressed: () => {},
+                          // padding: const EdgeInsets.all(0.0),
+                          style: userstylebutton,
+                          child: Container(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Row(
+                              children: [
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Icon(
+                                      Icons.email_sharp,
+                                      color: Colors.black,
+                                    )),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 50),
+                                    child: Text(
+                                      "${email}",
+                                      style: TextStyle(
+                                          fontSize: 20.0, color: Colors.black),
+                                    ))
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -229,25 +235,90 @@ class UserInforPageState extends State<UserInforScreen> {
                         height: 5,
                       ),
                       Container(
-                        width: 250,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              labelText: phone, icon: Icon(Icons.phone_android)
-                              // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
-                              ),
+                        child: TextButton(
+                          onPressed: () {},
+                          // padding: const EdgeInsets.all(0.0),
+                          style: userstylebutton,
+                          child: Container(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Row(
+                              children: [
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Icon(
+                                      Icons.phone_android,
+                                      color: Colors.black,
+                                    )),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 50),
+                                    child: Text(
+                                      "${phone}",
+                                      style: TextStyle(
+                                          fontSize: 20.0, color: Colors.black),
+                                    ))
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       Container(
-                        width: 250,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              labelText: identity,
-                              icon: Icon(Icons.perm_identity_sharp)
-                              // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
-                              ),
+                        child: TextButton(
+                          onPressed: null,
+                          // padding: const EdgeInsets.all(0.0),
+                          style: userstylebutton,
+                          child: Container(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Row(
+                              children: [
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Icon(
+                                      Icons.account_box,
+                                      color: Colors.black,
+                                    )),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 50),
+                                    child: Text(
+                                      "${name}",
+                                      style: TextStyle(
+                                          fontSize: 20.0, color: Colors.black),
+                                    ))
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Container(
+                        child: TextButton(
+                          onPressed: null,
+                          // padding: const EdgeInsets.all(0.0),
+                          style: userstylebutton,
+                          child: Container(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Row(
+                              children: [
+                                Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Icon(
+                                      Icons.perm_identity_sharp,
+                                      color: Colors.black,
+                                    )),
+                                Container(
+                                    margin: const EdgeInsets.only(left: 50),
+                                    child: Text(
+                                      "${identity}",
+                                      style: TextStyle(
+                                          fontSize: 20.0, color: Colors.black),
+                                    ))
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ],
