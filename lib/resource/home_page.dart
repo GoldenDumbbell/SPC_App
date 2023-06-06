@@ -1,11 +1,13 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'package:intl/intl.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:webspc/resource/account_page.dart';
 import 'package:webspc/resource/navigationbar.dart';
 import 'package:webspc/styles/button.dart';
-import 'account_page.dart';
+import '../DTO/section.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/homeScreen';
@@ -18,13 +20,64 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomePageState extends State<HomeScreen> {
+  // var time = DateTime.now();
+  var code = '';
+  String? name;
+  String? familyID;
+
+  String? Carplate;
   int selectedIndex = 0;
   int selectedCatIndex = 0;
+  String namehome = username.getLoggedInUsername();
+  TextEditingController title = TextEditingController();
   final RoundedLoadingButtonController _btnController =
       RoundedLoadingButtonController();
+
+  @override
+  void initState() {
+    super.initState();
+    this.fecthUser();
+  }
+
+  Future fecthUser() async {
+    final response = await get(
+      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers'),
+    );
+    final responsecar = await get(
+      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbCars'),
+    );
+    if (response.statusCode == 200) {
+      if (this.mounted) {
+        setState(() {
+          var items = json.decode(response.body);
+          String checkemail = Checksection.getLoggedInUser();
+          for (int i = 0; i < items.length; i++) {
+            if (items[i]['email'] == checkemail) {
+              name = items[i]['fullname'].toString();
+              // email = items[i]['email'].toString();
+              // phone = items[i]['phoneNumber'].toString();
+              // identity = items[i]['identitiCard'].toString();
+              familyID = items[i]['familyId'].toString();
+            }
+          }
+
+          var itemscar = json.decode(responsecar.body);
+          for (int u = 0; u < itemscar.length; u++) {
+            if (familyID == itemscar[u]['familyId']) {
+              //   CarName = itemscar[u]['carName'];
+              Carplate = itemscar[u]['carPlate'];
+              //   Carfont = itemscar[u]['carPaperFront'];
+            }
+          }
+        });
+      }
+    }
+  }
+
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    var time = DateTime.now();
+    DateTime now = DateTime.now();
+    String currentTime = DateFormat('yyyy-MM-dd  kk:mm').format(now);
     return Scaffold(
       body: Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -56,11 +109,11 @@ class HomePageState extends State<HomeScreen> {
                     ),
                     child: Row(
                       children: <Widget>[
-                        Text('Hi Phuong',
+                        Text('Hello ' + namehome,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 30)),
+                                fontSize: 20)),
                         Spacer(),
                         GestureDetector(
                           onTap: () {},
@@ -137,6 +190,13 @@ class HomePageState extends State<HomeScreen> {
         ]),
         child: FloatingActionButton(
           onPressed: () {
+            setState(() {
+              code = Carplate.toString();
+
+              DateTime now = DateTime.now();
+              String formattedDate =
+                  DateFormat('yyyy-MM-dd – kk:mm').format(now);
+            });
             showDialog(
                 context: context,
                 builder: (context) => Form(
@@ -183,18 +243,17 @@ class HomePageState extends State<HomeScreen> {
                               SizedBox(
                                 height: 30,
                               ),
-                              Container(
-                                height: 200,
-                                width: 200,
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 7.0, color: Colors.blue),
-                                    image: DecorationImage(
-                                      image: AssetImage('images/qr.png'),
-                                      fit: BoxFit.cover,
+                              code == ''
+                                  ? Text('')
+                                  : BarcodeWidget(
+                                      barcode: Barcode.qrCode(
+                                        errorCorrectLevel:
+                                            BarcodeQRCorrectionLevel.high,
+                                      ),
+                                      data: '$Carplate  $currentTime',
+                                      width: 200,
+                                      height: 200,
                                     ),
-                                    borderRadius: BorderRadius.circular(10)),
-                              ),
                               SizedBox(
                                 height: 30,
                               ),
@@ -211,8 +270,10 @@ class HomePageState extends State<HomeScreen> {
                                       width: 30,
                                       height: 30,
                                     ),
-                                    Spacer(),
-                                    Text('61A-1234.5',
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text('$Carplate',
                                         style: TextStyle(
                                             decoration: TextDecoration.none,
                                             color: Colors.black,
@@ -221,13 +282,6 @@ class HomePageState extends State<HomeScreen> {
                                   ],
                                 ),
                               ),
-                              // Text('61A 1234.5',
-                              // style: TextStyle(
-                              //             decoration: TextDecoration.none,
-                              //             fontSize: 20,
-                              //             fontWeight: FontWeight.bold,
-                              //             color: Colors.black),
-                              // ),
                               SizedBox(
                                 height: 30,
                               ),
@@ -250,7 +304,7 @@ class HomePageState extends State<HomeScreen> {
                                           color: Colors.black),
                                     ),
                                     Text(
-                                      "${time}",
+                                      "${now}",
                                       style: TextStyle(
                                           decoration: TextDecoration.none,
                                           fontSize: 15,
@@ -272,4 +326,6 @@ class HomePageState extends State<HomeScreen> {
       bottomNavigationBar: buildBottomNavigationBar(selectedCatIndex, context),
     );
   }
+
+  generateQRcode() {}
 }

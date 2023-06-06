@@ -28,6 +28,7 @@ class UserInforPageState extends State<UserInforScreen> {
   String? familyIDcar;
   String? CarName;
   String? Carplate;
+  String? Carfont;
   List<User> users = [];
   bool isLoading = false;
 
@@ -65,23 +66,11 @@ class UserInforPageState extends State<UserInforScreen> {
           var itemscar = json.decode(responsecar.body);
           for (int u = 0; u < itemscar.length; u++) {
             if (familyID == itemscar[u]['familyId']) {
-              print(familyID);
-              print(itemscar[u]);
               CarName = itemscar[u]['carName'];
               Carplate = itemscar[u]['carPlate'];
+              Carfont = itemscar[u]['carPaperFront'];
             }
           }
-          // for (var list in items) {
-          //   User user = User(
-          //       userId: list['userId'],
-          //       email: list['email'],
-          //       phoneNumber: list['phoneNumber'],
-          //       fullname: list['fullname'],
-          //       pass: list['pass'],
-          //       identitiCard: list['identitiCard'],
-          //       familyId: list['familyId']);
-          //   users.add(user);
-          // }
         });
       }
     }
@@ -165,14 +154,12 @@ class UserInforPageState extends State<UserInforScreen> {
                         height: 180,
                         width: 200,
                         decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage("${Carfont}")),
                             border: Border.all(width: 1.0, color: Colors.black),
-                            // image: DecorationImage(
-                            //   image: AssetImage('images/toyota.png'),
-                            //   fit: BoxFit.cover,
-                            // ),
                             borderRadius: BorderRadius.circular(10)),
                       ),
-                      Text('${CarName}',
+                      Text('$CarName',
                           style: TextStyle(
                               decoration: TextDecoration.none,
                               color: Colors.black,
@@ -181,7 +168,7 @@ class UserInforPageState extends State<UserInforScreen> {
                       SizedBox(
                         height: 5,
                       ),
-                      Text('${Carplate}',
+                      Text('$Carplate',
                           style: TextStyle(
                               decoration: TextDecoration.none,
                               color: Colors.black,
@@ -222,7 +209,7 @@ class UserInforPageState extends State<UserInforScreen> {
                                 Container(
                                     margin: const EdgeInsets.only(left: 50),
                                     child: Text(
-                                      "${email}",
+                                      "$email",
                                       style: TextStyle(
                                           fontSize: 20.0, color: Colors.black),
                                     ))
@@ -252,7 +239,7 @@ class UserInforPageState extends State<UserInforScreen> {
                                 Container(
                                     margin: const EdgeInsets.only(left: 50),
                                     child: Text(
-                                      "${phone}",
+                                      "$phone",
                                       style: TextStyle(
                                           fontSize: 20.0, color: Colors.black),
                                     ))
@@ -282,7 +269,7 @@ class UserInforPageState extends State<UserInforScreen> {
                                 Container(
                                     margin: const EdgeInsets.only(left: 50),
                                     child: Text(
-                                      "${name}",
+                                      "$name",
                                       style: TextStyle(
                                           fontSize: 20.0, color: Colors.black),
                                     ))
@@ -312,7 +299,7 @@ class UserInforPageState extends State<UserInforScreen> {
                                 Container(
                                     margin: const EdgeInsets.only(left: 50),
                                     child: Text(
-                                      "${identity}",
+                                      "$identity",
                                       style: TextStyle(
                                           fontSize: 20.0, color: Colors.black),
                                     ))

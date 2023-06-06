@@ -9,3 +9,15 @@ class Checksection {
     return loggedInUser;
   }
 }
+
+class username {
+  static String loggedInUsername = '';
+
+  static void setLoggecInUsername(String name) {
+    loggedInUsername = name;
+  }
+
+  static String getLoggedInUsername() {
+    return loggedInUsername;
+  }
+}

@@ -23,6 +23,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginScreen> {
+  late String name;
   final RoundedLoadingButtonController _btnLogin =
       RoundedLoadingButtonController();
   TextEditingController emailController = TextEditingController();
@@ -39,14 +40,10 @@ class LoginPageState extends State<LoginScreen> {
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       List<loginUser> listAccount = [];
-      for (var list in data) {
-        loginUser Luser = loginUser(email: list['email'], pass: list['pass']);
-        listAccount.add(Luser);
-      }
-      for (int i = 0; i < listAccount.length; i++) {
-        loginUser list1 = listAccount[i];
-        if (inputemail == listAccount[i].email &&
-            inputpassword == listAccount[i].pass) {
+      for (int i = 0; i < data.length; i++) {
+        if (inputemail == data[i]['email'] &&
+            inputpassword == data[i]['pass']) {
+          name = data[i]['fullname'];
           check = true;
           break;
         } else {
@@ -55,6 +52,7 @@ class LoginPageState extends State<LoginScreen> {
       }
       if (check == true) {
         Checksection.setLoggecInUser(inputemail);
+        username.setLoggecInUsername(name);
         _onLoginPress();
       } else {
         _btnLogin.reset();
