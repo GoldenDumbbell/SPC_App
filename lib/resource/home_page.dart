@@ -326,6 +326,4 @@ class HomePageState extends State<HomeScreen> {
       bottomNavigationBar: buildBottomNavigationBar(selectedCatIndex, context),
     );
   }
-
-  generateQRcode() {}
 }
