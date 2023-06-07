@@ -89,10 +89,7 @@ flutter:
     - images/user.png
     - images/qr.png
     - images/vietnam.png
-<<<<<<< HEAD
     - images/iconsy.png
-=======
->>>>>>> e74d86cc2226e0211630f28f402bda66bbef1880
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
