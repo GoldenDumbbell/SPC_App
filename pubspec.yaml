@@ -90,6 +90,7 @@ flutter:
     - images/qr.png
     - images/vietnam.png
     - images/iconsy.png
+    - images/spot.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

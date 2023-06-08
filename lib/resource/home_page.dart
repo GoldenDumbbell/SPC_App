@@ -5,9 +5,14 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:supercharged/supercharged.dart';
 import 'package:webspc/resource/navigationbar.dart';
 import 'package:webspc/styles/button.dart';
 import '../DTO/section.dart';
+import 'dart:math';
+
+import '../DTO/spot.dart';
+import 'BookingScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/homeScreen';
@@ -21,9 +26,12 @@ class HomeScreen extends StatefulWidget {
 
 class HomePageState extends State<HomeScreen> {
   // var time = DateTime.now();
+  String? Codesecurity;
   var code = '';
   String? name;
   String? familyID;
+  String? sensorId;
+  String? available;
 
   String? Carplate;
   int selectedIndex = 0;
@@ -76,8 +84,10 @@ class HomePageState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+
     DateTime now = DateTime.now();
     String currentTime = DateFormat('yyyy-MM-dd  kk:mm').format(now);
+
     return Scaffold(
       body: Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -157,6 +167,16 @@ class HomePageState extends State<HomeScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(10.0),
+              child: ElevatedButton(
+                style: buttonPrimary,
+                onPressed: () {
+                  Navigator.pushNamed(context, Booking1Screen.routerName);
+                },
+                child: Text('Booking'),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(10.0),
               child: ElevatedButton.icon(
                 style: buttonPrimary,
                 onPressed: () {},
@@ -193,6 +213,13 @@ class HomePageState extends State<HomeScreen> {
           onPressed: () {
             setState(() {
               code = Carplate.toString();
+
+              var rng = Random();
+              for (var i = 100000; i < 1000000; i++) {
+                Codesecurity = rng.nextInt(1000000).toString();
+                print(Codesecurity);
+                break;
+              }
 
               DateTime now = DateTime.now();
               String formattedDate =
@@ -251,7 +278,8 @@ class HomePageState extends State<HomeScreen> {
                                         errorCorrectLevel:
                                             BarcodeQRCorrectionLevel.high,
                                       ),
-                                      data: '$Carplate  $currentTime',
+                                      data:
+                                          'carplate: $Carplate \ntime: $currentTime \nHint code: $Codesecurity',
                                       width: 200,
                                       height: 200,
                                     ),

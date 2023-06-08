@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webspc/resource/topup_page.dart';
 import 'package:webspc/resource/userinfor_page.dart';
 import 'package:webspc/styles/button.dart';
-
+import 'package:webspc/resource/login_page.dart';
 import 'navigationbar.dart';
 
 class AccountPage extends StatefulWidget {
@@ -122,7 +122,28 @@ class AccountPageState extends State<AccountPage> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   style: buttonPrimary,
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Do you want to logout?'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('No'),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        LoginScreen(context))),
+                            child: const Text('Yes'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                   child: Text('Logout'),
                 ),
               ),
