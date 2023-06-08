@@ -3,88 +3,44 @@ import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:supercharged/supercharged.dart';
+
+import 'package:webspc/Api_service/user_infor_service.dart';
 import 'package:webspc/resource/navigationbar.dart';
 import 'package:webspc/styles/button.dart';
+
 import '../DTO/section.dart';
 import 'dart:math';
 
-import '../DTO/spot.dart';
 import 'BookingScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/homeScreen';
-  final BuildContext? context;
-
-  const HomeScreen(this.context, {Key? key}) : super(key: key);
+  const HomeScreen({super.key});
 
   @override
-  HomePageState createState() => HomePageState();
+  State<HomeScreen> createState() => HomePageState();
 }
 
 class HomePageState extends State<HomeScreen> {
-  // var time = DateTime.now();
   String? Codesecurity;
   var code = '';
-  String? name;
-  String? familyID;
-  String? sensorId;
-  String? available;
-
   String? Carplate;
   int selectedIndex = 0;
   int selectedCatIndex = 0;
-  String namehome = username.getLoggedInUsername();
-  TextEditingController title = TextEditingController();
-  final RoundedLoadingButtonController _btnController =
-      RoundedLoadingButtonController();
-
   @override
   void initState() {
+    getCarUserInfor();
     super.initState();
-    this.fecthUser();
+    // fecthUser();
   }
 
-  Future fecthUser() async {
-    final response = await get(
-      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers'),
-    );
-    final responsecar = await get(
-      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbCars'),
-    );
-    if (response.statusCode == 200) {
-      if (this.mounted) {
-        setState(() {
-          var items = json.decode(response.body);
-          String checkemail = Checksection.getLoggedInUser();
-          for (int i = 0; i < items.length; i++) {
-            if (items[i]['email'] == checkemail) {
-              name = items[i]['fullname'].toString();
-              // email = items[i]['email'].toString();
-              // phone = items[i]['phoneNumber'].toString();
-              // identity = items[i]['identitiCard'].toString();
-              familyID = items[i]['familyId'].toString();
-            }
-          }
-
-          var itemscar = json.decode(responsecar.body);
-          for (int u = 0; u < itemscar.length; u++) {
-            if (familyID == itemscar[u]['familyId']) {
-              //   CarName = itemscar[u]['carName'];
-              Carplate = itemscar[u]['carPlate'];
-              //   Carfont = itemscar[u]['carPaperFront'];
-            }
-          }
-        });
-      }
-    }
+  void getCarUserInfor() {
+    CarInforofUserService.carUserInfor().then((value) => setState(() {}));
+    Carplate = Session.carUserInfor.carPlate;
   }
 
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     DateTime now = DateTime.now();
     String currentTime = DateFormat('yyyy-MM-dd  kk:mm').format(now);
 
@@ -114,11 +70,6 @@ class HomePageState extends State<HomeScreen> {
             Container(
               height: 50,
               padding: EdgeInsets.only(right: 170, top: 20),
-              // child: Text('Hello, ' + namehome,
-              //     style: TextStyle(
-              //         color: Colors.white,
-              //         fontWeight: FontWeight.bold,
-              //         fontSize: 20)),
               child: Row(
                 children: <Widget>[
                   SizedBox(
@@ -133,7 +84,7 @@ class HomePageState extends State<HomeScreen> {
                   SizedBox(
                     width: 5,
                   ),
-                  Text('Hello, ' + namehome,
+                  Text('Hello, ${Session.loggedInUser.fullname ?? ""}',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -172,7 +123,10 @@ class HomePageState extends State<HomeScreen> {
                 onPressed: () {
                   Navigator.pushNamed(context, Booking1Screen.routerName);
                 },
-                child: Text('Booking'),
+                child: Text(
+                  'Booking',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
             Padding(

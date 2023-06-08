@@ -1,6 +1,7 @@
 ///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
 
 import 'package:flutter/material.dart';
+import 'package:webspc/Api_service/spot_service.dart';
 import 'package:webspc/resource/navigationbar.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:webspc/main.dart';
@@ -24,117 +25,37 @@ class Booking1Screen extends StatefulWidget {
   _BookingPage1State createState() => _BookingPage1State();
 }
 
-//const List<String> listSpot = ["one", "two", "three"];
-//List listspot1 = [];
 List<spot> listspot1 = [];
 List<String> listspot = [];
 
 class _BookingPage1State extends State<Booking1Screen> {
   DateTime date = DateTime(2023, 6, 7);
   TimeOfDay time = TimeOfDay(hour: 10, minute: 30);
-  String? dropdownValue;
 
-  loginUser? Users;
-  String? name;
-  String? email;
-  String? phone;
-  String? identity;
-  String? familyID;
-
-  String? sensorId;
-  String? available;
-
-  String? familyIDcar;
-  String? CarName;
-  String? Carplate;
-  String? Carfont;
-  List<User> users = [];
   bool isLoading = false;
+
+  List<Spot> listSpot = [];
+  Spot? detailSpot;
+  Spot? dropdownValue;
 
   @override
   void initState() {
+    getListSpot();
     super.initState();
-    this.fecthUser();
+    // this.fecthUser();
   }
 
-  @override
-  String loggedInUser = '';
-
-  Future fecthUser() async {
-    final response = await get(
-      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers'),
-    );
-    final responspot = await get(
-      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbSpots'),
-    );
-
-    final responsecar = await get(
-      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbCars'),
-    );
-    if (response.statusCode == 200 ||
-        responspot.statusCode == 200 ||
-        responsecar.statusCode == 200) {
-      if (this.mounted) {
-        setState(() {
-          var items = json.decode(response.body);
-          String checkemail = Checksection.getLoggedInUser();
-          for (int i = 0; i < items.length; i++) {
-            if (items[i]['email'] == checkemail) {
-              name = items[i]['fullname'].toString();
-              email = items[i]['email'].toString();
-              phone = items[i]['phoneNumber'].toString();
-              identity = items[i]['identitiCard'].toString();
-              familyID = items[i]['familyId'].toString();
+  void getListSpot() {
+    SpotDetailService.getListSpot().then((response) => setState(() {
+          listSpot = response;
+          if (listSpot.isNotEmpty) {
+            detailSpot = listSpot.first;
+            for (int i = 0; i < listSpot.length; i++) {
+              print(listSpot[i].spotId);
             }
           }
-          var itemspot = json.decode(responspot.body);
-          //String check = checkAvailable.getloggedInSpot();
-          for (var u in itemspot) {
-            spot Spot = spot(
-                spotId: u['sensorId'],
-                available: u['available'],
-                blockId: u['ablockId']);
-            listspot1.add(Spot);
-          }
-
-          listspot = listspot1.map((c) => c.spotId).toList();
-          dropdownValue = listspot.first;
-          /*var itemspot = json.decode(responspot.body);
-          //String check = checkAvailable.getloggedInSpot();
-          /*for (var u in itemspot)*/
-          
-          for (int u = 0; u < listspot1.length; u++) {
-            sensorId = itemspot[u]['sensorId'];
-            listspot1 = ['$sensorId'];
-            for(bool u in listspot1){   
-              if (u["available"] as bool){
-                print(u);}
-            //spot Spot = spot(
-            //spotId: u['sensorId'],
-            //available: u['available'],
-            //blockId: u['ablockId']//);
-            //listspot1.add(Spot);
-            //if (itemspot[u]['available'] == check) {
-            // sensorId = itemspot[u]['sensorId'];
-            //available = itemspot[u]['available'];
-            //}
-          }*/
-          print(listspot1[0].spotId);
-          print(listspot1[0].available);
-          var itemscar = json.decode(responsecar.body);
-          for (int n = 0; n < itemscar.length; n++) {
-            if (familyID == itemscar[n]['familyId']) {
-              CarName = itemscar[n]['carName'];
-              Carplate = itemscar[n]['carPlate'];
-              Carfont = itemscar[n]['carPaperFront'];
-            }
-          }
-        });
-      }
-    }
+        }));
   }
-
-  List categoryItemlist = [];
 
   int selectedIndex = 0;
   int selectedCatIndex = 0;
@@ -220,19 +141,19 @@ class _BookingPage1State extends State<Booking1Screen> {
                                 borderRadius: BorderRadius.circular(0),
                               ),
                               child: DropdownButtonHideUnderline(
-                                child: DropdownButton(
-                                  onChanged: (String? value) {
-                                    // This is called when the user selects an item.
+                                child: DropdownButton<Spot>(
+                                  hint: Text('Select available spot'),
+                                  onChanged: (Spot? newvalue) {
                                     setState(() {
-                                      dropdownValue = value!;
+                                      dropdownValue = newvalue!;
                                     });
                                   },
                                   value: dropdownValue,
-                                  items: listspot.map<DropdownMenuItem<String>>(
-                                      (String value) {
-                                    return DropdownMenuItem<String>(
+                                  items: listSpot.map<DropdownMenuItem<Spot>>(
+                                      (Spot value) {
+                                    return DropdownMenuItem<Spot>(
                                       value: value,
-                                      child: Text(value),
+                                      child: Text('${value.spotId}'),
                                     );
                                   }).toList(),
                                   style: TextStyle(
@@ -395,7 +316,7 @@ class _BookingPage1State extends State<Booking1Screen> {
                     Expanded(
                       flex: 1,
                       child: Text(
-                        "$name",
+                        Session.loggedInUser.fullname!,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         style: TextStyle(
@@ -438,7 +359,7 @@ class _BookingPage1State extends State<Booking1Screen> {
                     Expanded(
                       flex: 1,
                       child: Text(
-                        '$Carplate',
+                        Session.carUserInfor.carPlate!,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         style: TextStyle(
@@ -481,7 +402,7 @@ class _BookingPage1State extends State<Booking1Screen> {
                     Expanded(
                       flex: 1,
                       child: Text(
-                        "$phone",
+                        Session.loggedInUser.phoneNumber!,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         style: TextStyle(
@@ -634,7 +555,6 @@ class _BookingPage1State extends State<Booking1Screen> {
           ),
         ),
       ),
-      bottomNavigationBar: buildBottomNavigationBar(selectedCatIndex, context),
     );
   }
 }

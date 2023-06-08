@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:webspc/resource/Car_Register&%20Detail/car_detail_screen.dart';
 import 'package:webspc/resource/topup_page.dart';
 import 'package:webspc/resource/userinfor_page.dart';
 import 'package:webspc/styles/button.dart';
-import 'package:webspc/resource/login_page.dart';
+import 'package:webspc/resource/Login&Register/login_page.dart';
+import 'Car_Register& Detail/car_register_screen.dart';
 import 'navigationbar.dart';
 
 class AccountPage extends StatefulWidget {
-  static const routeName = '/accountpage';
-  final BuildContext? context;
-
-  const AccountPage(this.context, {Key? key}) : super(key: key);
+  const AccountPage({super.key});
 
   @override
   AccountPageState createState() => AccountPageState();
@@ -81,15 +80,33 @@ class AccountPageState extends State<AccountPage> {
                   onPressed: () {
                     Navigator.pushNamed(context, UserInforScreen.routeName);
                   },
-                  child: Text('User Information'),
+                  child: Text('Your Information'),
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   style: buttonPrimary,
-                  onPressed: () {},
-                  child: Text('Detail Your Car'),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CarDetailScreen()));
+                  },
+                  child: Text('Information Your Car'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ElevatedButton(
+                  style: buttonPrimary,
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const CarRegisterScreen()));
+                  },
+                  child: Text('Register Your Car'),
                 ),
               ),
               Padding(
@@ -110,14 +127,14 @@ class AccountPageState extends State<AccountPage> {
                   child: Text('History'),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ElevatedButton(
-                  style: buttonPrimary,
-                  onPressed: () {},
-                  child: Text('Setting'),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: ElevatedButton(
+              //     style: buttonPrimary,
+              //     onPressed: () {},
+              //     child: Text('Setting'),
+              //   ),
+              // ),
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(

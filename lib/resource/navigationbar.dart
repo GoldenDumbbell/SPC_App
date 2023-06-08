@@ -19,18 +19,19 @@ Widget buildBottomNavigationBar(int _currentIndex, BuildContext context) {
       ),
       CustomNavigationBarItem(
         icon: const Icon(Icons.account_circle),
-         title: const Text("Profile"),
+        title: const Text("Profile"),
       ),
     ],
     currentIndex: _currentIndex,
     onTap: (index) {
       if (index == _currentIndex) return;
       if (index == 0) {
-        Navigator.pushNamed(context, HomeScreen.routeName);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
       } else if (index == 1) {
-        Navigator.pushNamed(context, AccountPage.routeName);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const AccountPage()));
       }
     },
   );
-
 }

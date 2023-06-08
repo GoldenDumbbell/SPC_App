@@ -1,3 +1,7 @@
+import 'package:webspc/DTO/user.dart';
+
+import 'cars.dart';
+
 class Checksection {
   static String loggedInUser = '';
 
@@ -20,4 +24,9 @@ class username {
   static String getLoggedInUsername() {
     return loggedInUsername;
   }
+}
+
+class Session {
+  static Users loggedInUser = Users(userId: "0");
+  static Car carUserInfor = Car();
 }

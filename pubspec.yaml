@@ -52,6 +52,7 @@ dependencies:
   qr_flutter: ^4.1.0
   barcode_widget: ^2.0.3
   intl: ^0.18.1
+  responsive_builder: ^0.5.1
   
   
 
@@ -91,6 +92,8 @@ flutter:
     - images/vietnam.png
     - images/iconsy.png
     - images/spot.png
+    - images/header-1.gif
+    - images/chat.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

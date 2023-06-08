@@ -7,15 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:webspc/DTO/section.dart';
 import 'package:webspc/DTO/user.dart';
 import 'package:webspc/resource/forgot_password.dart';
+import '../../Api_service/login_service.dart';
 import 'register_page.dart';
-import 'home_page.dart';
+import '../home_page.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class LoginScreen extends StatefulWidget {
   static const routeName = '/loginScreen';
   final BuildContext context;
-
-  // ignore: use_key_in_widget_constructors
   const LoginScreen(this.context);
 
   @override
@@ -28,43 +27,6 @@ class LoginPageState extends State<LoginScreen> {
       RoundedLoadingButtonController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-
-  @override
-  String loggedInUser = '';
-
-  Future<List<loginUser>> login(String inputemail, inputpassword) async {
-    bool check = false;
-    final response = await get(
-      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers'),
-    );
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body);
-      List<loginUser> listAccount = [];
-      for (int i = 0; i < data.length; i++) {
-        if (inputemail == data[i]['email'] &&
-            inputpassword == data[i]['pass']) {
-          name = data[i]['fullname'];
-          check = true;
-          break;
-        } else {
-          check = false;
-        }
-      }
-      if (check == true) {
-        Checksection.setLoggecInUser(inputemail);
-        username.setLoggecInUsername(name);
-        _onLoginPress();
-      } else {
-        _btnLogin.reset();
-        emailController.clear();
-        passwordController.clear();
-        showError('please input correct email or password');
-      }
-      return listAccount;
-    } else {
-      throw Exception('fail');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +51,7 @@ class LoginPageState extends State<LoginScreen> {
                 height: 15,
               ),
               const Text(
-                'Smart Parking System',
+                'Smart Packing System',
                 style: TextStyle(
                     color: Colors.orange,
                     fontSize: 30,
@@ -167,21 +129,35 @@ class LoginPageState extends State<LoginScreen> {
                     ),
 
                     Container(
-                      margin: EdgeInsets.only(left: 60, right: 60),
+                      margin: const EdgeInsets.only(left: 60, right: 60),
                       child: RoundedLoadingButton(
                         width: MediaQuery.of(context).size.width * 0.9,
                         height: MediaQuery.of(context).size.height * 0.055,
-                        child: Text("SIGN IN",
+                        color: const Color.fromRGBO(20, 160, 240, 1.0),
+                        controller: _btnLogin,
+                        onPressed: () async {
+                          bool check = await LoginService.login(
+                              emailController.text, passwordController.text);
+                          if (check) {
+                            Timer(const Duration(seconds: 2), () {
+                              _btnLogin.success();
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const HomeScreen()));
+                              _btnLogin.reset();
+                            });
+                          } else {
+                            _btnLogin.reset();
+                            passwordController.clear();
+                          }
+                        },
+                        child: const Text("SIGN IN",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                             )),
-                        color: const Color.fromRGBO(20, 160, 240, 1.0),
-                        controller: _btnLogin,
-                        // onPressed: _onLoginPress,
-                        onPressed: () {
-                          login(emailController.text, passwordController.text);
-                        },
                         // borderRadius: MediaQuery.of(context).size.height * 0.04,
                       ),
                     ),

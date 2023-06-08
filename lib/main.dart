@@ -1,32 +1,34 @@
-
-import 'package:webspc/resource/undefined_view.dart';
+import 'package:webspc/undefined_view.dart';
 import 'package:flutter/material.dart';
 
 import 'route_generator.dart' as router;
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
 
   runApp(const MainApp());
 }
-Future initialization(BuildContext? context) async{
+
+Future initialization(BuildContext? context) async {
   await Future.delayed(const Duration(microseconds: 100));
 }
 
 class MainApp extends StatefulWidget {
-const MainApp({Key? key}) : super(key: key);
+  const MainApp({Key? key}) : super(key: key);
 
 // This widget is the root of your application.
-@override
-MainAppState createState() => MainAppState();
+  @override
+  MainAppState createState() => MainAppState();
 }
 
-class MainAppState extends State<MainApp>{
+class MainAppState extends State<MainApp> {
   Locale _locale = const Locale('en', 'US');
   setLocale(Locale locale) {
     setState(() {
       _locale = locale;
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,10 +42,8 @@ class MainAppState extends State<MainApp>{
       onGenerateRoute: router.generateRoute,
       onUnknownRoute: (settings) => MaterialPageRoute(
           builder: (context) => UndefinedView(
-            name: settings.name,
-          )
-      ),
+                name: settings.name,
+              )),
     );
   }
 }
-

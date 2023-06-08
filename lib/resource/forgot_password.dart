@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webspc/styles/fadeanimation.dart';
-import 'package:webspc/resource/login_page.dart';
-import 'package:webspc/resource/pin_code.dart';
+import 'package:webspc/resource/Login&Register/login_page.dart';
+import 'package:webspc/resource/Login&Register/pin_code.dart';
 
 enum FormData { Email }
 
@@ -172,7 +172,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             color: Colors.grey,
                             letterSpacing: 0.5,
                           )),
-                     GestureDetector(
+                      GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
                           Navigator.of(context).push(MaterialPageRoute(

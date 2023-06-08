@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'register_page.dart';
+import 'Login&Register/register_page.dart';
 import 'home_page.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -23,7 +23,6 @@ class TopupPageState extends State<TopupScreen> {
   final RoundedLoadingButtonController _btnLogin =
       RoundedLoadingButtonController();
 
-      
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,9 +90,7 @@ class TopupPageState extends State<TopupScreen> {
                     ),
                     Container(
                       width: 340,
-                      
                       child: TextField(
-                        
                         decoration: InputDecoration(
                           labelText: 'Deposit amount (VNĐ)',
 
@@ -104,107 +101,96 @@ class TopupPageState extends State<TopupScreen> {
                     SizedBox(
                       height: 50,
                     ),
-
                     Text(
                       '----------  Or choose amount  ----------',
-                      style: TextStyle(
-                        
-                          fontSize: 18,
-                          
-                          color: Colors.black),
+                      style: TextStyle(fontSize: 18, color: Colors.black),
                     ),
                     SizedBox(
                       height: 20,
                     ),
-                    
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                      Container(
-                     //   margin: EdgeInsets.only(left: 0, right: 200),
-                        child: OutlinedButton(
-                          child:
-                              Text('100.000đ', style: TextStyle(fontSize: 20)),
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            primary: Colors.blue,
-                            backgroundColor: Colors.white,
+                        Container(
+                          //   margin: EdgeInsets.only(left: 0, right: 200),
+                          child: OutlinedButton(
+                            child: Text('100.000đ',
+                                style: TextStyle(fontSize: 20)),
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                      //  margin: EdgeInsets.only(left: 0, right: 200),
-                        child: OutlinedButton(
-                          child:
-                              Text('200.000đ', style: TextStyle(fontSize: 20)),
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            primary: Colors.blue,
-                            backgroundColor: Colors.white,
+                        Container(
+                          //  margin: EdgeInsets.only(left: 0, right: 200),
+                          child: OutlinedButton(
+                            child: Text('200.000đ',
+                                style: TextStyle(fontSize: 20)),
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                      //  margin: EdgeInsets.only(left: 0, right: 200),
-                        child: OutlinedButton(
-                          child:
-                              Text('500.000đ', style: TextStyle(fontSize: 20)),
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            primary: Colors.blue,
-                            backgroundColor: Colors.white,
+                        Container(
+                          //  margin: EdgeInsets.only(left: 0, right: 200),
+                          child: OutlinedButton(
+                            child: Text('500.000đ',
+                                style: TextStyle(fontSize: 20)),
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-
-                     
                       ],
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                      Container(
-                     //   margin: EdgeInsets.only(left: 0, right: 200),
-                        child: OutlinedButton(
-                          child:
-                              Text('1.000.000đ', style: TextStyle(fontSize: 17)),
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            primary: Colors.blue,
-                            backgroundColor: Colors.white,
+                        Container(
+                          //   margin: EdgeInsets.only(left: 0, right: 200),
+                          child: OutlinedButton(
+                            child: Text('1.000.000đ',
+                                style: TextStyle(fontSize: 17)),
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                      //  margin: EdgeInsets.only(left: 0, right: 200),
-                        child: OutlinedButton(
-                          child:
-                              Text('2.000.000đ', style: TextStyle(fontSize: 17)),
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            primary: Colors.blue,
-                            backgroundColor: Colors.white,
+                        Container(
+                          //  margin: EdgeInsets.only(left: 0, right: 200),
+                          child: OutlinedButton(
+                            child: Text('2.000.000đ',
+                                style: TextStyle(fontSize: 17)),
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      Container(
-                      //  margin: EdgeInsets.only(left: 0, right: 200),
-                        child: OutlinedButton(
-                          child:
-                              Text('5.000.000đ', style: TextStyle(fontSize: 17)),
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            primary: Colors.blue,
-                            backgroundColor: Colors.white,
+                        Container(
+                          //  margin: EdgeInsets.only(left: 0, right: 200),
+                          child: OutlinedButton(
+                            child: Text('5.000.000đ',
+                                style: TextStyle(fontSize: 17)),
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              primary: Colors.blue,
+                              backgroundColor: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                      
-                     
                       ],
                     ),
                     SizedBox(
@@ -248,7 +234,6 @@ class TopupPageState extends State<TopupScreen> {
                     SizedBox(
                       height: 20,
                     ),
-                    
                   ],
                 ),
               )
