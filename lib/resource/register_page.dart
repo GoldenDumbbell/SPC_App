@@ -1,16 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:webspc/DTO/section.dart';
-import 'package:webspc/DTO/user.dart';
-
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:webspc/DTO/user.dart';
-import 'package:webspc/resource/home_page.dart';
-import 'login_page.dart';
+import 'Login&Register/login_page.dart';
 
 class RegisterScreen extends StatefulWidget {
   static const routeName = '/registerScreen';

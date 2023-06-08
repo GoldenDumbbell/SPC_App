@@ -153,7 +153,7 @@ class LoginPageState extends State<LoginScreen> {
                             passwordController.clear();
                           }
                         },
-                        child: const Text("SIGN IN",
+                        child: const Text("Log In",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 20,

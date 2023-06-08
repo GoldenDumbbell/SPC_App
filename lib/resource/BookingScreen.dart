@@ -1,19 +1,7 @@
 ///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
-
 import 'package:flutter/material.dart';
 import 'package:webspc/Api_service/spot_service.dart';
-import 'package:webspc/resource/navigationbar.dart';
-import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:webspc/main.dart';
-import 'package:http/http.dart';
-import 'package:webspc/styles/button.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'dart:math';
-import 'package:webspc/DTO/user.dart';
 import 'package:webspc/DTO/section.dart';
-import 'package:intl/intl.dart';
-
 import '../../DTO/spot.dart';
 
 class Booking1Screen extends StatefulWidget {

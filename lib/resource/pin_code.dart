@@ -1,9 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:webspc/styles/fadeanimation.dart';
-import 'package:webspc/resource/login_page.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
+import 'Login&Register/login_page.dart';
 
 class PinCodeVerificationScreen extends StatefulWidget {
   final String? phoneNumber;

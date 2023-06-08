@@ -51,7 +51,6 @@ class UserInforPageState extends State<UserInforScreen> {
           listUser = response;
           if (listUser.isNotEmpty) {
             userDetail = listUser.first;
-            print(userDetail!.email);
           }
         }));
   }
@@ -61,7 +60,6 @@ class UserInforPageState extends State<UserInforScreen> {
           listCar = response;
           if (listCar.isNotEmpty) {
             carDetail = listCar.first;
-            print(carDetail!.carName);
           }
         }));
   }

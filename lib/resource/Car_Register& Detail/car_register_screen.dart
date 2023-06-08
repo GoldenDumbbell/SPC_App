@@ -1,6 +1,9 @@
 // ignore_for_file: constant_identifier_names
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 // ignore: depend_on_referenced_packages
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 
@@ -294,8 +297,8 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                   carColor: colorController.text,
                                   carPaperFront: null,
                                   carPaperBack: "",
-                                  verifyState1: true,
-                                  verifyState2: true,
+                                  verifyState1: null,
+                                  verifyState2: null,
                                   securityCode: "",
                                   familyId: Session.loggedInUser.familyId);
                               CarRegisterService.registerCar(newCar)
