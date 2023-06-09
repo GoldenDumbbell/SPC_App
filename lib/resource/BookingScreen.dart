@@ -517,11 +517,11 @@ class _BookingPage1State extends State<Booking1Screen> {
                   child: MaterialButton(
                     onPressed: () {
                       Booking bookingspot = Booking(
-                          bookingId: "3",
+                          bookingId: "4",
                           carplate: Session.carUserInfor.carPlate,
                           carColor: Session.carUserInfor.carColor,
                           dateTime: null,
-                          sensorId: "A01",
+                          sensorId: dropdownValue.toString(),
                           userId: Session.loggedInUser.userId);
                       BookingService.BookingSpot(bookingspot)
                           .then((value) => null);

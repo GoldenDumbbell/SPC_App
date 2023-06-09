@@ -7,14 +7,8 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:webspc/Api_service/login_service.dart';
 import 'package:webspc/DTO/cars.dart';
 import 'package:webspc/DTO/section.dart';
-import 'package:webspc/resource/Login&Register/login_page.dart';
-import 'package:webspc/resource/account_page.dart';
 import 'package:webspc/styles/button.dart';
 import '../Api_service/car_detail_service.dart';
-import '../Api_service/login_service.dart';
-import '../Api_service/user_infor_service.dart';
-import '../DTO/user.dart';
-import '../DTO/user.dart';
 
 class UserInforScreen extends StatefulWidget {
   static const routeName = '/userScreen';

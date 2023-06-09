@@ -2,7 +2,6 @@ import 'dart:convert';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart';
 import 'dart:async';
-
 import '../DTO/cars.dart';
 import '../DTO/section.dart';
 import '../DTO/user.dart';

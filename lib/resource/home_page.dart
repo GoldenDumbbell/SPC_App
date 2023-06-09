@@ -1,16 +1,11 @@
-import 'dart:async';
-import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-
 import 'package:webspc/Api_service/user_infor_service.dart';
 import 'package:webspc/resource/navigationbar.dart';
 import 'package:webspc/styles/button.dart';
-
 import '../DTO/section.dart';
 import 'dart:math';
-
 import 'BookingScreen.dart';
 
 class HomeScreen extends StatefulWidget {

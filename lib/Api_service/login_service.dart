@@ -1,11 +1,8 @@
 import 'dart:convert';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart';
-
 import 'dart:async';
-
 import 'package:webspc/DTO/user.dart';
-
 import '../DTO/section.dart';
 
 class LoginService {

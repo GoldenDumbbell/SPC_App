@@ -1,17 +1,11 @@
 // ignore_for_file: constant_identifier_names
-
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
 // ignore: depend_on_referenced_packages
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-
 import '../../Api_service/car_register_service.dart';
 import '../../DTO/cars.dart';
 import '../../DTO/section.dart';
 import '../../styles/fadeanimation.dart';
-import 'car_detail_screen.dart';
 
 enum FormData { Name, Plate, Color, PpFront, PpBack }
 

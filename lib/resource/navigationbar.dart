@@ -1,7 +1,5 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 import 'home_page.dart';
 import 'account_page.dart';
 

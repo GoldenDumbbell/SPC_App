@@ -4,6 +4,9 @@ import 'package:webspc/resource/topup_page.dart';
 import 'package:webspc/resource/userinfor_page.dart';
 import 'package:webspc/styles/button.dart';
 import 'package:webspc/resource/Login&Register/login_page.dart';
+import '../DTO/cars.dart';
+import '../DTO/section.dart';
+import '../DTO/user.dart';
 import 'Car_Register& Detail/car_register_screen.dart';
 import 'navigationbar.dart';
 
@@ -153,11 +156,16 @@ class AccountPageState extends State<AccountPage> {
                             child: const Text('No'),
                           ),
                           TextButton(
-                            onPressed: () => Navigator.pushReplacement(
+                            onPressed: () {
+                              Session.loggedInUser = Users(userId: "0");
+                              Session.carUserInfor = Car();
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) =>
-                                        LoginScreen(context))),
+                                    builder: (context) => LoginScreen(context)),
+                                (route) => false,
+                              );
+                            },
                             child: const Text('Yes'),
                           ),
                         ],
