@@ -78,7 +78,10 @@ class AccountPageState extends State<AccountPage> {
                 child: ElevatedButton(
                   style: buttonPrimary,
                   onPressed: () {
-                    Navigator.pushNamed(context, UserInforScreen.routeName);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const UserInforScreen()));
                   },
                   child: Text('Your Information'),
                 ),

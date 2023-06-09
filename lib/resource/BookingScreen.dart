@@ -1,6 +1,8 @@
 ///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
 import 'package:flutter/material.dart';
+import 'package:webspc/Api_service/booking_services.dart';
 import 'package:webspc/Api_service/spot_service.dart';
+import 'package:webspc/DTO/booking.dart';
 import 'package:webspc/DTO/section.dart';
 import '../../DTO/spot.dart';
 
@@ -13,12 +15,10 @@ class Booking1Screen extends StatefulWidget {
   _BookingPage1State createState() => _BookingPage1State();
 }
 
-List<spot> listspot1 = [];
-List<String> listspot = [];
-
 class _BookingPage1State extends State<Booking1Screen> {
   DateTime date = DateTime(2023, 6, 7);
   TimeOfDay time = TimeOfDay(hour: 10, minute: 30);
+  DateTime now = DateTime.now();
 
   bool isLoading = false;
 
@@ -38,9 +38,7 @@ class _BookingPage1State extends State<Booking1Screen> {
           listSpot = response;
           if (listSpot.isNotEmpty) {
             detailSpot = listSpot.first;
-            for (int i = 0; i < listSpot.length; i++) {
-              print(listSpot[i].spotId);
-            }
+            for (int i = 0; i < listSpot.length; i++) {}
           }
         }));
   }
@@ -517,7 +515,17 @@ class _BookingPage1State extends State<Booking1Screen> {
                 child: Align(
                   alignment: Alignment.center,
                   child: MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Booking bookingspot = Booking(
+                          bookingId: "3",
+                          carplate: Session.carUserInfor.carPlate,
+                          carColor: Session.carUserInfor.carColor,
+                          dateTime: null,
+                          sensorId: "A01",
+                          userId: Session.loggedInUser.userId);
+                      BookingService.BookingSpot(bookingspot)
+                          .then((value) => null);
+                    },
                     color: Color(0xffee8b60),
                     elevation: 0,
                     shape: RoundedRectangleBorder(
