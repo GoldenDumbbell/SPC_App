@@ -529,7 +529,6 @@ class _BookingPage1State extends State<Booking1Screen> {
                           userId: Session.loggedInUser.userId);
                       BookingService.BookingSpot(bookingspot)
                           .then((value) => null);
-                          
                     },
                     color: Color(0xffee8b60),
                     elevation: 0,
