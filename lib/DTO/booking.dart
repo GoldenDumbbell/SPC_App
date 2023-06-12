@@ -8,7 +8,7 @@ class Booking {
   String? bookingId;
   String? carplate;
   String? carColor;
-  DateTime? dateTime;
+  String? dateTime;
   String? userId;
   String? sensorId;
 

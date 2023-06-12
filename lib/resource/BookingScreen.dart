@@ -1,5 +1,6 @@
 ///File download from FlutterViz- Drag and drop a tools. For more details visit https://flutterviz.io/
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:webspc/Api_service/booking_services.dart';
 import 'package:webspc/Api_service/spot_service.dart';
 import 'package:webspc/DTO/booking.dart';
@@ -19,9 +20,7 @@ class _BookingPage1State extends State<Booking1Screen> {
   DateTime date = DateTime(2023, 6, 7);
   TimeOfDay time = TimeOfDay(hour: 10, minute: 30);
   DateTime now = DateTime.now();
-
-  bool isLoading = false;
-
+  bool isLoading = true;
   List<Spot> listSpot = [];
   Spot? detailSpot;
   Spot? dropdownValue;
@@ -31,10 +30,12 @@ class _BookingPage1State extends State<Booking1Screen> {
     getListSpot();
     super.initState();
     // this.fecthUser();
+    print(now);
   }
 
   void getListSpot() {
     SpotDetailService.getListSpot().then((response) => setState(() {
+          // isLoading = false;
           listSpot = response;
           if (listSpot.isNotEmpty) {
             detailSpot = listSpot.first;
@@ -47,6 +48,9 @@ class _BookingPage1State extends State<Booking1Screen> {
   int selectedCatIndex = 0;
   @override
   Widget build(BuildContext context) {
+    // if (isLoading) {
+    //   return const Center(child: CircularProgressIndicator());
+    // } else {
     spacing:
     20;
     int selectedIndex = 0;
@@ -517,14 +521,15 @@ class _BookingPage1State extends State<Booking1Screen> {
                   child: MaterialButton(
                     onPressed: () {
                       Booking bookingspot = Booking(
-                          bookingId: "4",
+                          bookingId: "",
                           carplate: Session.carUserInfor.carPlate,
                           carColor: Session.carUserInfor.carColor,
                           dateTime: null,
-                          sensorId: dropdownValue.toString(),
+                          sensorId: dropdownValue?.spotId,
                           userId: Session.loggedInUser.userId);
                       BookingService.BookingSpot(bookingspot)
                           .then((value) => null);
+                          
                     },
                     color: Color(0xffee8b60),
                     elevation: 0,
@@ -554,3 +559,4 @@ class _BookingPage1State extends State<Booking1Screen> {
     );
   }
 }
+// }
