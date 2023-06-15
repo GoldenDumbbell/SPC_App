@@ -43,7 +43,7 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-          image: AssetImage('images/header-1.gif'),
+          image: AssetImage('images/bga.png'),
           fit: BoxFit.cover,
         )),
         child: Center(
@@ -230,51 +230,51 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
-                        FadeAnimation(
-                          delay: 1,
-                          child: Container(
-                            width: 300,
-                            height: 40,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12.0),
-                                color: selected == FormData.PpBack
-                                    ? enabled
-                                    : backgroundColor),
-                            padding: const EdgeInsets.all(5.0),
-                            child: TextField(
-                              controller: carIdController,
-                              onTap: () {
-                                setState(() {
-                                  selected = FormData.PpBack;
-                                });
-                              },
-                              decoration: InputDecoration(
-                                  enabledBorder: InputBorder.none,
-                                  border: InputBorder.none,
-                                  prefixIcon: Icon(
-                                    Icons.abc,
-                                    color: selected == FormData.PpBack
-                                        ? enabledtxt
-                                        : deaible,
-                                    size: 20,
-                                  ),
-                                  hintText: 'Car Id',
-                                  hintStyle: TextStyle(
-                                      color: selected == FormData.PpBack
-                                          ? enabledtxt
-                                          : deaible,
-                                      fontSize: 12)),
-                              textAlignVertical: TextAlignVertical.center,
-                              style: TextStyle(
-                                  color: selected == FormData.PpBack
-                                      ? enabledtxt
-                                      : deaible,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12),
-                            ),
-                          ),
-                        ),
+                        // const SizedBox(height: 20),
+                        // FadeAnimation(
+                        //   delay: 1,
+                        //   child: Container(
+                        //     width: 300,
+                        //     height: 40,
+                        //     decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.circular(12.0),
+                        //         color: selected == FormData.PpBack
+                        //             ? enabled
+                        //             : backgroundColor),
+                        //     padding: const EdgeInsets.all(5.0),
+                        //     child: TextField(
+                        //       controller: carIdController,
+                        //       onTap: () {
+                        //         setState(() {
+                        //           selected = FormData.PpBack;
+                        //         });
+                        //       },
+                        //       decoration: InputDecoration(
+                        //           enabledBorder: InputBorder.none,
+                        //           border: InputBorder.none,
+                        //           prefixIcon: Icon(
+                        //             Icons.abc,
+                        //             color: selected == FormData.PpBack
+                        //                 ? enabledtxt
+                        //                 : deaible,
+                        //             size: 20,
+                        //           ),
+                        //           hintText: 'Car Id',
+                        //           hintStyle: TextStyle(
+                        //               color: selected == FormData.PpBack
+                        //                   ? enabledtxt
+                        //                   : deaible,
+                        //               fontSize: 12)),
+                        //       textAlignVertical: TextAlignVertical.center,
+                        //       style: TextStyle(
+                        //           color: selected == FormData.PpBack
+                        //               ? enabledtxt
+                        //               : deaible,
+                        //           fontWeight: FontWeight.bold,
+                        //           fontSize: 12),
+                        //     ),
+                        //   ),
+                        // ),
                         const SizedBox(height: 25),
                         FadeAnimation(
                           delay: 1,
@@ -285,7 +285,7 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                             controller: _btnRegisterCar,
                             onPressed: () {
                               Car newCar = Car(
-                                  carId: carIdController.text,
+                                  carId: null,
                                   carName: nameController.text,
                                   carPlate: plateController.text,
                                   carColor: colorController.text,

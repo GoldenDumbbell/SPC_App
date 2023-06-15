@@ -1,8 +1,7 @@
 
 // import 'package:flutter/material.dart';
 // import 'package:video_player/video_player.dart';
-
-// import '../resource/login_page.dart';
+// import 'package:webspc/resource/Login&Register/login_page.dart';
 
 // class SplashScreen extends StatefulWidget {
 //   static const routeName = '/splashScreen';
@@ -23,7 +22,7 @@
 //   void initState() {
 //     super.initState();
 //     _controller = VideoPlayerController.asset(
-//         'assets/bayaboo_loading_screen.mp4'
+//         'assets/carrr.png'
 //     )..initialize().then((_) {setState(() {});})..setVolume(0.0);
 //     _playVideo();
 //   }

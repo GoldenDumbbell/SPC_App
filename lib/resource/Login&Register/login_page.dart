@@ -17,11 +17,21 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginScreen> {
+  late bool obscureText;
   late String name;
+  String email = '';
+  String phoneNumber = '';
+  String password = '';
   final RoundedLoadingButtonController _btnLogin =
       RoundedLoadingButtonController();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController credentialController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() {
+    obscureText = true;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,9 +88,9 @@ class LoginPageState extends State<LoginScreen> {
                     Container(
                       width: 250,
                       child: TextFormField(
-                        controller: emailController,
+                        controller: credentialController,
                         decoration: InputDecoration(
-                          labelText: 'Email',
+                          labelText: 'Email or Phone Number',
                           // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
                         ),
                       ),
@@ -91,10 +101,22 @@ class LoginPageState extends State<LoginScreen> {
                     Container(
                       width: 250,
                       child: TextFormField(
-                        obscureText: true,
+                        obscureText: obscureText,
                         controller: passwordController,
                         decoration: InputDecoration(
                           labelText: 'Password',
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                obscureText = !obscureText;
+                              });
+                            },
+                            icon: Icon(
+                              obscureText
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                            ),
+                          ),
                           // suffixIcon: Icon(FontAwesomeIcons.eyeSlash,size: 17,),
                         ),
                       ),
@@ -131,8 +153,38 @@ class LoginPageState extends State<LoginScreen> {
                         color: const Color.fromRGBO(20, 160, 240, 1.0),
                         controller: _btnLogin,
                         onPressed: () async {
+                          if (credentialController.text.isEmpty ||
+                              passwordController.text.isEmpty) {
+                            _btnLogin.reset();
+                            showError(
+                                "Please input email or phonenumber and password!");
+                            return;
+                          } else {
+                            // Check if user input phone number or email
+                            if (credentialController.text.contains('@')) {
+                              if (!RegExp(r'\S+@\S+\.\S+')
+                                  .hasMatch(credentialController.text)) {
+                                _btnLogin.reset();
+                                showError("Please enter a valid email!");
+                                return;
+                              }
+                              email = credentialController.text;
+                              phoneNumber = '';
+                            } else {
+                              if (credentialController.text.length != 10) {
+                                _btnLogin.reset();
+                                showError("Please enter a valid phone number!");
+                                return;
+                              }
+                              phoneNumber = credentialController.text;
+                              email = '';
+                            }
+                          }
                           bool check = await LoginService.login(
-                              emailController.text, passwordController.text);
+                            password: passwordController.text,
+                            email: email,
+                            phoneNumber: phoneNumber,
+                          );
                           if (check) {
                             Timer(const Duration(seconds: 2), () {
                               _btnLogin.success();
@@ -144,6 +196,8 @@ class LoginPageState extends State<LoginScreen> {
                               _btnLogin.reset();
                             });
                           } else {
+                            showError(
+                                "Please input correct email or phonenumber and password!");
                             _btnLogin.reset();
                             passwordController.clear();
                           }
@@ -209,16 +263,5 @@ class LoginPageState extends State<LoginScreen> {
         );
       },
     );
-  }
-
-  _onLoginPress() async {
-    Timer(const Duration(seconds: 2), () {
-      _btnLogin.success();
-      Navigator.pushNamed(
-        widget.context,
-        HomeScreen.routeName,
-      );
-      _btnLogin.reset();
-    });
   }
 }

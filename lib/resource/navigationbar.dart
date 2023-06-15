@@ -9,7 +9,7 @@ Widget buildBottomNavigationBar(int _currentIndex, BuildContext context) {
     selectedColor: const Color.fromRGBO(20, 160, 240, 1.0),
     strokeColor: const Color(0x30040307),
     unSelectedColor: const Color(0xffacacac),
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.white12,
     items: [
       CustomNavigationBarItem(
         icon: const Icon(Icons.home),

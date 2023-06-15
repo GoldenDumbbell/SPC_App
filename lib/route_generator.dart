@@ -1,6 +1,7 @@
 import 'package:webspc/resource/BookingScreen.dart';
 import 'package:webspc/resource/Login&Register/login_page.dart';
 import 'package:webspc/resource/topup_page.dart';
+import 'package:webspc/styles/plash_screen.dart';
 import 'package:webspc/undefined_view.dart';
 import 'package:flutter/material.dart';
 
