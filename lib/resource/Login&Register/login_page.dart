@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:webspc/resource/forgot_password.dart';
+import 'package:webspc/resource/Login&Register/forgot_password.dart';
 import '../../Api_service/login_service.dart';
 import 'register_page.dart';
 import '../home_page.dart';
@@ -51,7 +51,7 @@ class LoginPageState extends State<LoginScreen> {
               SizedBox(
                 height: 80,
               ),
-              Image.asset('images/logo.png'),
+              Image.asset('images/iconsy.png'),
               const SizedBox(
                 height: 15,
               ),

@@ -24,7 +24,7 @@ class LoginService {
                 password == data[i]['pass']) {
           Session.loggedInUser = Users(
             userId: data[i]['userId'],
-            email: email,
+            email: data[i]['email'],
             pass: data[i]['pass'],
             phoneNumber: data[i]['phoneNumber'],
             fullname: data[i]['fullname'],

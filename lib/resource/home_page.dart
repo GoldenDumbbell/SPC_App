@@ -8,8 +8,8 @@ import '../Api_service/car_detail_service.dart';
 import '../DTO/cars.dart';
 import '../DTO/section.dart';
 import 'dart:math';
-import '../DTO/spot.dart';
-import 'BookingScreen.dart';
+import 'Booking/BookingScreen.dart';
+import 'Booking/View_hisbooking.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/homeScreen';
@@ -44,14 +44,10 @@ class HomePageState extends State<HomeScreen> {
   void getListCar() {
     CarDetailService.getListCar().then((response) => setState(() {
           listCar = response;
-          if (listCar.isNotEmpty) {
-            carDetail = listCar.first;
-          }
         }));
   }
 
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     DateTime now = DateTime.now();
     String currentTime = DateFormat('yyyy-MM-dd  kk:mm').format(now);
 
@@ -79,8 +75,11 @@ class HomePageState extends State<HomeScreen> {
                       color: Color.fromARGB(100, 161, 125, 17)),
                 )),
             Container(
+              // decoration: BoxDecoration(
+              //   color: Colors.cyanAccent,
+              // ),
               height: 50,
-              padding: EdgeInsets.only(right: 170, top: 20),
+              padding: EdgeInsets.only(top: 10),
               child: Row(
                 children: <Widget>[
                   SizedBox(
@@ -100,6 +99,19 @@ class HomePageState extends State<HomeScreen> {
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 20)),
+                  SizedBox(
+                    width: 130,
+                  ),
+                  GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                            context, ViewHistoryPage.routerName);
+                      },
+                      child: Icon(
+                        Icons.book_online_sharp,
+                        size: 40,
+                        color: Color.fromARGB(255, 165, 110, 7),
+                      )),
                 ],
               ),
             ),

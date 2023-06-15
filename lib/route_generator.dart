@@ -1,4 +1,5 @@
-import 'package:webspc/resource/BookingScreen.dart';
+import 'package:webspc/resource/Booking/BookingScreen.dart';
+import 'package:webspc/resource/Booking/View_hisbooking.dart';
 import 'package:webspc/resource/Login&Register/login_page.dart';
 import 'package:webspc/resource/topup_page.dart';
 import 'package:webspc/styles/plash_screen.dart';
@@ -22,6 +23,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => TopupScreen(context));
     case Booking1Screen.routerName:
       return MaterialPageRoute(builder: (context) => Booking1Screen(context));
+    case ViewHistoryPage.routerName:
+      return MaterialPageRoute(builder: (context) => ViewHistoryPage(context));
     // case ForgotPasswordScreen.routeName:
     // return MaterialPageRoute(builder: (context) => ForgotPasswordScreen(context));
     default:

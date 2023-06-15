@@ -8,9 +8,9 @@ import 'package:webspc/Api_service/spot_service.dart';
 import 'package:webspc/DTO/booking.dart';
 import 'package:webspc/DTO/section.dart';
 import 'package:webspc/styles/button.dart';
-import '../../DTO/spot.dart';
-import '../Api_service/car_detail_service.dart';
-import '../DTO/cars.dart';
+import '../../../DTO/spot.dart';
+import '../../Api_service/car_detail_service.dart';
+import '../../DTO/cars.dart';
 
 class Booking1Screen extends StatefulWidget {
   static const routerName = 'booking1Screen';

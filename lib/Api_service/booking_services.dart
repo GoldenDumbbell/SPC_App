@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'dart:async';
 
 import '../DTO/booking.dart';
+import '../DTO/section.dart';
 
 class BookingService {
   // Generate new userId, which is the greatest userId in the list + 1
@@ -50,5 +51,38 @@ class BookingService {
         "user": null
       }),
     );
+  }
+
+  static Future<List<Booking>> getListBooking() async {
+    List<Booking> listBooking = [];
+    final response = await get(
+      Uri.parse("https://apiserverplan.azurewebsites.net/api/TbBookings"),
+    );
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      for (int i = 0; i < data.length; i++) {
+        if (Session.loggedInUser.userId == data[i]['userId']) {
+          listBooking.add(Booking(
+            bookingId: data[i]['bookingId'],
+            carplate: data[i]['carPlate'],
+            carColor: data[i]['carColor'],
+            dateTime: data[i]['dateTime'],
+            userId: data[i]['userId'],
+            sensorId: data[i]['sensorId'],
+          ));
+        }
+      }
+    }
+    return listBooking;
+  }
+
+  static Future DeleteBooking(String bookingid) async {
+    final response = await delete(
+        Uri.parse(
+            "https://apiserverplan.azurewebsites.net/api/TbBookings/$bookingid"),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accepct': 'application/json',
+        });
   }
 }
