@@ -10,7 +10,7 @@ class UserInforService {
   static Future Userinfor() async {
     List<Users> listuser = [];
     final response = await get(
-      Uri.parse("https://apiserverplan.azurewebsites.net/api/TbUsers"),
+      Uri.parse("https://primaryapinew.azurewebsites.net/api/TbUsers"),
     );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -35,7 +35,7 @@ class UserInforService {
 class CarInforofUserService {
   static Future carUserInfor() async {
     final response = await get(
-      Uri.parse("https://apiserverplan.azurewebsites.net/api/TbCars"),
+      Uri.parse("https://primaryapinew.azurewebsites.net/api/TbCars"),
     );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);

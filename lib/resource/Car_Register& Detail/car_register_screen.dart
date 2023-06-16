@@ -1,8 +1,12 @@
 // ignore_for_file: constant_identifier_names
+
+import 'package:file_picker/file_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 // ignore: depend_on_referenced_packages
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import '../../Api_service/car_register_service.dart';
+import '../../Api_service/car_service.dart';
 import '../../DTO/cars.dart';
 import '../../DTO/section.dart';
 import '../../styles/fadeanimation.dart';
@@ -290,13 +294,12 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                   carPlate: plateController.text,
                                   carColor: colorController.text,
                                   carPaperFront: null,
-                                  carPaperBack: "",
+                                  carPaperBack: null,
                                   verifyState1: null,
                                   verifyState2: null,
                                   securityCode: "",
                                   familyId: Session.loggedInUser.familyId);
-                              CarRegisterService.registerCar(newCar)
-                                  .then((value) {
+                              CarService.registerCar(newCar).then((value) {
                                 carIdController.clear();
                                 nameController.clear();
                                 plateController.clear();

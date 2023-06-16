@@ -8,7 +8,7 @@ class SpotDetailService {
   static Future<List<Spot>> getListSpot() async {
     List<Spot> listSpot = [];
     final response = await get(
-      Uri.parse("https://apiserverplan.azurewebsites.net/api/TbSpots"),
+      Uri.parse("https://primaryapinew.azurewebsites.net/api/TbSpots"),
     );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);

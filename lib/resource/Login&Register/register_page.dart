@@ -252,7 +252,7 @@ class RegisterPageState extends State<RegisterScreen> {
   Future<void> register(
       String email, String fullName, String pass, String phoneNumber) async {
     final response = await get(
-      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers'),
+      Uri.parse('https://primaryapinew.azurewebsites.net/api/TbUsers'),
     );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -288,7 +288,7 @@ class RegisterPageState extends State<RegisterScreen> {
       debugPrint(newUserId.toString());
       // Create new user
       await post(
-        Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers'),
+        Uri.parse('https://primaryapinew.azurewebsites.net/api/TbUsers'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },

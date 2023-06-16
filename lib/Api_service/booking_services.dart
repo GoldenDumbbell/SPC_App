@@ -15,7 +15,7 @@ class BookingService {
     String currentTime = DateFormat('yyyy-MM-dd  kk:mm').format(now);
     int newBookingId = 0;
     final response1 = await get(
-      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbBookings'),
+      Uri.parse('https://primaryapinew.azurewebsites.net/api/TbBookings'),
     );
     if (response1.statusCode == 200) {
       var data = json.decode(response1.body);
@@ -36,7 +36,7 @@ class BookingService {
       newBookingId += 1;
     }
     final response = await post(
-      Uri.parse("https://apiserverplan.azurewebsites.net/api/TbBookings"),
+      Uri.parse("https://primaryapinew.azurewebsites.net/api/TbBookings"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
@@ -56,7 +56,7 @@ class BookingService {
   static Future<List<Booking>> getListBooking() async {
     List<Booking> listBooking = [];
     final response = await get(
-      Uri.parse("https://apiserverplan.azurewebsites.net/api/TbBookings"),
+      Uri.parse("https://primaryapinew.azurewebsites.net/api/TbBookings"),
     );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
@@ -79,7 +79,7 @@ class BookingService {
   static Future DeleteBooking(String bookingid) async {
     final response = await delete(
         Uri.parse(
-            "https://apiserverplan.azurewebsites.net/api/TbBookings/$bookingid"),
+            "https://primaryapinew.azurewebsites.net/api/TbBookings/$bookingid"),
         headers: {
           'Content-Type': 'application/json',
           'Accepct': 'application/json',

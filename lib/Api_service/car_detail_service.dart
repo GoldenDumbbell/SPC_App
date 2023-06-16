@@ -11,7 +11,7 @@ class CarDetailService {
   static Future<List<Car>> getListCar() async {
     List<Car> listCar = [];
     final response = await get(
-      Uri.parse("https://apiserverplan.azurewebsites.net/api/TbCars"),
+      Uri.parse("https://primaryapinew.azurewebsites.net/api/TbCars"),
     );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);

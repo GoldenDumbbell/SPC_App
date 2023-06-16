@@ -68,7 +68,7 @@ class UserInforPageState extends State<UserInforScreen> {
       'familyId': Session.loggedInUser.familyId!,
     });
     return put(
-      Uri.parse('https://apiserverplan.azurewebsites.net/api/TbUsers/$userId'),
+      Uri.parse('https://primaryapinew.azurewebsites.net/api/TbUsers/$userId'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
