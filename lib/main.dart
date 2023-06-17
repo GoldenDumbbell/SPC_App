@@ -8,6 +8,17 @@ Future main() async {
   await Firebase.initializeApp();
   runApp(const MainApp());
 }
+// Future main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp(
+//       options: FirebaseOptions(
+//     apiKey: "AIzaSyCXh37CbMxDz1I3yG8NtUL2VLVipmSfitc",
+//     projectId: "spsproject-70327",
+//     messagingSenderId: "887795274212",
+//     appId: "1:887795274212:web:b6ac49b7db1efa5a7d37f1",
+//   ));
+//   runApp(const MainApp());
+// }
 
 // void main() {
 //   WidgetsFlutterBinding.ensureInitialized();
