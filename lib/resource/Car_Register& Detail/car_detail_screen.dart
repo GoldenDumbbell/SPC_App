@@ -52,8 +52,8 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
           return Scaffold(
             body: SingleChildScrollView(
               child: Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height,
+                // width: MediaQuery.of(context).size.width,
+                // height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                   image: AssetImage('images/bga.png'),
@@ -328,7 +328,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 children: [
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -337,6 +337,13 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                       SizedBox(
                         width: 20,
                       ),
+                      if (fileFront != null)
+                        Container(
+                            height: 200,
+                            width: 100,
+                            color: Colors.blue,
+                            child: Image.file(File(fileFront!.path!),
+                                width: double.infinity, fit: BoxFit.cover)),
                       TextButton(
                         child: Text(
                           'ADD',
@@ -396,13 +403,6 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                       SizedBox(
                         width: 10,
                       ),
-                      if (fileFront != null)
-                        Container(
-                            height: 200,
-                            width: 150,
-                            color: Colors.blue,
-                            child: Image.file(File(fileFront!.path!),
-                                width: double.infinity, fit: BoxFit.cover)),
                     ],
                   ),
                   const SizedBox(width: 140),
