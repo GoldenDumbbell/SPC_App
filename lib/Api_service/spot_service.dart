@@ -24,4 +24,22 @@ class SpotDetailService {
     }
     return listSpot;
   }
+
+  static Future<List<Spot>> getAllListSpot() async {
+    List<Spot> listSpot = [];
+    final response = await get(
+      Uri.parse("https://primaryapinew.azurewebsites.net/api/TbSpots"),
+    );
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      for (int i = 0; i < data.length; i++) {
+        listSpot.add(Spot(
+            spotId: data[i]["sensorId"],
+            available: data[i]["available"],
+            location: data[i]["location"],
+            blockId: data[i]["ablockId"]));
+      }
+    }
+    return listSpot;
+  }
 }

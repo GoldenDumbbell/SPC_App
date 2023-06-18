@@ -2,6 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:webspc/Api_service/user_infor_service.dart';
+import 'package:webspc/resource/Parking_spot.dart';
 import 'package:webspc/resource/navigationbar.dart';
 import 'package:webspc/styles/button.dart';
 import '../Api_service/car_detail_service.dart';
@@ -232,7 +233,9 @@ class HomePageState extends State<HomeScreen> {
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton.icon(
                 style: buttonPrimary,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, viewSpotPage.routerName);
+                },
                 icon: Icon(
                   Icons.directions_car_outlined,
                   size: 50,

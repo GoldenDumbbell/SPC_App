@@ -52,6 +52,8 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
           return Scaffold(
             body: SingleChildScrollView(
               child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
                   image: AssetImage('images/bga.png'),
@@ -141,7 +143,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
         children: <Widget>[
           Container(
             width: sizingInformation.localWidgetSize.width,
-            height: 180,
+            height: 100,
             padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
@@ -403,80 +405,78 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                                 width: double.infinity, fit: BoxFit.cover)),
                     ],
                   ),
-                  // const SizedBox(width: 140),
-                  // Column(
-                  //   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       "Car Paper (Back)",
-                  //     ),
-                  //     if (fileBack != null)
-                  //       Container(
-                  //           height: 200,
-                  //           width: 100,
-                  //           color: Colors.blue,
-                  //           child: Image.file(File(fileBack!.path!),
-                  //               width: double.infinity, fit: BoxFit.cover)),
-                  //     TextButton(
-                  //       child: Text(
-                  //         'ADD',
-                  //         style: TextStyle(color: Colors.blue),
-                  //       ),
-                  //       onPressed: () {
-                  //         showDialog(
-                  //             context: context,
-                  //             builder: (BuildContext context) {
-                  //               dialogContext = context;
-                  //               return Container(
-                  //                 padding: const EdgeInsets.only(
-                  //                     left: 40,
-                  //                     right: 40,
-                  //                     top: 400,
-                  //                     bottom: 290),
-                  //                 child: Container(
-                  //                     padding: EdgeInsets.only(top: 5),
-                  //                     decoration: BoxDecoration(
-                  //                         color: Colors.white,
-                  //                         border: Border.all(
-                  //                             width: 2.0,
-                  //                             color: Color.fromARGB(
-                  //                                 100, 161, 125, 17)),
-                  //                         borderRadius:
-                  //                             BorderRadius.circular(20)),
-                  //                     child: Column(children: <Widget>[
-                  //                       // SizedBox(
-                  //                       //   height: 100,
-                  //                       // ),
-                  //                       ElevatedButton(
-                  //                         style: buttonPrimary,
-                  //                         onPressed: () {
-                  //                           takefileBack()
-                  //                               .then((value) => getListCar());
-                  //                           Navigator.pop(dialogContext!);
-                  //                         },
-                  //                         child: Text("Take your car"),
-                  //                       ),
+                  const SizedBox(width: 140),
+                  Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Car Paper (Back)",
+                      ),
+                      if (fileBack != null)
+                        Container(
+                            height: 200,
+                            width: 100,
+                            color: Colors.blue,
+                            child: Image.file(File(fileBack!.path!),
+                                width: double.infinity, fit: BoxFit.cover)),
+                      TextButton(
+                        child: Text(
+                          'ADD',
+                          style: TextStyle(color: Colors.blue),
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                dialogContext = context;
+                                return Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 40,
+                                      right: 40,
+                                      top: 400,
+                                      bottom: 290),
+                                  child: Container(
+                                      padding: EdgeInsets.only(top: 5),
+                                      decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                              width: 2.0,
+                                              color: Color.fromARGB(
+                                                  100, 161, 125, 17)),
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: Column(children: <Widget>[
+                                        // SizedBox(
+                                        //   height: 100,
+                                        // ),
+                                        ElevatedButton(
+                                          style: buttonPrimary,
+                                          onPressed: () {
+                                            takefileBack()
+                                                .then((value) => getListCar());
+                                            Navigator.pop(dialogContext!);
+                                          },
+                                          child: Text("Take your car"),
+                                        ),
 
-                  //                       SizedBox(
-                  //                         height: 10,
-                  //                       ),
-                  //                       ElevatedButton(
-                  //                           style: buttonPrimary,
-                  //                           onPressed: () {
-                  //                             selectfileBack().then(
-                  //                                 (value) => getListCar());
-                  //                             Navigator.pop(dialogContext!);
-                  //                           },
-                  //                           child: Text("choose file")),
-                  //                     ]
-                  //                     )
-                  //                     ),
-                  //               );
-                  //             });
-                  //       },
-                  //     ),
-                  //   ],
-                  // ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        ElevatedButton(
+                                            style: buttonPrimary,
+                                            onPressed: () {
+                                              selectfileBack().then(
+                                                  (value) => getListCar());
+                                              Navigator.pop(dialogContext!);
+                                            },
+                                            child: Text("choose file")),
+                                      ])),
+                                );
+                              });
+                        },
+                      ),
+                    ],
+                  ),
                 ],
               ),
             )),
@@ -514,41 +514,41 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                               .then((value) => getListCar());
                           Navigator.pop(context);
 
-                          // if (imageUrlFront.isEmpty) {
-                          //   Car car = Car(
-                          //       carId: carDetail!.carId.toString(),
-                          //       carName: carDetail!.carName.toString(),
-                          //       carPlate: carDetail!.carPlate.toString(),
-                          //       carColor: carDetail!.carColor.toString(),
-                          //       carPaperFront:
-                          //           carDetail!.carPaperFront.toString(),
-                          //       carPaperBack: imageUrlBack,
-                          //       verifyState1: null,
-                          //       verifyState2: null,
-                          //       securityCode: "",
-                          //       familyId: Session.loggedInUser.familyId);
+                          if (imageUrlFront.isEmpty) {
+                            Car car = Car(
+                                carId: carDetail!.carId.toString(),
+                                carName: carDetail!.carName.toString(),
+                                carPlate: carDetail!.carPlate.toString(),
+                                carColor: carDetail!.carColor.toString(),
+                                carPaperFront:
+                                    carDetail!.carPaperFront.toString(),
+                                carPaperBack: imageUrlBack,
+                                verifyState1: null,
+                                verifyState2: null,
+                                securityCode: "",
+                                familyId: Session.loggedInUser.familyId);
 
-                          //   CarService.updateCar(car, carDetail!.carId!)
-                          //       .then((value) => getListCar());
-                          //   Navigator.pop(context);
-                          // } else if (imageUrlBack.isEmpty) {
-                          //   Car car = Car(
-                          //       carId: carDetail!.carId.toString(),
-                          //       carName: carDetail!.carName.toString(),
-                          //       carPlate: carDetail!.carPlate.toString(),
-                          //       carColor: carDetail!.carColor.toString(),
-                          //       carPaperFront: imageUrlFront,
-                          //       carPaperBack:
-                          //           carDetail!.carPaperBack.toString(),
-                          //       verifyState1: null,
-                          //       verifyState2: null,
-                          //       securityCode: "",
-                          //       familyId: Session.loggedInUser.familyId);
+                            CarService.updateCar(car, carDetail!.carId!)
+                                .then((value) => getListCar());
+                            Navigator.pop(context);
+                          } else if (imageUrlBack.isEmpty) {
+                            Car car = Car(
+                                carId: carDetail!.carId.toString(),
+                                carName: carDetail!.carName.toString(),
+                                carPlate: carDetail!.carPlate.toString(),
+                                carColor: carDetail!.carColor.toString(),
+                                carPaperFront: imageUrlFront,
+                                carPaperBack:
+                                    carDetail!.carPaperBack.toString(),
+                                verifyState1: null,
+                                verifyState2: null,
+                                securityCode: "",
+                                familyId: Session.loggedInUser.familyId);
 
-                          //   CarService.updateCar(car, carDetail!.carId!)
-                          //       .then((value) => getListCar());
-                          //   Navigator.pop(context);
-                          // }
+                            CarService.updateCar(car, carDetail!.carId!)
+                                .then((value) => getListCar());
+                            Navigator.pop(context);
+                          }
                         },
                         child: const Text('Yes'),
                       ),
@@ -567,7 +567,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                 fontWeight: FontWeight.bold,
               ),
             )),
-        const SizedBox(height: 20),
+        // const SizedBox(height: 20),
         // TextButton(
         //     onPressed: () {},
         //     style: buttonPrimary,
@@ -605,18 +605,18 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
     imageUrlFront = await snapshot.ref.getDownloadURL();
   }
 
-  // Future takefileBack() async {
-  //   fileBack = await imagePicker.pickImage(source: ImageSource.camera);
-  //   if (fileBack == null) return;
+  Future takefileBack() async {
+    fileBack = await imagePicker.pickImage(source: ImageSource.camera);
+    if (fileBack == null) return;
 
-  //   String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-  //   final path = 'filestrorageimage/${uniqueFileName}';
-  //   final file1 = File(fileBack!.path);
-  //   final ref = FirebaseStorage.instance.ref().child(path);
-  //   uploadTask = ref.putFile(file1);
-  //   final snapshot = await uploadTask!.whenComplete(() {});
-  //   imageUrlBack = await snapshot.ref.getDownloadURL();
-  // }
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final path = 'filestrorageimage/${uniqueFileName}';
+    final file1 = File(fileBack!.path);
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file1);
+    final snapshot = await uploadTask!.whenComplete(() {});
+    imageUrlBack = await snapshot.ref.getDownloadURL();
+  }
 
   Future selectfileFront() async {
     fileFront = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -631,18 +631,18 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
     imageUrlFront = await snapshot.ref.getDownloadURL();
   }
 
-  // Future selectfileBack() async {
-  //   fileBack = await imagePicker.pickImage(source: ImageSource.gallery);
-  //   if (fileBack == null) return;
+  Future selectfileBack() async {
+    fileBack = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (fileBack == null) return;
 
-  //   String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
-  //   final path = 'filestrorageimage/${uniqueFileName}';
-  //   final file1 = File(fileBack!.path);
-  //   final ref = FirebaseStorage.instance.ref().child(path);
-  //   uploadTask = ref.putFile(file1);
-  //   final snapshot = await uploadTask!.whenComplete(() {});
-  //   imageUrlBack = await snapshot.ref.getDownloadURL();
-  // }
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final path = 'filestrorageimage/${uniqueFileName}';
+    final file1 = File(fileBack!.path);
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file1);
+    final snapshot = await uploadTask!.whenComplete(() {});
+    imageUrlBack = await snapshot.ref.getDownloadURL();
+  }
 
   Future _showMyDialog(
       BuildContext context, String title, String description) async {
