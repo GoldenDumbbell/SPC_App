@@ -1,7 +1,7 @@
 import 'package:custom_navigation_bar/custom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'home_page.dart';
-import 'account_page.dart';
+import 'resource/Home/home_page.dart';
+import 'resource/Profile/account_page.dart';
 
 Widget buildBottomNavigationBar(int _currentIndex, BuildContext context) {
   return CustomNavigationBar(

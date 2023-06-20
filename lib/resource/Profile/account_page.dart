@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:webspc/resource/Car_Register&%20Detail/car_detail_screen.dart';
-import 'package:webspc/resource/topup_page.dart';
-import 'package:webspc/resource/userinfor_page.dart';
+import 'package:webspc/resource/Profile/car_detail_screen.dart';
+import 'package:webspc/resource/Profile/car_register_screen.dart';
+import 'package:webspc/resource/Profile/topup_page.dart';
+import 'package:webspc/resource/Profile/userinfor_page.dart';
 import 'package:webspc/styles/button.dart';
 import 'package:webspc/resource/Login&Register/login_page.dart';
-import '../DTO/cars.dart';
-import '../DTO/section.dart';
-import '../DTO/user.dart';
-import 'Car_Register& Detail/car_register_screen.dart';
-import 'navigationbar.dart';
+import '../../DTO/cars.dart';
+import '../../DTO/section.dart';
+import '../../DTO/user.dart';
+
+import 'view_history.dart';
+import '../../navigationbar.dart';
 
 class AccountPage extends StatefulWidget {
   const AccountPage({super.key});
@@ -129,7 +131,9 @@ class AccountPageState extends State<AccountPage> {
                 padding: const EdgeInsets.all(10.0),
                 child: ElevatedButton(
                   style: buttonPrimary,
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, ViewUserHistoryPage.routeName);
+                  },
                   child: Text('History'),
                 ),
               ),

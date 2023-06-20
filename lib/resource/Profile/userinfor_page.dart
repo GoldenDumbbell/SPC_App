@@ -8,7 +8,7 @@ import 'package:webspc/Api_service/login_service.dart';
 import 'package:webspc/DTO/cars.dart';
 import 'package:webspc/DTO/section.dart';
 import 'package:webspc/styles/button.dart';
-import '../Api_service/car_detail_service.dart';
+import '../../Api_service/car_detail_service.dart';
 
 class UserInforScreen extends StatefulWidget {
   static const routeName = '/userScreen';

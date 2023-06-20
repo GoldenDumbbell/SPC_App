@@ -2,15 +2,15 @@ import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:webspc/Api_service/user_infor_service.dart';
-import 'package:webspc/resource/Parking_spot.dart';
-import 'package:webspc/resource/navigationbar.dart';
+import 'package:webspc/resource/Home/Parking_spot.dart';
+import 'package:webspc/navigationbar.dart';
+import 'package:webspc/resource/Home/BookingScreen.dart';
+import 'package:webspc/resource/Home/View_hisbooking.dart';
 import 'package:webspc/styles/button.dart';
-import '../Api_service/car_detail_service.dart';
-import '../DTO/cars.dart';
-import '../DTO/section.dart';
+import '../../Api_service/car_detail_service.dart';
+import '../../DTO/cars.dart';
+import '../../DTO/section.dart';
 import 'dart:math';
-import 'Booking/BookingScreen.dart';
-import 'Booking/View_hisbooking.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/homeScreen';
@@ -296,6 +296,31 @@ class HomePageState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(10)),
                           child: const Text(
                             "Please choose your car!",
+                            style: TextStyle(
+                                fontSize: 20,
+                                decoration: TextDecoration.none,
+                                color: Colors.black),
+                          ),
+                        ),
+                      )));
+            } else if (dropdownValue?.verifyState1 == null ||
+                dropdownValue?.verifyState1 == false) {
+              showDialog(
+                  context: context,
+                  builder: (context) => Form(
+                          child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 40, right: 40, top: 350, bottom: 390),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 9),
+                          decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.8),
+                              border: Border.all(
+                                  width: 2.0,
+                                  color: Color.fromARGB(100, 161, 125, 17)),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: const Text(
+                            "*Your car is not authenticated state 1!\n*Please waiting for admin to authenticated state 1",
                             style: TextStyle(
                                 fontSize: 20,
                                 decoration: TextDecoration.none,

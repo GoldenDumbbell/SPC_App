@@ -52,7 +52,7 @@ class _BookingPage1State extends State<Booking1Screen> {
           listSpot = response;
           if (listSpot.isNotEmpty) {
             detailSpot = listSpot.first;
-            for (int i = 0; i < listSpot.length; i++) {}
+            // for (int i = 0; i < listSpot.length; i++) {}
           }
         }));
   }

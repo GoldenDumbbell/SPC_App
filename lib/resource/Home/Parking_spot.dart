@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:webspc/resource/home_page.dart';
+import 'package:webspc/resource/Home/home_page.dart';
 import 'package:webspc/styles/button.dart';
-
-import '../Api_service/spot_service.dart';
-import '../DTO/spot.dart';
+import '../../Api_service/spot_service.dart';
+import '../../DTO/spot.dart';
 
 class viewSpotPage extends StatefulWidget {
   static const routerName = 'ViewSpotPage';
@@ -27,7 +26,6 @@ class _ViewSpotState extends State<viewSpotPage> {
           if (listSpot.isNotEmpty) {
             detailSpot = listSpot.first;
           }
-          print(listSpot[6].available.toString());
         }));
   }
 

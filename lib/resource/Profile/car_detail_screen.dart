@@ -483,9 +483,9 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
         const SizedBox(height: 20),
         TextButton(
             onPressed: () {
-              if (imageUrlFront.isEmpty) {
+              if (imageUrlFront.isEmpty && imageUrlBack.isEmpty) {
                 _showMyDialog(context, "failed Update!!!",
-                    "Choose Car Paper Front you want to change");
+                    "Choose Car Paper Front or car Paper Back you want to change");
               } else {
                 showDialog<String>(
                   context: context,
@@ -498,22 +498,6 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Car car = Car(
-                              carId: carDetail!.carId.toString(),
-                              carName: carDetail!.carName.toString(),
-                              carPlate: carDetail!.carPlate.toString(),
-                              carColor: carDetail!.carColor.toString(),
-                              carPaperFront: imageUrlFront,
-                              carPaperBack: carDetail!.carPaperBack.toString(),
-                              verifyState1: null,
-                              verifyState2: null,
-                              securityCode: "",
-                              familyId: Session.loggedInUser.familyId);
-
-                          CarService.updateCar(car, carDetail!.carId!)
-                              .then((value) => getListCar());
-                          Navigator.pop(context);
-
                           if (imageUrlFront.isEmpty) {
                             Car car = Car(
                                 carId: carDetail!.carId.toString(),
@@ -540,6 +524,22 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                                 carPaperFront: imageUrlFront,
                                 carPaperBack:
                                     carDetail!.carPaperBack.toString(),
+                                verifyState1: null,
+                                verifyState2: null,
+                                securityCode: "",
+                                familyId: Session.loggedInUser.familyId);
+
+                            CarService.updateCar(car, carDetail!.carId!)
+                                .then((value) => getListCar());
+                            Navigator.pop(context);
+                          } else {
+                            Car car = Car(
+                                carId: carDetail!.carId.toString(),
+                                carName: carDetail!.carName.toString(),
+                                carPlate: carDetail!.carPlate.toString(),
+                                carColor: carDetail!.carColor.toString(),
+                                carPaperFront: imageUrlFront,
+                                carPaperBack: imageUrlBack,
                                 verifyState1: null,
                                 verifyState2: null,
                                 securityCode: "",
