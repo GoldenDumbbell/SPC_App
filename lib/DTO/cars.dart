@@ -15,32 +15,33 @@ class Car {
   bool? verifyState2;
   String? securityCode;
   String? familyId;
+  String? historyID;
 
-  Car({
-    this.carId,
-    this.carName,
-    this.carPlate,
-    this.carColor,
-    this.carPaperFront,
-    this.carPaperBack,
-    this.verifyState1,
-    this.verifyState2,
-    this.securityCode,
-    this.familyId,
-  });
+  Car(
+      {this.carId,
+      this.carName,
+      this.carPlate,
+      this.carColor,
+      this.carPaperFront,
+      this.carPaperBack,
+      this.verifyState1,
+      this.verifyState2,
+      this.securityCode,
+      this.familyId,
+      this.historyID});
 
   factory Car.fromJson(Map<String, dynamic> json) => Car(
-        carId: json["carId"],
-        carName: json["carName"],
-        carPlate: json["carPlate"],
-        carColor: json["carColor"],
-        carPaperFront: json["carPaperFront"],
-        carPaperBack: json["carPaperBack"],
-        verifyState1: json["verifyState1"],
-        verifyState2: json["verifyState2"],
-        securityCode: json["securityCode"],
-        familyId: json["familyId"],
-      );
+      carId: json["carId"],
+      carName: json["carName"],
+      carPlate: json["carPlate"],
+      carColor: json["carColor"],
+      carPaperFront: json["carPaperFront"],
+      carPaperBack: json["carPaperBack"],
+      verifyState1: json["verifyState1"],
+      verifyState2: json["verifyState2"],
+      securityCode: json["securityCode"],
+      familyId: json["familyId"],
+      historyID: json["historyID"]);
 
   Map<String, dynamic> toJson() => {
         "carId": carId,

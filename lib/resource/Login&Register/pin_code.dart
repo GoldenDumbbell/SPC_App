@@ -1,9 +1,16 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:webspc/DTO/section.dart';
+import 'package:webspc/resource/Home/home_page.dart';
+import 'package:webspc/resource/Login&Register/forgot_password.dart';
+import 'package:webspc/resource/Login&Register/reset_password.dart';
 import 'package:webspc/styles/fadeanimation.dart';
 import 'package:webspc/resource/Login&Register/login_page.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+
+import '../Home/BookingScreen.dart';
 
 class PinCodeVerificationScreen extends StatefulWidget {
   final String? phoneNumber;
@@ -25,6 +32,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
   bool hasError = false;
   String currentText = "";
   final formKey = GlobalKey<FormState>();
+  final FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -51,6 +59,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var code = '';
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(
@@ -113,7 +122,8 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                                 text: "Enter the code sent to ",
                                 children: [
                                   TextSpan(
-                                      text: "${widget.phoneNumber}",
+                                      text:
+                                          "${Session.loggedInUser.phoneNumber}",
                                       style: const TextStyle(
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
@@ -139,7 +149,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                             obscureText: true,
                             obscuringCharacter: '*',
                             obscuringWidget: const Icon(
-                              Icons.pets,
+                              Icons.hide_source,
                               color: Colors.blue,
                               size: 24,
                             ),
@@ -180,10 +190,11 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                             //   print("Pressed");
                             // },
                             onChanged: (value) {
-                              debugPrint(value);
-                              setState(() {
-                                currentText = value;
-                              });
+                              code = value;
+                              // debugPrint(value);
+                              // setState(() {
+                              //   currentText = value;
+                              // });
                             },
                             beforeTextPaste: (text) {
                               debugPrint("Allowing to paste $text");
@@ -234,21 +245,35 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         FadeAnimation(
                           delay: 1,
                           child: TextButton(
-                              onPressed: () {
-                                formKey.currentState!.validate();
-                                // conditions for validating
-                                if (currentText.length != 6 ||
-                                    currentText != "123456") {
-                                  errorController!.add(ErrorAnimationType
-                                      .shake); // Triggering error shake animation
-                                  setState(() => hasError = true);
-                                } else {
-                                  setState(
-                                    () {
-                                      hasError = false;
-                                      snackBar("OTP Verified!!");
-                                    },
-                                  );
+                              onPressed: () async {
+                                // formKey.currentState!.validate();
+                                // // conditions for validating
+                                // if (currentText.length != 6 ||
+                                //     currentText != "123456") {
+                                //   errorController!.add(ErrorAnimationType
+                                //       .shake); // Triggering error shake animation
+                                //   setState(() => hasError = true);
+                                // } else {
+                                //   setState(
+                                //     () {
+                                //       hasError = false;
+                                //       snackBar("OTP Verified!!");
+                                //     },
+                                //   );
+                                // }
+                                try {
+                                  PhoneAuthCredential credential =
+                                      PhoneAuthProvider.credential(
+                                          verificationId:
+                                              ForgotPasswordScreen.verify,
+                                          smsCode: code);
+
+                                  await auth.signInWithCredential(credential);
+                                  Navigator.pushNamed(
+                                      context, ResetPasswordScreen.routeName);
+                                } catch (e) {
+                                  _showMyDialog(context, 'Error',
+                                      'Error OTP please try again');
                                 }
                               },
                               child: Text(
@@ -310,6 +335,23 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Future _showMyDialog(
+      BuildContext context, String title, String description) async {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(description),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }

@@ -1,4 +1,10 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:webspc/Api_service/login_service.dart';
+import 'package:webspc/DTO/section.dart';
 import 'package:webspc/styles/fadeanimation.dart';
 import 'package:webspc/resource/Login&Register/login_page.dart';
 import 'package:webspc/resource/Login&Register/pin_code.dart';
@@ -8,6 +14,7 @@ enum FormData { Email }
 class ForgotPasswordScreen extends StatefulWidget {
   static const routeName = '/forgetpage';
   final BuildContext? context;
+  static String verify = "";
 
   const ForgotPasswordScreen(this.context, {Key? key}) : super(key: key);
   @override
@@ -20,10 +27,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   Color deaible = Colors.grey;
   Color backgroundColor = const Color(0xFF1F1A30);
   bool ispasswordev = true;
-
+  final RoundedLoadingButtonController _btnLogin =
+      RoundedLoadingButtonController();
+  String phoneNumber = '';
   FormData? selected;
 
-  TextEditingController emailController = new TextEditingController();
+  TextEditingController phoneController = new TextEditingController();
+  TextEditingController countryController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    countryController.text = "+84";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +102,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ),
                             padding: const EdgeInsets.all(5.0),
                             child: TextField(
-                              controller: emailController,
+                              controller: phoneController,
                               onTap: () {
                                 setState(() {
                                   selected = FormData.Email;
@@ -95,13 +112,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                 enabledBorder: InputBorder.none,
                                 border: InputBorder.none,
                                 prefixIcon: Icon(
-                                  Icons.email_outlined,
+                                  Icons.phone_android,
                                   color: selected == FormData.Email
                                       ? enabledtxt
                                       : deaible,
                                   size: 20,
                                 ),
-                                hintText: 'Email',
+                                hintText: 'Phone Number',
                                 hintStyle: TextStyle(
                                     color: selected == FormData.Email
                                         ? enabledtxt
@@ -123,32 +140,61 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                         ),
                         FadeAnimation(
                           delay: 1,
-                          child: TextButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.of(context)
-                                    .push(MaterialPageRoute(builder: (context) {
-                                  return const PinCodeVerificationScreen(
-                                    phoneNumber: '0123456789',
-                                  );
-                                }));
-                              },
-                              child: Text(
-                                "Continue",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  letterSpacing: 0.5,
-                                  fontSize: 16.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                          child: RoundedLoadingButton(
+                            width: MediaQuery.of(context).size.width * 0.9,
+                            height: MediaQuery.of(context).size.height * 0.055,
+                            color: const Color.fromRGBO(20, 160, 240, 1.0),
+                            controller: _btnLogin,
+                            onPressed: () async {
+                              if (phoneController.text.isEmpty) {
+                                _btnLogin.reset();
+                                showError("Please input PhoneNumber");
+                                return;
+                              } else {
+                                // Check if user input phone number or email
+
+                                if (phoneController.text.length != 10) {
+                                  _btnLogin.reset();
+                                  showError(
+                                      "Please enter a valid phone number!");
+                                  return;
+                                }
+                                phoneNumber = phoneController.text;
+                              }
+                              bool check = await LoginService.CheckEmail(
+                                //password: password,
+                                phone: phoneController.text,
+                                //phoneNumber: phoneNumber,
+                              );
+                              if (check) {
+                                Timer(const Duration(seconds: 2), () {
+                                  _btnLogin.success();
+                                  sendOTP();
+                                  _btnLogin.reset();
+                                });
+                              } else {
+                                showError("Please input correct phonenumber");
+                                _btnLogin.reset();
+                                phoneController.clear();
+                              }
+                            },
+                            child: Text(
+                              "Continue",
+                              style: TextStyle(
+                                color: Colors.white,
+                                letterSpacing: 0.5,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
                               ),
-                              style: TextButton.styleFrom(
-                                  backgroundColor: Color(0xFF2697FF),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 14.0, horizontal: 80),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(12.0)))),
+                            ),
+                            // style: TextButton.styleFrom(
+                            //     backgroundColor: Color(0xFF2697FF),
+                            //     padding: const EdgeInsets.symmetric(
+                            //         vertical: 14.0, horizontal: 80),
+                            //     shape: RoundedRectangleBorder(
+                            //         borderRadius:
+                            //             BorderRadius.circular(12.0)))),
+                          ),
                         ),
                       ],
                     ),
@@ -193,6 +239,44 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void showError(String errorMessage) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Error!"),
+          content: Text(errorMessage),
+          actions: <Widget>[
+            new TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future sendOTP() async {
+    String? phone = Session.loggedInUser.phoneNumber;
+    String countrycode = '+84';
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: '${countryController.text + phone!}',
+      verificationCompleted: (phoneAuthCredential) {},
+      verificationFailed: (FirebaseAuthException e) {},
+      codeSent: (String verificationId, int? resendToken) {
+        ForgotPasswordScreen.verify = verificationId;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => PinCodeVerificationScreen()));
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
     );
   }
 }
