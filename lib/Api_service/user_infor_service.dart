@@ -7,28 +7,79 @@ import '../DTO/section.dart';
 import '../DTO/user.dart';
 
 class UserInforService {
-  static Future Userinfor() async {
-    List<Users> listuser = [];
+  static Future<List<Users>> Userinforfamily({required String familyID}) async {
+    List<Users> listuserInFamily = [];
     final response = await get(
       Uri.parse("https://primaryapinew.azurewebsites.net/api/TbUsers"),
     );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       for (int i = 0; i < data.length; i++) {
-        if (Session.loggedInUser.userId == data[i]['userID']) {
-          Session.loggedInUser = Users(
-            userId: data[i]['userID'],
+        if (familyID == data[i]['familyId']) {
+          Users user = Users(
+            userId: data[i]['userId'],
             email: data[i]['email'],
             pass: data[i]['pass'],
             phoneNumber: data[i]['phoneNumber'],
             fullname: data[i]['fullname'],
             identitiCard: data[i]['identitiCard'],
             familyId: data[i]['familyId'],
+            familyVerify: data[i]['familyVerify'],
+            roleUser: data[i]['roleUser'],
           );
+          listuserInFamily.add(user);
         }
       }
     }
-    return listuser;
+    return listuserInFamily;
+  }
+
+  static Future updateUser(Users user, String userId) {
+    final body = jsonEncode(<String, dynamic>{
+      'userId': user.userId,
+      'phoneNumber': user.phoneNumber,
+      'email': user.email,
+      'pass': user.pass,
+      'fullname': user.fullname,
+      'identitiCard': user.identitiCard,
+      'familyId': user.familyId,
+      'familyVerify': user.familyVerify,
+      'roleUser': user.roleUser
+    });
+    return put(
+      Uri.parse('https://primaryapinew.azurewebsites.net/api/TbUsers/$userId'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: body,
+    );
+  }
+
+  static Future<bool> CheckEmail({
+    required String email,
+  }) async {
+    final response = await get(
+      Uri.parse("https://primaryapinew.azurewebsites.net/api/TbUsers"),
+    );
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body);
+      for (int i = 0; i < data.length; i++) {
+        if (email == data[i]['email'] && data[i]['familyId'] == null) {
+          Session.FamilyInUser = Users(
+              userId: data[i]['userId'],
+              email: data[i]['email'],
+              pass: data[i]['pass'],
+              phoneNumber: data[i]['phoneNumber'],
+              fullname: data[i]['fullname'],
+              identitiCard: data[i]['identitiCard'],
+              familyId: data[i]['familyId'],
+              familyVerify: data[i]['familyVerify'],
+              roleUser: data[i]['roleUser']);
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }
 

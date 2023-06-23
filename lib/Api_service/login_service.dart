@@ -24,14 +24,15 @@ class LoginService {
             phoneNumber == data[i]['phoneNumber'] &&
                 password == data[i]['pass']) {
           Session.loggedInUser = Users(
-            userId: data[i]['userId'],
-            email: data[i]['email'],
-            pass: data[i]['pass'],
-            phoneNumber: data[i]['phoneNumber'],
-            fullname: data[i]['fullname'],
-            identitiCard: data[i]['identitiCard'],
-            familyId: data[i]['familyId'],
-          );
+              userId: data[i]['userId'],
+              email: data[i]['email'],
+              pass: data[i]['pass'],
+              phoneNumber: data[i]['phoneNumber'],
+              fullname: data[i]['fullname'],
+              identitiCard: data[i]['identitiCard'],
+              familyId: data[i]['familyId'],
+              familyVerify: data[i]['familyVerify'],
+              roleUser: data[i]['roleUser']);
           return true;
         }
       }
@@ -39,7 +40,7 @@ class LoginService {
     return false;
   }
 
-  static Future<bool> CheckEmail({
+  static Future<bool> CheckPhone({
     required String phone,
   }) async {
     final response = await get(
@@ -50,14 +51,15 @@ class LoginService {
       for (int i = 0; i < data.length; i++) {
         if (phone == data[i]['phoneNumber']) {
           Session.loggedInUser = Users(
-            userId: data[i]['userId'],
-            email: data[i]['email'],
-            pass: data[i]['pass'],
-            phoneNumber: data[i]['phoneNumber'],
-            fullname: data[i]['fullname'],
-            identitiCard: data[i]['identitiCard'],
-            familyId: data[i]['familyId'],
-          );
+              userId: data[i]['userId'],
+              email: data[i]['email'],
+              pass: data[i]['pass'],
+              phoneNumber: data[i]['phoneNumber'],
+              fullname: data[i]['fullname'],
+              identitiCard: data[i]['identitiCard'],
+              familyId: data[i]['familyId'],
+              familyVerify: data[i]['familyVerify'],
+              roleUser: data[i]['roleUser']);
           return true;
         }
       }
@@ -74,14 +76,15 @@ class LoginService {
       for (int i = 0; i < data.length; i++) {
         if (Session.loggedInUser.userId == data[i]['userId']) {
           Session.loggedInUser = Users(
-            userId: data[i]['userId'],
-            email: data[i]['email'],
-            pass: data[i]['pass'],
-            phoneNumber: data[i]['phoneNumber'],
-            fullname: data[i]['fullname'],
-            identitiCard: data[i]['identitiCard'],
-            familyId: data[i]['familyId'],
-          );
+              userId: data[i]['userId'],
+              email: data[i]['email'],
+              pass: data[i]['pass'],
+              phoneNumber: data[i]['phoneNumber'],
+              fullname: data[i]['fullname'],
+              identitiCard: data[i]['identitiCard'],
+              familyId: data[i]['familyId'],
+              familyVerify: data[i]['familyVerify'],
+              roleUser: data[i]['roleUser']);
           return true;
         }
       }
@@ -98,6 +101,8 @@ class LoginService {
       'pass': user.pass,
       'identitiCard': user.identitiCard,
       'familyId': user.familyId,
+      'familyVerify': user.familyVerify,
+      'roleUser': user.roleUser
     });
     return put(
       Uri.parse('https://primaryapinew.azurewebsites.net/api/TbUsers/$userID'),

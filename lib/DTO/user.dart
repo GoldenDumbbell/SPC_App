@@ -12,26 +12,30 @@ class Users {
   String? fullname;
   String? identitiCard;
   String? familyId;
+  bool? familyVerify;
+  bool? roleUser;
 
-  Users({
-    this.userId,
-    this.email,
-    this.phoneNumber,
-    this.pass,
-    this.fullname,
-    this.identitiCard,
-    this.familyId,
-  });
+  Users(
+      {this.userId,
+      this.email,
+      this.phoneNumber,
+      this.pass,
+      this.fullname,
+      this.identitiCard,
+      this.familyId,
+      this.roleUser,
+      this.familyVerify});
 
   factory Users.fromJson(Map<String, dynamic> json) => Users(
-        userId: json["userId"],
-        email: json["email"],
-        phoneNumber: json["phoneNumber"],
-        pass: json["pass"],
-        fullname: json["fullname"],
-        identitiCard: json["identitiCard"],
-        familyId: json["familyId"],
-      );
+      userId: json["userId"],
+      email: json["email"],
+      phoneNumber: json["phoneNumber"],
+      pass: json["pass"],
+      fullname: json["fullname"],
+      identitiCard: json["identitiCard"],
+      familyId: json["familyId"],
+      familyVerify: json["familyVerify"],
+      roleUser: json["roleUser"]);
 
   Map<String, dynamic> toJson() => {
         "userId": userId,
@@ -41,5 +45,7 @@ class Users {
         "fullname": fullname,
         "identitiCard": identitiCard,
         "familyId": familyId,
+        "familyVerify": familyVerify,
+        "roleUser": roleUser
       };
 }

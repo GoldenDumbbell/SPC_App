@@ -288,26 +288,34 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                             color: const Color.fromRGBO(20, 160, 240, 1.0),
                             controller: _btnRegisterCar,
                             onPressed: () {
-                              Car newCar = Car(
-                                  carId: null,
-                                  carName: nameController.text,
-                                  carPlate: plateController.text,
-                                  carColor: colorController.text,
-                                  carPaperFront: null,
-                                  carPaperBack: null,
-                                  verifyState1: null,
-                                  verifyState2: null,
-                                  securityCode: "",
-                                  familyId: Session.loggedInUser.familyId);
-                              CarService.registerCar(newCar).then((value) {
-                                carIdController.clear();
-                                nameController.clear();
-                                plateController.clear();
-                                colorController.clear();
+                              if (nameController.text.isEmpty &&
+                                  plateController.text.isEmpty &&
+                                  colorController.text.isEmpty) {
+                                _showMyDialog(context, "Error",
+                                    "please fill all requirment when you want to create new car");
                                 _btnRegisterCar.reset();
-                              });
+                              } else {
+                                Car newCar = Car(
+                                    carId: null,
+                                    carName: nameController.text,
+                                    carPlate: plateController.text,
+                                    carColor: colorController.text,
+                                    carPaperFront: null,
+                                    carPaperBack: null,
+                                    verifyState1: null,
+                                    verifyState2: null,
+                                    securityCode: "",
+                                    familyId: Session.loggedInUser.familyId);
+                                CarService.registerCar(newCar).then((value) {
+                                  carIdController.clear();
+                                  nameController.clear();
+                                  plateController.clear();
+                                  colorController.clear();
+                                  _btnRegisterCar.reset();
+                                });
+                              }
                             },
-                            child: const Text("SIGN IN",
+                            child: const Text("Create",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -356,6 +364,23 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Future _showMyDialog(
+      BuildContext context, String title, String description) async {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(description),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
       ),
     );
   }

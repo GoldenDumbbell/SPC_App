@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
 import 'package:webspc/Api_service/login_service.dart';
+import 'package:webspc/Api_service/user_infor_service.dart';
 import 'package:webspc/DTO/cars.dart';
 import 'package:webspc/DTO/section.dart';
 import 'package:webspc/styles/button.dart';
 import '../../Api_service/car_detail_service.dart';
+import '../../DTO/user.dart';
 
 class UserInforScreen extends StatefulWidget {
   static const routeName = '/userScreen';
@@ -54,26 +56,6 @@ class UserInforPageState extends State<UserInforScreen> {
             carDetail = listCar.first;
           }
         }));
-  }
-
-  Future updatePhoneNumber(String phoneNumber) {
-    userId = Session.loggedInUser.userId;
-    final body = jsonEncode(<String, String>{
-      'userId': Session.loggedInUser.userId!,
-      'phoneNumber': phoneNumber,
-      'email': Session.loggedInUser.email!,
-      'pass': Session.loggedInUser.pass!,
-      'fullname': Session.loggedInUser.fullname!,
-      'identitiCard': Session.loggedInUser.identitiCard!,
-      'familyId': Session.loggedInUser.familyId!,
-    });
-    return put(
-      Uri.parse('https://primaryapinew.azurewebsites.net/api/TbUsers/$userId'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: body,
-    );
   }
 
   @override
@@ -284,6 +266,7 @@ class UserInforPageState extends State<UserInforScreen> {
                           ),
                           onPressed: () {
                             showModalBottomSheet<void>(
+                              isScrollControlled: true,
                               context: context,
                               builder: (BuildContext context) {
                                 return SingleChildScrollView(
@@ -383,8 +366,36 @@ class UserInforPageState extends State<UserInforScreen> {
                                                 controller: _btnSave,
                                                 onPressed: () {
                                                   if (textFiledPhone != null) {
-                                                    updatePhoneNumber(
-                                                            textFiledPhone!)
+                                                    Users user = Users(
+                                                        userId: Session
+                                                            .loggedInUser
+                                                            .userId,
+                                                        email: Session
+                                                            .loggedInUser.email,
+                                                        pass: Session
+                                                            .loggedInUser.pass,
+                                                        phoneNumber:
+                                                            textFiledPhone
+                                                                .toString(),
+                                                        fullname: Session
+                                                            .loggedInUser
+                                                            .fullname,
+                                                        identitiCard: Session
+                                                            .loggedInUser
+                                                            .identitiCard,
+                                                        familyId: Session
+                                                            .loggedInUser
+                                                            .familyId,
+                                                        familyVerify: Session
+                                                            .loggedInUser
+                                                            .familyVerify,
+                                                        roleUser: Session
+                                                            .loggedInUser
+                                                            .roleUser);
+                                                    UserInforService.updateUser(
+                                                            user,
+                                                            Session.loggedInUser
+                                                                .userId!)
                                                         .then((value) =>
                                                             loading());
                                                   }

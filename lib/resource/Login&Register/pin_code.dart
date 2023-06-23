@@ -246,21 +246,6 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                           delay: 1,
                           child: TextButton(
                               onPressed: () async {
-                                // formKey.currentState!.validate();
-                                // // conditions for validating
-                                // if (currentText.length != 6 ||
-                                //     currentText != "123456") {
-                                //   errorController!.add(ErrorAnimationType
-                                //       .shake); // Triggering error shake animation
-                                //   setState(() => hasError = true);
-                                // } else {
-                                //   setState(
-                                //     () {
-                                //       hasError = false;
-                                //       snackBar("OTP Verified!!");
-                                //     },
-                                //   );
-                                // }
                                 try {
                                   PhoneAuthCredential credential =
                                       PhoneAuthProvider.credential(

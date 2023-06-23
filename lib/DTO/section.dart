@@ -27,6 +27,9 @@ class username {
 }
 
 class Session {
-  static Users loggedInUser = Users(userId: "0");
+  static Users loggedInUser = Users(
+    userId: "0",
+  );
   static Car carUserInfor = Car();
+  static Users FamilyInUser = Users(userId: "0");
 }

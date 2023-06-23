@@ -101,7 +101,7 @@ class HomePageState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                           fontSize: 20)),
                   SizedBox(
-                    width: 130,
+                    width: 110,
                   ),
                   GestureDetector(
                       onTap: () {
@@ -383,7 +383,7 @@ class HomePageState extends State<HomeScreen> {
                                               BarcodeQRCorrectionLevel.high,
                                         ),
                                         data:
-                                            'carplate: ${dropdownValue?.carPlate} \ntime: $currentTime \nHint code: $Codesecurity',
+                                            'carplate: ${dropdownValue?.carPlate} \ntime: $currentTime \nHint code: $Codesecurity\n user: ${Session.loggedInUser.fullname}',
                                         width: 200,
                                         height: 200,
                                       ),
