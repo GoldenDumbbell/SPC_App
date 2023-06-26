@@ -58,14 +58,14 @@ class HomePageState extends State<HomeScreen> {
         constraints: BoxConstraints.expand(),
         decoration: const BoxDecoration(
             image: DecorationImage(
-          image: AssetImage('images/bga.png'),
+          image: AssetImage('images/bga1png.png'),
           fit: BoxFit.cover,
         )),
         child: Column(
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(top: 20),
-              child: Image(image: AssetImage('images/iconsy.png')),
+              child: Image(image: AssetImage('images/iconn.png')),
             ),
             Container(
                 padding: EdgeInsets.only(top: 10),
@@ -255,7 +255,10 @@ class HomePageState extends State<HomeScreen> {
                   Icons.directions_car_outlined,
                   size: 50,
                 ),
-                label: Text('CHECK YOUR CAR'),
+                label: Text(
+                  'CHECK YOUR CAR',
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
@@ -454,7 +457,9 @@ class HomePageState extends State<HomeScreen> {
             }
             ;
           },
-          child: const Icon(Icons.qr_code),
+          child: const Icon(
+            Icons.qr_code,
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

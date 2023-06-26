@@ -51,7 +51,7 @@ class _FamilyScreenState extends State<FamilyScreen> {
       return Container(
           decoration: const BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('images/bga.png'),
+            image: AssetImage('images/bga1png.png'),
             fit: BoxFit.cover,
           )),
           // padding: const EdgeInsets.all(16),

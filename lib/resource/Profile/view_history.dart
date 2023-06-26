@@ -37,7 +37,7 @@ class _ViewUserHistoryPageState extends State<ViewUserHistoryPage> {
       return Container(
           decoration: const BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('images/bga.png'),
+            image: AssetImage('images/bga1png.png'),
             fit: BoxFit.cover,
           )),
           child: Column(
@@ -72,6 +72,15 @@ class _ViewUserHistoryPageState extends State<ViewUserHistoryPage> {
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            // Text(
+                            //   'Name: ${DateTime.parse(listHistory[index].userId ?? '').toString().substring(0, 19)}',
+                            //   style: TextStyle(
+                            //     fontSize: 18,
+                            //     fontWeight: FontWeight.bold,
+                            //     color: Colors.black,
+                            //     decoration: TextDecoration.none,
+                            //   ),
+                            // ),
                             Text(
                               'Time in: ${DateTime.parse(listHistory[index].timeIn ?? '').toString().substring(0, 19)}',
                               style: TextStyle(

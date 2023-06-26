@@ -21,12 +21,13 @@ class HistoryService {
         for (int j = 0; j < listCar.length; j++) {
           if (listCar[j].carPlate == data[i]['carPlate']) {
             listUserHistory.add(History(
-              historyId: data[i]['historyId'],
-              carPlate: data[i]['carPlate'],
-              timeIn: data[i]['timeIn'],
-              timeOut: data[i]['timeOut'],
-              amount: data[i]['amount'].toString(),
-            ));
+                historyId: data[i]['historyId'],
+                carPlate: data[i]['carPlate'],
+                timeIn: data[i]['timeIn'],
+                timeOut: data[i]['timeOut'],
+                amount: data[i]['amount'].toString(),
+                carId: data[i]["carId"],
+                userId: data[i]["userId"]));
           }
         }
       }

@@ -31,7 +31,7 @@ class AccountPageState extends State<AccountPage> {
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
             image: DecorationImage(
-              image: AssetImage('images/bga.png'),
+              image: AssetImage('images/bga1png.png'),
               fit: BoxFit.cover,
             ),
           ),

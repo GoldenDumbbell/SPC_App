@@ -42,7 +42,7 @@ class LoginPageState extends State<LoginScreen> {
           width: MediaQuery.of(context).size.width,
           decoration: const BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('images/bga.png'),
+            image: AssetImage('images/bga1png.png'),
             fit: BoxFit.cover,
           )),
           child: Column(
@@ -51,12 +51,12 @@ class LoginPageState extends State<LoginScreen> {
               SizedBox(
                 height: 80,
               ),
-              Image.asset('images/iconsy.png'),
+              Image.asset('images/iconn.png'),
               const SizedBox(
                 height: 15,
               ),
               const Text(
-                'Smart Packing System',
+                'Smart Parking System',
                 style: TextStyle(
                     color: Colors.orange,
                     fontSize: 30,
@@ -69,7 +69,7 @@ class LoginPageState extends State<LoginScreen> {
                 height: 480,
                 width: 325,
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.white.withOpacity(0.8),
                     borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

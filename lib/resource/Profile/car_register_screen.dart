@@ -1,5 +1,5 @@
 // ignore_for_file: constant_identifier_names
-
+import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +9,7 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 import '../../Api_service/car_service.dart';
 import '../../DTO/cars.dart';
 import '../../DTO/section.dart';
+import '../../styles/button.dart';
 import '../../styles/fadeanimation.dart';
 
 enum FormData { Name, Plate, Color, PpFront, PpBack }
@@ -21,6 +22,7 @@ class CarRegisterScreen extends StatefulWidget {
 }
 
 class _CarRegisterScreenState extends State<CarRegisterScreen> {
+  BuildContext? dialogContext;
   final RoundedLoadingButtonController _btnRegisterCar =
       RoundedLoadingButtonController();
 
@@ -47,7 +49,7 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
-          image: AssetImage('images/bga.png'),
+          image: AssetImage('images/bga1png.png'),
           fit: BoxFit.cover,
         )),
         child: Center(
@@ -70,9 +72,9 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         const SizedBox(
-                          height: 80,
+                          height: 30,
                         ),
-                        Image.asset('images/logo.png'),
+                        Image.asset('images/iconsy.png'),
                         const SizedBox(
                           height: 15,
                         ),
@@ -234,6 +236,170 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                             ),
                           ),
                         ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        FadeAnimation(
+                          delay: 1,
+                          child: Container(
+                            width: 300,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              color: selected == FormData.Color
+                                  ? enabled
+                                  : backgroundColor,
+                            ),
+                            padding: const EdgeInsets.all(5.0),
+                            child: TextButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      dialogContext = context;
+                                      return Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 40,
+                                            right: 40,
+                                            top: 400,
+                                            bottom: 290),
+                                        child: Container(
+                                            padding: EdgeInsets.only(top: 5),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    width: 2.0,
+                                                    color: Color.fromARGB(
+                                                        100, 161, 125, 17)),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: Column(children: <Widget>[
+                                              // SizedBox(
+                                              //   height: 100,
+                                              // ),
+                                              ElevatedButton(
+                                                style: buttonPrimary,
+                                                onPressed: () {
+                                                  takefileFront()
+                                                      .then((value) => null);
+                                                  Navigator.pop(dialogContext!);
+                                                },
+                                                child: Text("Take your car"),
+                                              ),
+
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              ElevatedButton(
+                                                  style: buttonPrimary,
+                                                  onPressed: () {
+                                                    selectfileFront()
+                                                        .then((value) => null);
+                                                    Navigator.pop(
+                                                        dialogContext!);
+                                                  },
+                                                  child: Text("choose file")),
+                                            ])),
+                                      );
+                                    });
+                              },
+                              child: Text(
+                                'ADD Car Paper Front',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ),
+                        ),
+                        fileFront != null
+                            ? Container(
+                                height: 200,
+                                width: 100,
+                                color: Colors.blue,
+                                child: Image.file(File(fileFront!.path!),
+                                    width: double.infinity, fit: BoxFit.cover))
+                            : Text(""),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        FadeAnimation(
+                          delay: 1,
+                          child: Container(
+                            width: 300,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12.0),
+                              color: selected == FormData.Color
+                                  ? enabled
+                                  : backgroundColor,
+                            ),
+                            padding: const EdgeInsets.all(5.0),
+                            child: TextButton(
+                              onPressed: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      dialogContext = context;
+                                      return Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 40,
+                                            right: 40,
+                                            top: 400,
+                                            bottom: 290),
+                                        child: Container(
+                                            padding: EdgeInsets.only(top: 5),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    width: 2.0,
+                                                    color: Color.fromARGB(
+                                                        100, 161, 125, 17)),
+                                                borderRadius:
+                                                    BorderRadius.circular(20)),
+                                            child: Column(children: <Widget>[
+                                              // SizedBox(
+                                              //   height: 100,
+                                              // ),
+                                              ElevatedButton(
+                                                style: buttonPrimary,
+                                                onPressed: () {
+                                                  takefileBack()
+                                                      .then((value) => null);
+                                                  Navigator.pop(dialogContext!);
+                                                },
+                                                child: Text("Take your car"),
+                                              ),
+
+                                              SizedBox(
+                                                height: 10,
+                                              ),
+                                              ElevatedButton(
+                                                  style: buttonPrimary,
+                                                  onPressed: () {
+                                                    selectfileBack()
+                                                        .then((value) => null);
+                                                    Navigator.pop(
+                                                        dialogContext!);
+                                                  },
+                                                  child: Text("choose file")),
+                                            ])),
+                                      );
+                                    });
+                              },
+                              child: Text(
+                                'ADD Car Paper Back',
+                                style: TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ),
+                        ),
+                        fileBack != null
+                            ? Container(
+                                height: 200,
+                                width: 100,
+                                color: Colors.blue,
+                                child: Image.file(File(fileBack!.path!),
+                                    width: double.infinity, fit: BoxFit.cover))
+                            : Text(""),
                         // const SizedBox(height: 20),
                         // FadeAnimation(
                         //   delay: 1,
@@ -288,9 +454,11 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                             color: const Color.fromRGBO(20, 160, 240, 1.0),
                             controller: _btnRegisterCar,
                             onPressed: () {
-                              if (nameController.text.isEmpty &&
-                                  plateController.text.isEmpty &&
-                                  colorController.text.isEmpty) {
+                              if (nameController.text.isEmpty ||
+                                  plateController.text.isEmpty ||
+                                  colorController.text.isEmpty ||
+                                  imageUrlFront.isEmpty ||
+                                  imageUrlBack.isEmpty) {
                                 _showMyDialog(context, "Error",
                                     "please fill all requirment when you want to create new car");
                                 _btnRegisterCar.reset();
@@ -300,8 +468,8 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                     carName: nameController.text,
                                     carPlate: plateController.text,
                                     carColor: colorController.text,
-                                    carPaperFront: null,
-                                    carPaperBack: null,
+                                    carPaperFront: imageUrlFront,
+                                    carPaperBack: imageUrlBack,
                                     verifyState1: null,
                                     verifyState2: null,
                                     securityCode: "",
@@ -383,5 +551,65 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
         ],
       ),
     );
+  }
+
+  XFile? fileFront;
+  XFile? fileBack;
+  String? url;
+  UploadTask? uploadTask;
+  ImagePicker imagePicker = ImagePicker();
+  String imageUrlFront = '';
+  String imageUrlBack = '';
+
+  Future takefileFront() async {
+    fileFront = await imagePicker.pickImage(source: ImageSource.camera);
+    if (fileFront == null) return;
+
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final path = 'filestrorageimage/${uniqueFileName}';
+    final file1 = File(fileFront!.path);
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file1);
+    final snapshot = await uploadTask!.whenComplete(() {});
+    imageUrlFront = await snapshot.ref.getDownloadURL();
+  }
+
+  Future takefileBack() async {
+    fileBack = await imagePicker.pickImage(source: ImageSource.camera);
+    if (fileBack == null) return;
+
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final path = 'filestrorageimage/${uniqueFileName}';
+    final file1 = File(fileBack!.path);
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file1);
+    final snapshot = await uploadTask!.whenComplete(() {});
+    imageUrlBack = await snapshot.ref.getDownloadURL();
+  }
+
+  Future selectfileFront() async {
+    fileFront = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (fileFront == null) return;
+
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final path = 'filestrorageimage/${uniqueFileName}';
+    final file1 = File(fileFront!.path);
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file1);
+    final snapshot = await uploadTask!.whenComplete(() {});
+    imageUrlFront = await snapshot.ref.getDownloadURL();
+  }
+
+  Future selectfileBack() async {
+    fileBack = await imagePicker.pickImage(source: ImageSource.gallery);
+    if (fileBack == null) return;
+
+    String uniqueFileName = DateTime.now().millisecondsSinceEpoch.toString();
+    final path = 'filestrorageimage/${uniqueFileName}';
+    final file1 = File(fileBack!.path);
+    final ref = FirebaseStorage.instance.ref().child(path);
+    uploadTask = ref.putFile(file1);
+    final snapshot = await uploadTask!.whenComplete(() {});
+    imageUrlBack = await snapshot.ref.getDownloadURL();
   }
 }

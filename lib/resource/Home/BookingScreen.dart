@@ -81,7 +81,7 @@ class _BookingPage1State extends State<Booking1Screen> {
               borderRadius: BorderRadius.zero,
               border: Border.all(color: Color(0xfff7f2f2), width: 0),
               image: DecorationImage(
-                image: AssetImage('images/bga.png'),
+                image: AssetImage('images/bga1png.png'),
                 fit: BoxFit.cover,
               )),
           child: Column(

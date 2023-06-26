@@ -71,7 +71,7 @@ class UserInforPageState extends State<UserInforScreen> {
           constraints: BoxConstraints.expand(),
           decoration: const BoxDecoration(
               image: DecorationImage(
-            image: AssetImage('images/bga.png'),
+            image: AssetImage('images/bga1png.png'),
             fit: BoxFit.cover,
           )),
           child: Column(

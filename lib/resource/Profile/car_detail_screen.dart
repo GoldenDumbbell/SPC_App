@@ -56,7 +56,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                 // height: MediaQuery.of(context).size.height,
                 decoration: const BoxDecoration(
                     image: DecorationImage(
-                  image: AssetImage('images/bga.png'),
+                  image: AssetImage('images/bga1png.png'),
                   fit: BoxFit.cover,
                 )),
                 padding:
@@ -337,13 +337,14 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                       SizedBox(
                         width: 20,
                       ),
-                      if (fileFront != null)
-                        Container(
-                            height: 200,
-                            width: 100,
-                            color: Colors.blue,
-                            child: Image.file(File(fileFront!.path!),
-                                width: double.infinity, fit: BoxFit.cover)),
+                      fileFront != null
+                          ? Container(
+                              height: 200,
+                              width: 100,
+                              color: Colors.blue,
+                              child: Image.file(File(fileFront!.path!),
+                                  width: double.infinity, fit: BoxFit.cover))
+                          : Text(""),
                       TextButton(
                         child: Text(
                           'ADD',
@@ -412,13 +413,14 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                       Text(
                         "Car Paper (Back)",
                       ),
-                      if (fileBack != null)
-                        Container(
-                            height: 200,
-                            width: 100,
-                            color: Colors.blue,
-                            child: Image.file(File(fileBack!.path!),
-                                width: double.infinity, fit: BoxFit.cover)),
+                      fileBack != null
+                          ? Container(
+                              height: 200,
+                              width: 100,
+                              color: Colors.blue,
+                              child: Image.file(File(fileBack!.path!),
+                                  width: double.infinity, fit: BoxFit.cover))
+                          : Text(""),
                       TextButton(
                         child: Text(
                           'ADD',
@@ -547,6 +549,8 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
 
                             CarService.updateCar(car, carDetail!.carId!)
                                 .then((value) => getListCar());
+                            fileFront = null;
+                            fileBack = null;
                             Navigator.pop(context);
                           }
                         },
