@@ -280,8 +280,8 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                               ElevatedButton(
                                                 style: buttonPrimary,
                                                 onPressed: () {
-                                                  takefileFront()
-                                                      .then((value) => null);
+                                                  takefileFront().then(
+                                                      (value) => fileFront);
                                                   Navigator.pop(dialogContext!);
                                                 },
                                                 child: Text("Take your car"),
@@ -293,8 +293,8 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                               ElevatedButton(
                                                   style: buttonPrimary,
                                                   onPressed: () {
-                                                    selectfileFront()
-                                                        .then((value) => null);
+                                                    selectfileFront().then(
+                                                        (value) => fileFront);
                                                     Navigator.pop(
                                                         dialogContext!);
                                                   },
@@ -362,8 +362,8 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                               ElevatedButton(
                                                 style: buttonPrimary,
                                                 onPressed: () {
-                                                  takefileBack()
-                                                      .then((value) => null);
+                                                  takefileBack().then(
+                                                      (value) => fileBack);
                                                   Navigator.pop(dialogContext!);
                                                 },
                                                 child: Text("Take your car"),
@@ -375,8 +375,8 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                               ElevatedButton(
                                                   style: buttonPrimary,
                                                   onPressed: () {
-                                                    selectfileBack()
-                                                        .then((value) => null);
+                                                    selectfileBack().then(
+                                                        (value) => fileBack);
                                                     Navigator.pop(
                                                         dialogContext!);
                                                   },
@@ -400,51 +400,7 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                 child: Image.file(File(fileBack!.path!),
                                     width: double.infinity, fit: BoxFit.cover))
                             : Text(""),
-                        // const SizedBox(height: 20),
-                        // FadeAnimation(
-                        //   delay: 1,
-                        //   child: Container(
-                        //     width: 300,
-                        //     height: 40,
-                        //     decoration: BoxDecoration(
-                        //         borderRadius: BorderRadius.circular(12.0),
-                        //         color: selected == FormData.PpBack
-                        //             ? enabled
-                        //             : backgroundColor),
-                        //     padding: const EdgeInsets.all(5.0),
-                        //     child: TextField(
-                        //       controller: carIdController,
-                        //       onTap: () {
-                        //         setState(() {
-                        //           selected = FormData.PpBack;
-                        //         });
-                        //       },
-                        //       decoration: InputDecoration(
-                        //           enabledBorder: InputBorder.none,
-                        //           border: InputBorder.none,
-                        //           prefixIcon: Icon(
-                        //             Icons.abc,
-                        //             color: selected == FormData.PpBack
-                        //                 ? enabledtxt
-                        //                 : deaible,
-                        //             size: 20,
-                        //           ),
-                        //           hintText: 'Car Id',
-                        //           hintStyle: TextStyle(
-                        //               color: selected == FormData.PpBack
-                        //                   ? enabledtxt
-                        //                   : deaible,
-                        //               fontSize: 12)),
-                        //       textAlignVertical: TextAlignVertical.center,
-                        //       style: TextStyle(
-                        //           color: selected == FormData.PpBack
-                        //               ? enabledtxt
-                        //               : deaible,
-                        //           fontWeight: FontWeight.bold,
-                        //           fontSize: 12),
-                        //     ),
-                        //   ),
-                        // ),
+
                         const SizedBox(height: 25),
                         FadeAnimation(
                           delay: 1,

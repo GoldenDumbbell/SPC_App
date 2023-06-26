@@ -96,7 +96,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        listSpot[6].available == true
+                        listSpot[3].available == true
                             ? Container(
                                 margin: EdgeInsets.all(0),
                                 padding: EdgeInsets.all(0),
@@ -115,7 +115,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[6].spotId}",
+                                      "${listSpot[3].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -146,7 +146,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[6].spotId}",
+                                      "${listSpot[3].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -163,146 +163,6 @@ class _ViewSpotState extends State<viewSpotPage> {
                           height: 16,
                           width: 50,
                         ),
-                        listSpot[10].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[10].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[10].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        SizedBox(
-                          height: 16,
-                          width: 50,
-                        ),
-                        listSpot[17].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[17].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[17].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
                         listSpot[5].available == true
                             ? Container(
                                 margin: EdgeInsets.all(0),
@@ -313,7 +173,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   color: Color(0x1f000000),
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
+                                      topRight: Radius.circular(0.0)),
                                   border: Border.all(
                                       color: Color(0x4d9e9e9e), width: 1),
                                 ),
@@ -344,7 +204,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   color: Colors.red,
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
+                                      topRight: Radius.circular(0.0)),
                                   border: Border.all(
                                       color: Color(0x4d9e9e9e), width: 1),
                                 ),
@@ -380,8 +240,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   color: Color(0x1f000000),
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(10)),
+                                      topLeft: Radius.circular(10.0)),
                                   border: Border.all(
                                       color: Color(0x4d9e9e9e), width: 1),
                                 ),
@@ -412,8 +271,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   color: Colors.red,
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(10.0),
-                                      bottomLeft: Radius.circular(10)),
+                                      topLeft: Radius.circular(10.0)),
                                   border: Border.all(
                                       color: Color(0x4d9e9e9e), width: 1),
                                 ),
@@ -435,384 +293,14 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   ),
                                 ),
                               ),
-                        SizedBox(
-                          width: 50,
-                        ),
-                        listSpot[16].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[16].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[16].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        listSpot[4].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[4].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[4].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        SizedBox(
-                          width: 200,
-                        ),
-                        listSpot[15].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[15].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[15].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                      ],
-                    ),
+                  SizedBox(
+                    height: 50,
+                    width: 100,
                   ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        listSpot[3].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[3].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[3].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        SizedBox(
-                          height: 16,
-                          width: 50,
-                        ),
-                        Container(
-                          margin: EdgeInsets.all(0),
-                          padding: EdgeInsets.all(0),
-                          width: 100,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Color(0x1f000000),
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.circular(10.0),
-                            border:
-                                Border.all(color: Color(0x4d9e9e9e), width: 1),
-                          ),
-                          child: Align(
-                            alignment: Alignment(-0.1, 0.0),
-                            child: Text(
-                              "Elevator",
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.clip,
-                              style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                                fontSize: 14,
-                                color: Color(0xff000000),
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 50,
-                        ),
-                        listSpot[14].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[14].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[14].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                      ],
-                    ),
-                  ),
+
                   Padding(
                     padding: EdgeInsets.fromLTRB(5, 0, 0, 0),
                     child: Row(
@@ -886,7 +374,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                         SizedBox(
                           width: 200,
                         ),
-                        listSpot[13].available == true
+                        listSpot[8].available == true
                             ? Container(
                                 margin: EdgeInsets.all(0),
                                 padding: EdgeInsets.all(0),
@@ -905,7 +393,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[13].spotId}",
+                                      "${listSpot[8].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -936,7 +424,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[13].spotId}",
+                                      "${listSpot[8].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -969,7 +457,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   color: Color(0x1f000000),
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0)),
+                                      bottomRight: Radius.circular(0.0)),
                                   border: Border.all(
                                       color: Color(0x4d9e9e9e), width: 1),
                                 ),
@@ -1000,7 +488,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   color: Colors.red,
                                   shape: BoxShape.rectangle,
                                   borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0)),
+                                      bottomRight: Radius.circular(0.0)),
                                   border: Border.all(
                                       color: Color(0x4d9e9e9e), width: 1),
                                 ),
@@ -1026,75 +514,37 @@ class _ViewSpotState extends State<viewSpotPage> {
                           height: 16,
                           width: 50,
                         ),
-                        listSpot[8].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(10.0),
-                                      topLeft: Radius.circular(10)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[8].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(10.0),
-                                      topRight: Radius.circular(10)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[8].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                        Container(
+                          margin: EdgeInsets.all(0),
+                          padding: EdgeInsets.all(0),
+                          width: 100,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Color(0x1f000000),
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(10.0),
+                            border:
+                                Border.all(color: Color(0x4d9e9e9e), width: 1),
+                          ),
+                          child: Align(
+                            alignment: Alignment(-0.1, 0.0),
+                            child: Text(
+                              "Elevator",
+                              textAlign: TextAlign.start,
+                              overflow: TextOverflow.clip,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal,
+                                fontSize: 14,
+                                color: Color(0xff000000),
                               ),
+                            ),
+                          ),
+                        ),
                         SizedBox(
                           width: 50,
                         ),
-                        listSpot[12].available == true
+                        listSpot[7].available == true
                             ? Container(
                                 margin: EdgeInsets.all(0),
                                 padding: EdgeInsets.all(0),
@@ -1113,7 +563,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[12].spotId}",
+                                      "${listSpot[7].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1144,7 +594,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[12].spotId}",
+                                      "${listSpot[7].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1160,6 +610,11 @@ class _ViewSpotState extends State<viewSpotPage> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 50,
+                    width: 100,
+                  ),
+
                   Padding(
                     padding: EdgeInsets.fromLTRB(5, 0, 0, 5),
                     child: Row(
@@ -1234,6 +689,72 @@ class _ViewSpotState extends State<viewSpotPage> {
                           height: 16,
                           width: 50,
                         ),
+                        listSpot[4].available == true
+                            ? Container(
+                                margin: EdgeInsets.all(0),
+                                padding: EdgeInsets.all(0),
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Color(0x1f000000),
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(0)),
+                                  border: Border.all(
+                                      color: Color(0x4d9e9e9e), width: 1),
+                                ),
+                                child: Align(
+                                  alignment: Alignment(-0.1, 0.0),
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      "${listSpot[4].spotId}",
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: 14,
+                                        color: Color(0xff000000),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                margin: EdgeInsets.all(0),
+                                padding: EdgeInsets.all(0),
+                                width: 100,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  shape: BoxShape.rectangle,
+                                  borderRadius: BorderRadius.only(
+                                      topRight: Radius.circular(0)),
+                                  border: Border.all(
+                                      color: Color(0x4d9e9e9e), width: 1),
+                                ),
+                                child: Align(
+                                  alignment: Alignment(-0.1, 0.0),
+                                  child: TextButton(
+                                    onPressed: () {},
+                                    child: Text(
+                                      "${listSpot[4].spotId}",
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.clip,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.normal,
+                                        fontSize: 14,
+                                        color: Color(0xff000000),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                        SizedBox(
+                          width: 50,
+                        ),
                         listSpot[6].available == true
                             ? Container(
                                 margin: EdgeInsets.all(0),
@@ -1253,73 +774,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[7].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[7].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        SizedBox(
-                          width: 50,
-                        ),
-                        listSpot[11].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 100,
-                                height: 50,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[11].spotId}",
+                                      "${listSpot[6].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1350,7 +805,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[11].spotId}",
+                                      "${listSpot[6].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1365,6 +820,9 @@ class _ViewSpotState extends State<viewSpotPage> {
                               ),
                       ],
                     ),
+                  ),
+                  SizedBox(
+                    height: 50,
                   ),
                   // Row(
                   //   // mainAxisAlignment: MainAxisAlignment.start,
@@ -1382,16 +840,19 @@ class _ViewSpotState extends State<viewSpotPage> {
                       color: Color(0xff000000),
                     ),
                   ),
+                  SizedBox(
+                    height: 50,
+                  ),
                   //   ],
                   // ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(60, 10, 0, 5),
+                    padding: EdgeInsets.fromLTRB(110, 10, 0, 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        listSpot[18].available == true
+                        listSpot[10].available == true
                             ? Container(
                                 margin: EdgeInsets.all(0),
                                 padding: EdgeInsets.all(0),
@@ -1411,7 +872,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[18].spotId}",
+                                      "${listSpot[10].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1443,7 +904,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[18].spotId}",
+                                      "${listSpot[10].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1456,11 +917,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   ),
                                 ),
                               ),
-                        // SizedBox(
-                        //   height: 16,
-                        //   width: 50,
-                        // ),
-                        listSpot[19].available == true
+                        listSpot[11].available == true
                             ? Container(
                                 margin: EdgeInsets.all(0),
                                 padding: EdgeInsets.all(0),
@@ -1479,7 +936,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[19].spotId}",
+                                      "${listSpot[11].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1510,7 +967,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[19].spotId}",
+                                      "${listSpot[11].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1523,10 +980,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   ),
                                 ),
                               ),
-                        // SizedBox(
-                        //   width: 50,
-                        // ),
-                        listSpot[20].available == true
+                        listSpot[12].available == true
                             ? Container(
                                 margin: EdgeInsets.all(0),
                                 padding: EdgeInsets.all(0),
@@ -1545,7 +999,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[20].spotId}",
+                                      "${listSpot[12].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1576,7 +1030,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[20].spotId}",
+                                      "${listSpot[12].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1589,133 +1043,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   ),
                                 ),
                               ),
-                        listSpot[21].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 50,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[21].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 50,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[21].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        listSpot[22].available == true
-                            ? Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 50,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Color(0x1f000000),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[22].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.all(0),
-                                padding: EdgeInsets.all(0),
-                                width: 50,
-                                height: 100,
-                                decoration: BoxDecoration(
-                                  color: Colors.red,
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.only(
-                                      bottomRight: Radius.circular(0.0)),
-                                  border: Border.all(
-                                      color: Color(0x4d9e9e9e), width: 1),
-                                ),
-                                child: Align(
-                                  alignment: Alignment(-0.1, 0.0),
-                                  child: TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      "${listSpot[22].spotId}",
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.normal,
-                                        fontSize: 14,
-                                        color: Color(0xff000000),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                        listSpot[23].available == true
+                        listSpot[13].available == true
                             ? Container(
                                 margin: EdgeInsets.all(0),
                                 padding: EdgeInsets.all(0),
@@ -1735,7 +1063,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[23].spotId}",
+                                      "${listSpot[13].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1767,7 +1095,7 @@ class _ViewSpotState extends State<viewSpotPage> {
                                   child: TextButton(
                                     onPressed: () {},
                                     child: Text(
-                                      "${listSpot[23].spotId}",
+                                      "${listSpot[13].spotId}",
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.clip,
                                       style: TextStyle(
@@ -1782,6 +1110,10 @@ class _ViewSpotState extends State<viewSpotPage> {
                               ),
                       ],
                     ),
+                  ),
+
+                  SizedBox(
+                    height: 50,
                   ),
 
                   Padding(
@@ -1825,10 +1157,6 @@ class _ViewSpotState extends State<viewSpotPage> {
                             ),
                           ),
                         ),
-                        // SizedBox(
-                        //   height: 16,
-                        //   width: 50,
-                        // ),
                       ],
                     ),
                   ),
