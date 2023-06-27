@@ -1,0 +1,125 @@
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.exe
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.deps.json
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.runtimeconfig.json
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.pdb
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.Video.DirectShow.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.Video.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.Video.xml
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.Video.DirectShow.xml
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.xml
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.csproj.AssemblyReference.cache
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.csproj.GenerateResource.cache
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.GeneratedMSBuildEditorConfig.editorconfig
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.AssemblyInfoInputs.cache
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.AssemblyInfo.cs
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.csproj.CoreCompileInputs.cache
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.csproj.CopyComplete
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.dll
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\refint\SpS_Foremployee.dll
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.pdb
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.genruntimeconfig.cache
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\ref\SpS_Foremployee.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Azure.Core.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Azure.Identity.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Data.SqlClient.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.EntityFrameworkCore.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.EntityFrameworkCore.Relational.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Caching.Abstractions.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Caching.Memory.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.DependencyInjection.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Options.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Primitives.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Identity.Client.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Abstractions.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Logging.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Protocols.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Tokens.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.SqlServer.Server.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\System.IdentityModel.Tokens.Jwt.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\System.Memory.Data.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\System.Runtime.Caching.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.Login.resources
+D:\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.home.resources
+D:\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\zxing.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.exe
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.deps.json
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.runtimeconfig.json
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\SpS_Foremployee.pdb
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Azure.Core.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Azure.Identity.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Bcl.AsyncInterfaces.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Data.SqlClient.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.EntityFrameworkCore.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.EntityFrameworkCore.SqlServer.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Caching.Memory.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.DependencyInjection.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Options.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Extensions.Primitives.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Identity.Client.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.Identity.Client.Extensions.Msal.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Abstractions.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Logging.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Protocols.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.IdentityModel.Tokens.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Microsoft.SqlServer.Server.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\System.IdentityModel.Tokens.Jwt.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\System.Memory.Data.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\System.Runtime.Caching.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\zxing.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\unix\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win\lib\netcoreapp3.1\Microsoft.Data.SqlClient.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win-arm\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win-arm64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win-x64\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win-x86\native\Microsoft.Data.SqlClient.SNI.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.Video.DirectShow.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.Video.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.Video.xml
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.Video.DirectShow.xml
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\AForge.xml
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.csproj.AssemblyReference.cache
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.home.resources
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.Login.resources
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.csproj.GenerateResource.cache
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.GeneratedMSBuildEditorConfig.editorconfig
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.AssemblyInfoInputs.cache
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.AssemblyInfo.cs
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.csproj.CoreCompileInputs.cache
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.csproj.CopyComplete
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\refint\SpS_Foremployee.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.pdb
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\SpS_Foremployee.genruntimeconfig.cache
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\obj\Debug\net6.0-windows\ref\SpS_Foremployee.dll
+D:\Mine\thư viện C#\SpS_Foremployee\SpS_Foremployee\bin\Debug\net6.0-windows\Newtonsoft.Json.dll
