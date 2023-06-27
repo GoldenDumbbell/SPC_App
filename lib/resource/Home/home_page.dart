@@ -1,7 +1,10 @@
 import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:webspc/Api_service/user_infor_service.dart';
+import 'package:webspc/DTO/Qr.dart';
+import 'package:webspc/DTO/spot.dart';
 import 'package:webspc/resource/Home/Parking_spot.dart';
 import 'package:webspc/navigationbar.dart';
 import 'package:webspc/resource/Home/BookingScreen.dart';
@@ -281,6 +284,13 @@ class HomePageState extends State<HomeScreen> {
               DateTime now = DateTime.now();
               String formattedDate =
                   DateFormat('yyyy-MM-dd – kk:mm').format(now);
+
+              Map<String, dynamic> toJson() => {
+                    "carID": dropdownValue?.carPlate,
+                    "time": currentTime,
+                    "securityCode": Codesecurity,
+                    "fullname": Session.loggedInUser.fullname,
+                  };
             });
             if (dropdownValue?.carPlate == null) {
               showDialog(
@@ -385,8 +395,14 @@ class HomePageState extends State<HomeScreen> {
                                           errorCorrectLevel:
                                               BarcodeQRCorrectionLevel.high,
                                         ),
-                                        data:
-                                            'carplate: ${dropdownValue?.carPlate} \ntime: $currentTime \nHint code: $Codesecurity\n user: ${Session.loggedInUser.fullname}',
+
+                                        data: QrToJson(Qrcode(
+                                            carplate: dropdownValue?.carPlate,
+                                            datetime: currentTime,
+                                            securityCode: Codesecurity,
+                                            username:
+                                                Session.loggedInUser.fullname)),
+                                        // 'carplate: ${dropdownValue?.carPlate} \ntime: $currentTime \nHint code: $Codesecurity\n user: ${Session.loggedInUser.fullname}',
                                         width: 200,
                                         height: 200,
                                       ),
