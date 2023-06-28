@@ -10,6 +10,8 @@ class Users {
   String? phoneNumber;
   String? pass;
   String? fullname;
+  double? wallet;
+  bool? paymentStatus;
   String? identitiCard;
   String? familyId;
   bool? familyVerify;
@@ -21,6 +23,8 @@ class Users {
       this.phoneNumber,
       this.pass,
       this.fullname,
+      this.wallet,
+      this.paymentStatus,
       this.identitiCard,
       this.familyId,
       this.roleUser,

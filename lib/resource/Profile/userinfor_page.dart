@@ -386,6 +386,12 @@ class UserInforPageState extends State<UserInforScreen> {
                                                         familyId: Session
                                                             .loggedInUser
                                                             .familyId,
+                                                        wallet: Session
+                                                            .loggedInUser
+                                                            .wallet,
+                                                        paymentStatus: Session
+                                                            .loggedInUser
+                                                            .paymentStatus,
                                                         familyVerify: Session
                                                             .loggedInUser
                                                             .familyVerify,

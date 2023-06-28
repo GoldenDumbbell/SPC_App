@@ -115,6 +115,8 @@ class _FamilyScreenState extends State<FamilyScreen> {
                                               identitiCard:
                                                   listUserInFamily[index]
                                                       .identitiCard,
+                                              wallet: listUserInFamily[index]
+                                                  .wallet,
                                               familyId: null,
                                               familyVerify: false,
                                               roleUser: false);
@@ -338,6 +340,9 @@ class _FamilyScreenState extends State<FamilyScreen> {
                                                                 identitiCard: Session
                                                                     .FamilyInUser
                                                                     .identitiCard,
+                                                                wallet: Session
+                                                                    .FamilyInUser
+                                                                    .wallet,
                                                                 familyId: Session
                                                                     .loggedInUser
                                                                     .familyId,

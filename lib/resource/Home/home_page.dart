@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:webspc/Api_service/car_service.dart';
 import 'package:webspc/Api_service/user_infor_service.dart';
 import 'package:webspc/DTO/Qr.dart';
 import 'package:webspc/DTO/spot.dart';
@@ -342,6 +345,33 @@ class HomePageState extends State<HomeScreen> {
                         ),
                       )));
             } else {
+              Car car = Car(
+                  carId: dropdownValue!.carId,
+                  carName: dropdownValue!.carName,
+                  carPlate: dropdownValue!.carPlate,
+                  carColor: dropdownValue!.carColor,
+                  carPaperFront: dropdownValue!.carPaperFront,
+                  carPaperBack: dropdownValue!.carPaperBack,
+                  verifyState1: dropdownValue!.verifyState1,
+                  verifyState2: dropdownValue!.verifyState2,
+                  securityCode: Codesecurity,
+                  familyId: dropdownValue!.familyId);
+              CarService.updateCar(car, dropdownValue!.carId!)
+                  .then((value) => Timer(const Duration(seconds: 60), () {
+                        Car car = Car(
+                            carId: dropdownValue!.carId,
+                            carName: dropdownValue!.carName,
+                            carPlate: dropdownValue!.carPlate,
+                            carColor: dropdownValue!.carColor,
+                            carPaperFront: dropdownValue!.carPaperFront,
+                            carPaperBack: dropdownValue!.carPaperBack,
+                            verifyState1: dropdownValue!.verifyState1,
+                            verifyState2: dropdownValue!.verifyState2,
+                            securityCode: null,
+                            familyId: dropdownValue!.familyId);
+                        CarService.updateCar(car, dropdownValue!.carId!)
+                            .then((value) => Navigator.pop(context));
+                      }));
               showDialog(
                   context: context,
                   builder: (context) => Form(
@@ -466,7 +496,22 @@ class HomePageState extends State<HomeScreen> {
                                       )
                                     ],
                                   ),
-                                )
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(
+                                    left: 20,
+                                    right: 20,
+                                  ),
+                                  child: Text('Code available in: 60s ',
+                                      style: TextStyle(
+                                        decoration: TextDecoration.none,
+                                        color: Colors.grey,
+                                        fontSize: 8,
+                                      )),
+                                ),
                               ],
                             )),
                       )));

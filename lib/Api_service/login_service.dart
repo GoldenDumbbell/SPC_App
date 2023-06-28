@@ -28,6 +28,8 @@ class LoginService {
               email: data[i]['email'],
               pass: data[i]['pass'],
               phoneNumber: data[i]['phoneNumber'],
+              wallet: data[i]['wallet'],
+              paymentStatus: data[i]['paymentStatus'],
               fullname: data[i]['fullname'],
               identitiCard: data[i]['identitiCard'],
               familyId: data[i]['familyId'],
@@ -100,6 +102,8 @@ class LoginService {
       'fullname': user.fullname,
       'pass': user.pass,
       'identitiCard': user.identitiCard,
+      'wallet': user.wallet,
+      'paymentStatus': user.paymentStatus,
       'familyId': user.familyId,
       'familyVerify': user.familyVerify,
       'roleUser': user.roleUser
