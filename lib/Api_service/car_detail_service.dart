@@ -27,6 +27,7 @@ class CarDetailService {
             verifyState1: data[i]['verifyState1'],
             verifyState2: data[i]['verifyState2'],
             securityCode: data[i]['securityCode'],
+            historyID: data[i]['historyId'],
             familyId: data[i]['familyId'],
           ));
         }

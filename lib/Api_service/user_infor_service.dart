@@ -90,14 +90,14 @@ class UserInforService {
 }
 
 class CarInforofUserService {
-  static Future carUserInfor() async {
+  static Future carUserInfor(String carid) async {
     final response = await get(
       Uri.parse("https://primaryapinew.azurewebsites.net/api/TbCars"),
     );
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       for (int i = 0; i < data.length; i++) {
-        if (Session.loggedInUser.familyId == data[i]['familyId']) {
+        if (carid == data[i]['carId']) {
           Session.carUserInfor = Car(
             carId: data[i]['carId'],
             carName: data[i]['carName'],
@@ -108,6 +108,7 @@ class CarInforofUserService {
             verifyState1: data[i]['verifyState1'],
             verifyState2: data[i]['verifyState2'],
             securityCode: data[i]['securityCode'],
+            historyID: data[i]['historyId'],
             familyId: data[i]['familyId'],
           );
         }

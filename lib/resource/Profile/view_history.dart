@@ -90,15 +90,25 @@ class _ViewUserHistoryPageState extends State<ViewUserHistoryPage> {
                                 decoration: TextDecoration.none,
                               ),
                             ),
-                            Text(
-                              'Time out: ${DateTime.parse(listHistory[index].timeOut ?? '').toString().substring(0, 19)}',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                                decoration: TextDecoration.none,
-                              ),
-                            ),
+                            listHistory[index].timeOut == null
+                                ? Text(
+                                    'Time out:',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.none,
+                                    ),
+                                  )
+                                : Text(
+                                    'Time out: ${DateTime.parse(listHistory[index].timeOut ?? '').toString().substring(0, 19)}',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                      decoration: TextDecoration.none,
+                                    ),
+                                  ),
                           ],
                         ),
                         trailing: Text(

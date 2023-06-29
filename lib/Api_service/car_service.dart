@@ -66,6 +66,7 @@ class CarService {
       "verifyState2": car.verifyState2,
       "securityCode": car.securityCode,
       "familyId": car.familyId,
+      "historyId": car.historyID,
     });
     return put(
       Uri.parse('https://primaryapinew.azurewebsites.net/api/TbCars/$carId'),
