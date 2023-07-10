@@ -231,6 +231,7 @@ class RegisterPageState extends State<ResetPasswordScreen> {
           pass: confirmPassword.toString(),
           phoneNumber: Session.loggedInUser.phoneNumber,
           fullname: Session.loggedInUser.fullname,
+          wallet: Session.loggedInUser.wallet,
           identitiCard: Session.loggedInUser.identitiCard,
           familyId: Session.loggedInUser.familyId,
           familyVerify: Session.loggedInUser.familyVerify,

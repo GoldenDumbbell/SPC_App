@@ -15,10 +15,12 @@ class SpotDetailService {
       for (int i = 0; i < data.length; i++) {
         if (data[i]["available"] == true) {
           listSpot.add(Spot(
-              spotId: data[i]["sensorId"],
-              available: data[i]["available"],
-              location: data[i]["location"],
-              blockId: data[i]["ablockId"]));
+            spotId: data[i]["sensorId"],
+            available: data[i]["available"],
+            location: data[i]["location"],
+            blockId: data[i]["ablockId"],
+            carId: data[i]["carId"],
+          ));
         }
       }
     }
@@ -34,12 +36,30 @@ class SpotDetailService {
       var data = json.decode(response.body);
       for (int i = 0; i < data.length; i++) {
         listSpot.add(Spot(
-            spotId: data[i]["sensorId"],
-            available: data[i]["available"],
-            location: data[i]["location"],
-            blockId: data[i]["ablockId"]));
+          spotId: data[i]["sensorId"],
+          available: data[i]["available"],
+          location: data[i]["location"],
+          blockId: data[i]["ablockId"],
+          carId: data[i]["carId"],
+        ));
       }
     }
     return listSpot;
+  }
+
+  static Future<bool> updateSpot(Spot spot) async {
+    final response = await put(
+      Uri.parse(
+          "https://primaryapinew.azurewebsites.net/api/TbSpots/${spot.spotId}"),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(spot.toJson()),
+    );
+    if (response.statusCode == 204) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

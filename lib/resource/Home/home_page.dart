@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:webspc/DTO/spot.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
@@ -16,9 +17,12 @@ import 'package:webspc/resource/Home/BookingScreen.dart';
 import 'package:webspc/resource/Home/View_hisbooking.dart';
 import 'package:webspc/styles/button.dart';
 import '../../Api_service/car_detail_service.dart';
+import '../../Api_service/spot_service.dart';
 import '../../DTO/cars.dart';
 import '../../DTO/section.dart';
 import 'dart:math';
+
+import 'map_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static const routeName = '/homeScreen';
@@ -44,6 +48,12 @@ class HomePageState extends State<HomeScreen> {
     getListCar();
     // getCarUserInfor();
     super.initState();
+  }
+
+  String formatCurrency(double n) {
+    // Add comma to separate thousands
+    var currency = NumberFormat("#,##0", "vi_VN");
+    return currency.format(n);
   }
 
   // void getCarUserInfor() {
@@ -217,11 +227,25 @@ class HomePageState extends State<HomeScreen> {
                       SizedBox(
                         height: 30,
                       ),
-                      Text('Balance',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 35,
-                              fontWeight: FontWeight.bold))
+                      Text(
+                        'Balance',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        '${formatCurrency(Session.loggedInUser.wallet!)} VND',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 35,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   )),
             ),
@@ -242,8 +266,30 @@ class HomePageState extends State<HomeScreen> {
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton.icon(
                 style: buttonPrimary,
-                onPressed: () {
-                  Navigator.pushNamed(context, viewSpotPage.routerName);
+                onPressed: () async {
+                  SpotDetailService.getAllListSpot().then((response) {
+                    CarDetailService.getListCar().then((listCar) {
+                      Spot? boughtSpot = null;
+                      // Find which spot has carId in listCar
+                      for (var spot in response) {
+                        for (var car in listCar) {
+                          if (spot.carId == car.carId) {
+                            boughtSpot = spot;
+                          }
+                        }
+                      }
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MapScreen(
+                            listSpot: response,
+                            boughtSpot: boughtSpot,
+                          ),
+                        ),
+                      );
+                    });
+                  });
+                  // Navigator.pushNamed(context, viewSpotPage.routerName);
                 },
                 icon: Icon(
                   Icons.directions_car_outlined,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webspc/resource/Profile/car_detail_screen.dart';
 import 'package:webspc/resource/Profile/car_register_screen.dart';
 import 'package:webspc/resource/Profile/family_screen.dart';
+import 'package:webspc/resource/Profile/spc_wallet_page.dart';
 import 'package:webspc/resource/Profile/topup_page.dart';
 import 'package:webspc/resource/Profile/userinfor_page.dart';
 import 'package:webspc/styles/button.dart';
@@ -9,6 +10,8 @@ import 'package:webspc/resource/Login&Register/login_page.dart';
 import '../../DTO/cars.dart';
 import '../../DTO/section.dart';
 import '../../DTO/user.dart';
+import 'package:intl/intl.dart';
+import 'package:webspc/resource/Profile/spot_screen.dart';
 
 import 'view_history.dart';
 import '../../navigationbar.dart';
@@ -23,6 +26,13 @@ class AccountPage extends StatefulWidget {
 class AccountPageState extends State<AccountPage> {
   int selectedIndex = 1;
   int selectedCatIndex = 1;
+  double wallet = Session.loggedInUser.wallet ?? 0;
+  String formatCurrency(double n) {
+    // Add comma to separate thousands
+    var currency = NumberFormat("#,##0", "vi_VN");
+    return currency.format(n);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
@@ -71,11 +81,25 @@ class AccountPageState extends State<AccountPage> {
                         SizedBox(
                           height: 30,
                         ),
-                        Text('Balance',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 35,
-                                fontWeight: FontWeight.bold))
+                        Text(
+                          'Balance',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          formatCurrency(wallet) + ' VND',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ],
                     )),
               ),
@@ -123,9 +147,41 @@ class AccountPageState extends State<AccountPage> {
                 child: ElevatedButton(
                   style: buttonPrimary,
                   onPressed: () {
-                    Navigator.pushNamed(context, TopupScreen.routeName);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SpotScreen(context)));
                   },
-                  child: Text('Top Up'),
+                  child: Text('Buy Spot'),
+                ),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(10.0),
+              //   child: ElevatedButton(
+              //     style: buttonPrimary,
+              //     onPressed: () {
+              //       Navigator.pushNamed(context, TopupScreen.routeName);
+              //     },
+              //     child: Text('Top Up'),
+              //   ),
+              // ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ElevatedButton(
+                  style: buttonPrimary,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SPCWalletScreen(context),
+                      ),
+                    ).then((_) {
+                      setState(() {
+                        wallet = Session.loggedInUser.wallet ?? 0;
+                      });
+                    });
+                  },
+                  child: Text('SPS Wallet'),
                 ),
               ),
               Padding(
