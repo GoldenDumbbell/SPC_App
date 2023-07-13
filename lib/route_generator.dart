@@ -1,6 +1,7 @@
 import 'package:webspc/resource/Home/BookingScreen.dart';
 import 'package:webspc/resource/Home/View_hisbooking.dart';
 import 'package:webspc/resource/Profile/family_screen.dart';
+import 'package:webspc/resource/Profile/family_share_car.dart';
 import 'package:webspc/resource/Profile/view_history.dart';
 import 'package:webspc/resource/Login&Register/login_page.dart';
 import 'package:webspc/resource/Home/Parking_spot.dart';
@@ -36,6 +37,9 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return MaterialPageRoute(builder: (context) => ViewUserHistoryPage());
     case ResetPasswordScreen.routeName:
       return MaterialPageRoute(builder: (context) => ResetPasswordScreen());
+    case ShareCarFamilyScreen.routerName:
+      return MaterialPageRoute(
+          builder: (context) => ShareCarFamilyScreen(context));
     case FamilyScreen.routerName:
       return MaterialPageRoute(builder: (context) => FamilyScreen(context));
     // case ForgotPasswordScreen.routeName:

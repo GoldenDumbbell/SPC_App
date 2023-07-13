@@ -1,48 +1,32 @@
-import 'dart:async';
-import 'dart:convert';
-
 import 'package:webspc/Api_service/familyshare_service.dart';
-import 'package:webspc/DTO/spot.dart';
-import 'package:http/http.dart';
+
 import 'package:intl/intl.dart';
 import 'package:barcode_widget/barcode_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:webspc/Api_service/car_service.dart';
-import 'package:webspc/Api_service/user_infor_service.dart';
 import 'package:webspc/DTO/Qr.dart';
-import 'package:webspc/DTO/spot.dart';
-import 'package:webspc/resource/Home/Parking_spot.dart';
-import 'package:webspc/navigationbar.dart';
-import 'package:webspc/resource/Home/BookingScreen.dart';
-import 'package:webspc/resource/Home/View_hisbooking.dart';
-import 'package:webspc/resource/Home/use_car_in_family.dart';
-import 'package:webspc/styles/button.dart';
+import 'package:webspc/resource/Home/home_page.dart';
 import '../../Api_service/car_detail_service.dart';
-import '../../Api_service/spot_service.dart';
 import '../../DTO/cars.dart';
 import '../../DTO/familycar.dart';
 import '../../DTO/section.dart';
 import 'dart:math';
 
-import 'map_screen.dart';
-
-class HomeScreen extends StatefulWidget {
+class Usecarinshare extends StatefulWidget {
   static const routeName = '/homeScreen';
-  const HomeScreen({super.key});
+  const Usecarinshare({super.key});
 
   @override
-  State<HomeScreen> createState() => HomePageState();
+  State<Usecarinshare> createState() => UsecarinshareState();
 }
 
-class HomePageState extends State<HomeScreen> {
+class UsecarinshareState extends State<Usecarinshare> {
   String? Codesecurity;
   String? code = '';
   int selectedIndex = 0;
   int selectedCatIndex = 0;
   List<Car> listCar = [];
   Car? carDetail;
-  Car? dropdownValue;
   Car? dropdownValuecarfam;
   String? Carplate;
   BuildContext? dialogContext;
@@ -53,7 +37,10 @@ class HomePageState extends State<HomeScreen> {
   @override
   void initState() {
     getListCar();
+    // getCarUserInfor();
     super.initState();
+    // getlistsharecar();
+    getListfamCar();
   }
 
   String formatCurrency(double n) {
@@ -73,21 +60,21 @@ class HomePageState extends State<HomeScreen> {
         }));
   }
 
-  // void getListfamCar() {
-  //   familyShareservice.getListfamilyCar().then((response) => setState(() {
-  //         listfamcar1 = response;
-  //         if (listfamcar1.isNotEmpty) {
-  //           for (int i = 0; i < listfamcar1.length; i++) {
-  //             if (Session.loggedInUser.familyId == listfamcar1[i].familyID) {
-  //               CarDetailService.getListCarbyID(listfamcar1[i].CarID!)
-  //                   .then((value) => setState(() {
-  //                         listCarinfam += value;
-  //                       }));
-  //             }
-  //           }
-  //         }
-  //       }));
-  // }
+  void getListfamCar() {
+    familyShareservice.getListfamilyCar().then((response) => setState(() {
+          listfamcar1 = response;
+          if (listfamcar1.isNotEmpty) {
+            for (int i = 0; i < listfamcar1.length; i++) {
+              if (Session.loggedInUser.familyId == listfamcar1[i].familyID) {
+                CarDetailService.getListCarbyID(listfamcar1[i].CarID!)
+                    .then((value) => setState(() {
+                          listCarinfam += value;
+                        }));
+              }
+            }
+          }
+        }));
+  }
 
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
@@ -136,24 +123,12 @@ class HomePageState extends State<HomeScreen> {
                   SizedBox(
                     width: 5,
                   ),
-                  Text('Hello, ${Session.loggedInUser.fullname ?? ""}',
+                  Text(
+                      'Hello, resident in family ${Session.loggedInUser.familyId ?? ""}',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontSize: 20)),
-                  // SizedBox(
-                  //   width: 110,
-                  // ),
-                  // GestureDetector(
-                  //     onTap: () {
-                  //       Navigator.pushNamed(
-                  //           context, ViewHistoryPage.routerName);
-                  //     },
-                  //     child: Icon(
-                  //       Icons.book_online_sharp,
-                  //       size: 40,
-                  //       color: Color.fromARGB(255, 165, 110, 7),
-                  //     )),
                 ],
               ),
             ),
@@ -185,7 +160,7 @@ class HomePageState extends State<HomeScreen> {
                                 underline: Container(),
                                 borderRadius: BorderRadius.circular(30),
                                 hint: const Text(
-                                  'Today, What car you use?',
+                                  'Car share in your family',
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -195,11 +170,11 @@ class HomePageState extends State<HomeScreen> {
                                 // iconSize: 45,
                                 onChanged: (Car? newvalue) {
                                   setState(() {
-                                    dropdownValue = newvalue!;
+                                    dropdownValuecarfam = newvalue!;
                                   });
                                 },
-                                value: dropdownValue,
-                                items: listCar
+                                value: dropdownValuecarfam,
+                                items: listCarinfam
                                     .map<DropdownMenuItem<Car>>((Car value) {
                                   return DropdownMenuItem<Car>(
                                       value: value,
@@ -233,145 +208,17 @@ class HomePageState extends State<HomeScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                  height: 200,
-                  width: 420,
-                  decoration: BoxDecoration(
-                      color: Colors.black,
-                      border: Border.all(
-                          width: 2.0, color: Color.fromARGB(100, 161, 125, 17)),
-                      borderRadius: BorderRadius.circular(10)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        'Balance',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        '${formatCurrency(Session.loggedInUser.wallet!)} VND',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  )),
-            ),
-            // Padding(
-            //   padding: const EdgeInsets.all(10.0),
-            //   child: ElevatedButton(
-            //     style: buttonPrimary,
-            //     onPressed: () {
-            //       Navigator.pushNamed(context, Booking1Screen.routerName);
-            //     },
-            //     child: Text(
-            //       'Booking',
-            //       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-            //     ),
-            //   ),
-            // ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton.icon(
-                style: buttonPrimary,
-                onPressed: () {
-                  Session.loggedInUser.familyId == null
-                      ? _showMyDialog(context, "Error",
-                          "Sorry for the inconvenience, you must join a family group to use this funtion")
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Usecarinshare()));
-                },
-                icon: Icon(
-                  Icons.directions_car_outlined,
-                  size: 50,
-                ),
-                label: Text(
-                  'GENERATE QR BY CAR IN FAMILY',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton.icon(
-                style: buttonPrimary,
-                onPressed: () async {
-                  SpotDetailService.getAllListSpot().then((response) {
-                    CarDetailService.getListCar().then((listCar) {
-                      Spot? boughtSpot = null;
-                      // Find which spot has carId in listCar
-                      for (var spot in response) {
-                        for (var car in listCar) {
-                          if (spot.carId == car.carId) {
-                            boughtSpot = spot;
-                          }
-                        }
-                      }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MapScreen(
-                            listSpot: response,
-                            boughtSpot: boughtSpot,
-                          ),
-                        ),
-                      );
-                    });
-                  });
-                  // Navigator.pushNamed(context, viewSpotPage.routerName);
-                },
-                icon: Icon(
-                  Icons.directions_car_outlined,
-                  size: 50,
-                ),
-                label: Text(
-                  'CHECK SPOT',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton.icon(
-                style: buttonPrimary,
-                onPressed: () {},
-                icon: Icon(
-                  Icons.directions_car_outlined,
-                  size: 50,
-                ),
-                label: Text(
-                  'CHECK YOUR CAR',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
           ],
         ),
       ),
       floatingActionButton: Container(
         decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-          BoxShadow(color: Colors.white, spreadRadius: 7, blurRadius: 1)
+          // BoxShadow(color: Colors.white, spreadRadius: 7, blurRadius: 1)
         ]),
-        child: FloatingActionButton(
+        child: FloatingActionButton.extended(
           onPressed: () {
             setState(() {
-              code = dropdownValue?.carPlate;
+              code = dropdownValuecarfam?.carPlate;
               var rng = Random();
               for (var i = 100000; i < 1000000; i++) {
                 Codesecurity = rng.nextInt(1000000).toString();
@@ -383,13 +230,13 @@ class HomePageState extends State<HomeScreen> {
                   DateFormat('yyyy-MM-dd – kk:mm').format(now);
 
               Map<String, dynamic> toJson() => {
-                    "carID": dropdownValue?.carPlate,
+                    "carID": dropdownValuecarfam?.carPlate,
                     "time": currentTime,
                     "securityCode": Codesecurity,
                     "fullname": Session.loggedInUser.fullname,
                   };
             });
-            if (dropdownValue?.carPlate == null) {
+            if (dropdownValuecarfam?.carPlate == null) {
               showDialog(
                   context: context,
                   builder: (context) => Form(
@@ -413,8 +260,8 @@ class HomePageState extends State<HomeScreen> {
                           ),
                         ),
                       )));
-            } else if (dropdownValue?.verifyState1 == null ||
-                dropdownValue?.verifyState1 == false) {
+            } else if (dropdownValuecarfam?.verifyState1 == null ||
+                dropdownValuecarfam?.verifyState1 == false) {
               showDialog(
                   context: context,
                   builder: (context) => Form(
@@ -440,18 +287,18 @@ class HomePageState extends State<HomeScreen> {
                       )));
             } else {
               Car car = Car(
-                  carId: dropdownValue!.carId,
-                  carName: dropdownValue!.carName,
-                  carPlate: dropdownValue!.carPlate,
-                  carColor: dropdownValue!.carColor,
-                  carPaperFront: dropdownValue!.carPaperFront,
-                  carPaperBack: dropdownValue!.carPaperBack,
-                  verifyState1: dropdownValue!.verifyState1,
-                  verifyState2: dropdownValue!.verifyState2,
+                  carId: dropdownValuecarfam!.carId,
+                  carName: dropdownValuecarfam!.carName,
+                  carPlate: dropdownValuecarfam!.carPlate,
+                  carColor: dropdownValuecarfam!.carColor,
+                  carPaperFront: dropdownValuecarfam!.carPaperFront,
+                  carPaperBack: dropdownValuecarfam!.carPaperBack,
+                  verifyState1: dropdownValuecarfam!.verifyState1,
+                  verifyState2: dropdownValuecarfam!.verifyState2,
                   securityCode: Codesecurity,
-                  historyID: dropdownValue!.historyID,
-                  userId: dropdownValue!.userId);
-              CarService.updateCar(car, dropdownValue!.carId!);
+                  historyID: dropdownValuecarfam!.historyID,
+                  userId: dropdownValuecarfam!.userId);
+              CarService.updateCar(car, dropdownValuecarfam!.carId!);
               // .then((value) => Timer(const Duration(seconds: 120), () {
               //           // Navigator.pushAndRemoveUntil(
               //           //   context,
@@ -533,7 +380,8 @@ class HomePageState extends State<HomeScreen> {
                                         ),
 
                                         data: QrToJson(Qrcode(
-                                            carplate: dropdownValue?.carPlate,
+                                            carplate:
+                                                dropdownValuecarfam?.carPlate,
                                             datetime: currentTime,
                                             securityCode: Codesecurity,
                                             username:
@@ -561,7 +409,7 @@ class HomePageState extends State<HomeScreen> {
                                       SizedBox(
                                         width: 10,
                                       ),
-                                      Text('${dropdownValue?.carPlate}',
+                                      Text('${dropdownValuecarfam?.carPlate}',
                                           style: const TextStyle(
                                               decoration: TextDecoration.none,
                                               color: Colors.black,
@@ -615,12 +463,11 @@ class HomePageState extends State<HomeScreen> {
                                         style: TextStyle(fontSize: 15),
                                       ),
                                       onPressed: () {
-                                        Navigator.pushAndRemoveUntil(
+                                        Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   HomeScreen()),
-                                          (route) => false,
                                         );
                                       },
                                     )),
@@ -630,30 +477,24 @@ class HomePageState extends State<HomeScreen> {
             }
             ;
           },
-          child: const Icon(
+          label: Text(
+            "GENERATE QR",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          icon: Icon(
             Icons.qr_code,
           ),
+          // child: const Icon(
+          //   Icons.qr_code,
+          // ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: buildBottomNavigationBar(selectedCatIndex, context),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
+}
 
-  Future _showMyDialog(
-      BuildContext context, String title, String description) async {
-    return showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: Text(title),
-        content: Text(description),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () => Navigator.pop(context, 'OK'),
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
+class carID {
+  String? carid;
+  carID({required this.carid});
 }

@@ -34,3 +34,12 @@ final ButtonStyle buttonDelete = ElevatedButton.styleFrom(
         borderRadius: BorderRadius.all(
       Radius.circular(50),
     )));
+
+final ButtonStyle sharecarbutton = ElevatedButton.styleFrom(
+    minimumSize: Size(350, 64),
+    primary: Colors.white,
+    elevation: 0,
+    shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+      Radius.circular(10),
+    )));

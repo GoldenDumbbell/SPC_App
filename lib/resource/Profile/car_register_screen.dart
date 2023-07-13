@@ -418,6 +418,12 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                 _showMyDialog(context, "Error",
                                     "please fill all requirment when you want to create new car");
                                 _btnRegisterCar.reset();
+                              } else if (!RegExp(
+                                      r'^[0-9]{2}[A-Z]{1}-[0-9]{4,5}$')
+                                  .hasMatch(plateController.text)) {
+                                _showMyDialog(context, "Error",
+                                    "Please input carplate base on template \n\n                        51K-12345");
+                                _btnRegisterCar.reset();
                               } else {
                                 Car newCar = Car(
                                     carId: null,
@@ -429,7 +435,7 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                     verifyState1: null,
                                     verifyState2: null,
                                     securityCode: "",
-                                    familyId: Session.loggedInUser.familyId);
+                                    userId: Session.loggedInUser.userId);
                                 CarService.registerCar(newCar).then((value) {
                                   carIdController.clear();
                                   nameController.clear();

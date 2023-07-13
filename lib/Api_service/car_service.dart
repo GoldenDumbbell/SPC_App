@@ -47,7 +47,7 @@ class CarService {
         "verifyState1": car.verifyState1,
         "verifyState2": car.verifyState2,
         "securityCode": car.securityCode,
-        "familyId": car.familyId,
+        "userId": car.userId,
         "family": null,
         "tbHistories": []
       }),
@@ -65,7 +65,7 @@ class CarService {
       "verifyState1": car.verifyState1,
       "verifyState2": car.verifyState2,
       "securityCode": car.securityCode,
-      "familyId": car.familyId,
+      "userId": car.userId,
       "historyId": car.historyID,
     });
     return put(

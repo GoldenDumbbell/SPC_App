@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:webspc/resource/Profile/car_detail_screen.dart';
 import 'package:webspc/resource/Profile/car_register_screen.dart';
 import 'package:webspc/resource/Profile/family_screen.dart';
+import 'package:webspc/resource/Profile/family_share_car.dart';
 import 'package:webspc/resource/Profile/spc_wallet_page.dart';
 import 'package:webspc/resource/Profile/topup_page.dart';
 import 'package:webspc/resource/Profile/userinfor_page.dart';
@@ -192,6 +193,17 @@ class AccountPageState extends State<AccountPage> {
                     Navigator.pushNamed(context, FamilyScreen.routerName);
                   },
                   child: Text('Family'),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: ElevatedButton(
+                  style: buttonPrimary,
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, ShareCarFamilyScreen.routerName);
+                  },
+                  child: Text('Share Car with Family'),
                 ),
               ),
               Padding(

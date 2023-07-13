@@ -512,7 +512,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                                 verifyState1: null,
                                 verifyState2: null,
                                 securityCode: "",
-                                familyId: Session.loggedInUser.familyId);
+                                userId: Session.loggedInUser.userId);
 
                             CarService.updateCar(car, carDetail!.carId!)
                                 .then((value) => getListCar());
@@ -529,7 +529,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                                 verifyState1: null,
                                 verifyState2: null,
                                 securityCode: "",
-                                familyId: Session.loggedInUser.familyId);
+                                userId: Session.loggedInUser.userId);
 
                             CarService.updateCar(car, carDetail!.carId!)
                                 .then((value) => getListCar());
@@ -545,7 +545,7 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                                 verifyState1: null,
                                 verifyState2: null,
                                 securityCode: "",
-                                familyId: Session.loggedInUser.familyId);
+                                userId: Session.loggedInUser.userId);
 
                             CarService.updateCar(car, carDetail!.carId!)
                                 .then((value) => getListCar());

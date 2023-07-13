@@ -14,7 +14,7 @@ class Car {
   bool? verifyState1;
   bool? verifyState2;
   String? securityCode;
-  String? familyId;
+  String? userId;
   String? historyID;
 
   Car(
@@ -27,7 +27,7 @@ class Car {
       this.verifyState1,
       this.verifyState2,
       this.securityCode,
-      this.familyId,
+      this.userId,
       this.historyID});
 
   factory Car.fromJson(Map<String, dynamic> json) => Car(
@@ -40,7 +40,7 @@ class Car {
       verifyState1: json["verifyState1"],
       verifyState2: json["verifyState2"],
       securityCode: json["securityCode"],
-      familyId: json["familyId"],
+      userId: json["userId"],
       historyID: json["historyID"]);
 
   Map<String, dynamic> toJson() => {
@@ -53,7 +53,7 @@ class Car {
         "verifyState1": verifyState1,
         "verifyState2": verifyState2,
         "securityCode": securityCode,
-        "familyId": familyId,
+        "userId": userId,
         "family": null,
         "tbHistories": [],
       };

@@ -193,7 +193,7 @@ class RegisterPageState extends State<RegisterScreen> {
   }
 
   _onRegisterPress() async {
-    // Validate all fields, check null or empty and check password and confirm password
+    
     if (email == null ||
         fullName == null ||
         password == null ||
@@ -211,6 +211,20 @@ class RegisterPageState extends State<RegisterScreen> {
         confirmPassword!.isEmpty ||
         phoneNumber!.isEmpty) {
       _showMyDialog(context, "Error", "Please fill all fields");
+      _btnRegister.error();
+      Timer(const Duration(seconds: 2), () {
+        _btnRegister.reset();
+      });
+      return;
+    } else if (password!.length < 8) {
+      _showMyDialog(context, "Error", "Password must be at least 8 characters");
+      _btnRegister.error();
+      Timer(const Duration(seconds: 2), () {
+        _btnRegister.reset();
+      });
+      return;
+    } else if (phoneNumber!.length < 10) {
+      _showMyDialog(context, "Error", "Phone number must be 10 characters");
       _btnRegister.error();
       Timer(const Duration(seconds: 2), () {
         _btnRegister.reset();

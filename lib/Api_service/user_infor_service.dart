@@ -109,7 +109,7 @@ class CarInforofUserService {
             verifyState2: data[i]['verifyState2'],
             securityCode: data[i]['securityCode'],
             historyID: data[i]['historyId'],
-            familyId: data[i]['familyId'],
+            userId: data[i]['familyId'],
           );
         }
       }
