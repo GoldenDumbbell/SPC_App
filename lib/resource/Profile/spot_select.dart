@@ -58,6 +58,14 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
     super.initState();
   }
 
+  Widget handleBuildSpot(Spot spot) {
+    if (spot.owned!) {
+      return buildUnavailableSpot(spot);
+    } else {
+      return buildAvailableSpot(spot);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -93,23 +101,17 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              listSpot[3].available == true
-                                  ? buildAvailableSpot(listSpot[3].spotId)
-                                  : buildUnavailableSpot(listSpot[3].spotId),
+                              handleBuildSpot(listSpot[3]),
                               SizedBox(
                                 height: 16,
                                 width: 20,
                               ),
-                              listSpot[5].available == true
-                                  ? buildAvailableSpot(listSpot[5].spotId)
-                                  : buildUnavailableSpot(listSpot[5].spotId),
+                              handleBuildSpot(listSpot[5]),
                               SizedBox(
                                 height: 16,
                                 width: 20,
                               ),
-                              listSpot[9].available == true
-                                  ? buildAvailableSpot(listSpot[9].spotId)
-                                  : buildUnavailableSpot(listSpot[9].spotId),
+                              handleBuildSpot(listSpot[9]),
                             ],
                           ),
                         ),
@@ -124,15 +126,11 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              listSpot[2].available == true
-                                  ? buildAvailableSpot(listSpot[2].spotId)
-                                  : buildUnavailableSpot(listSpot[2].spotId),
+                              handleBuildSpot(listSpot[2]),
                               SizedBox(
                                 width: 90,
                               ),
-                              listSpot[8].available == true
-                                  ? buildAvailableSpot(listSpot[8].spotId)
-                                  : buildUnavailableSpot(listSpot[8].spotId),
+                              handleBuildSpot(listSpot[8]),
                             ],
                           ),
                         ),
@@ -143,9 +141,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              listSpot[1].available == true
-                                  ? buildAvailableSpot(listSpot[1].spotId)
-                                  : buildUnavailableSpot(listSpot[1].spotId),
+                              handleBuildSpot(listSpot[1]),
                               SizedBox(
                                 height: 16,
                                 width: 20,
@@ -178,9 +174,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                               SizedBox(
                                 width: 20,
                               ),
-                              listSpot[7].available == true
-                                  ? buildAvailableSpot(listSpot[7].spotId)
-                                  : buildUnavailableSpot(listSpot[7].spotId),
+                              handleBuildSpot(listSpot[7]),
                             ],
                           ),
                         ),
@@ -195,22 +189,16 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              listSpot[0].available == true
-                                  ? buildAvailableSpot(listSpot[0].spotId)
-                                  : buildUnavailableSpot(listSpot[0].spotId),
+                              handleBuildSpot(listSpot[0]),
                               SizedBox(
                                 height: 16,
                                 width: 20,
                               ),
-                              listSpot[4].available == true
-                                  ? buildAvailableSpot(listSpot[4].spotId)
-                                  : buildUnavailableSpot(listSpot[4].spotId),
+                              handleBuildSpot(listSpot[4]),
                               SizedBox(
                                 width: 20,
                               ),
-                              listSpot[6].available == true
-                                  ? buildAvailableSpot(listSpot[6].spotId)
-                                  : buildUnavailableSpot(listSpot[6].spotId),
+                              handleBuildSpot(listSpot[6]),
                             ],
                           ),
                         ),
@@ -275,12 +263,12 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
     );
   }
 
-  Container buildUnavailableSpot(String? spotId) {
+  Container buildUnavailableSpot(Spot? spot) {
     return Container(
       width: 50,
       height: 25,
       decoration: BoxDecoration(
-        color: spotId == widget.spotId ? Colors.green : Colors.red,
+        color: spot!.spotId == widget.spotId ? Colors.green : Colors.red,
         shape: BoxShape.rectangle,
       ),
       child: Align(
@@ -288,7 +276,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
         child: TextButton(
           onPressed: () {},
           child: Text(
-            spotId ?? "",
+            spot.spotId ?? "",
             textAlign: TextAlign.start,
             overflow: TextOverflow.clip,
             style: TextStyle(
@@ -303,7 +291,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
     );
   }
 
-  Container buildAvailableSpot(String? spotId) {
+  Container buildAvailableSpot(Spot? spot) {
     return Container(
       width: 50,
       height: 25,
@@ -316,7 +304,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
         child: TextButton(
           onPressed: () {},
           child: Text(
-            spotId ?? "",
+            spot!.spotId ?? "",
             textAlign: TextAlign.start,
             overflow: TextOverflow.clip,
             style: TextStyle(
@@ -378,7 +366,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                   Spot spot = listSpot
                       .firstWhere((element) => element.spotId == widget.spotId);
 
-                  spot.available = false;
+                  spot.owned = true;
                   if (widget.selectedCar != null) {
                     spot.carId = widget.selectedCar!.carId;
                   }

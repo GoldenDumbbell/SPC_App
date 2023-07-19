@@ -10,6 +10,7 @@ class Spot {
   String? location;
   String? blockId;
   String? carId;
+  bool? owned;
 
   Spot({
     required this.spotId,
@@ -17,6 +18,7 @@ class Spot {
     required this.location,
     required this.blockId,
     required this.carId,
+    required this.owned,
   });
 
   factory Spot.fromJson(Map<String, dynamic> json) => Spot(
@@ -25,6 +27,7 @@ class Spot {
         location: json["location"],
         blockId: json["AblockID"],
         carId: json["carId"],
+        owned: json["owned"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -35,5 +38,6 @@ class Spot {
         "ablock": null,
         "carId": carId,
         "tbBookings": [],
+        "owned": owned,
       };
 }

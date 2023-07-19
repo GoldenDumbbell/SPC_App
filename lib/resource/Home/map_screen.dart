@@ -51,22 +51,34 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  bool handleSpotStatus(Spot spot) {
+    if (spot.owned == null) {
+      return false;
+    } else {
+      if (spot.owned!) {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  }
+
   @override
   void initState() {
     start = MapObject(46, 0, 8, 4);
     end = MapObject(0, 0, 8, 6);
     spots = [
       // Row, col, width, height
-      MapObject(0, 0, 8, 6, "A04", widget.listSpot[3].available!),
-      MapObject(0, 20, 6, 8, "B02", widget.listSpot[5].available!),
-      MapObject(0, 42, 8, 6, "C04", widget.listSpot[9].available!),
-      MapObject(13, 0, 8, 6, "A03", widget.listSpot[2].available!),
-      MapObject(13, 42, 8, 6, "C03", widget.listSpot[8].available!),
-      MapObject(22, 0, 8, 6, "A02", widget.listSpot[1].available!),
-      MapObject(22, 42, 8, 6, "C02", widget.listSpot[7].available!),
-      MapObject(35, 0, 8, 6, "A01", widget.listSpot[0].available!),
-      MapObject(35, 20, 6, 8, "B01", widget.listSpot[4].available!),
-      MapObject(35, 42, 8, 6, "C01", widget.listSpot[6].available!),
+      MapObject(0, 0, 8, 6, "A04", handleSpotStatus(widget.listSpot[3])),
+      MapObject(0, 20, 6, 8, "B02", handleSpotStatus(widget.listSpot[5])),
+      MapObject(0, 42, 8, 6, "C04", handleSpotStatus(widget.listSpot[9])),
+      MapObject(13, 0, 8, 6, "A03", handleSpotStatus(widget.listSpot[2])),
+      MapObject(13, 42, 8, 6, "C03", handleSpotStatus(widget.listSpot[8])),
+      MapObject(22, 0, 8, 6, "A02", handleSpotStatus(widget.listSpot[1])),
+      MapObject(22, 42, 8, 6, "C02", handleSpotStatus(widget.listSpot[7])),
+      MapObject(35, 0, 8, 6, "A01", handleSpotStatus(widget.listSpot[0])),
+      MapObject(35, 20, 6, 8, "B01", handleSpotStatus(widget.listSpot[4])),
+      MapObject(35, 42, 8, 6, "C01", handleSpotStatus(widget.listSpot[6])),
     ];
 
     obstacles = [MapObject(12, 16, 20, 20, "Elevator")];

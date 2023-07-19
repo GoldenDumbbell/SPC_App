@@ -25,6 +25,7 @@ import '../../DTO/familycar.dart';
 import '../../DTO/section.dart';
 import 'dart:math';
 
+import 'car_info.dart';
 import 'map_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -312,27 +313,28 @@ class HomePageState extends State<HomeScreen> {
               child: ElevatedButton.icon(
                 style: buttonPrimary,
                 onPressed: () async {
+                  if (dropdownValue == null) {
+                    _showMyDialog(
+                        context, "Error", "Please select a car to check spot");
+                    return;
+                  }
                   SpotDetailService.getAllListSpot().then((response) {
-                    CarDetailService.getListCar().then((listCar) {
-                      Spot? boughtSpot = null;
-                      // Find which spot has carId in listCar
-                      for (var spot in response) {
-                        for (var car in listCar) {
-                          if (spot.carId == car.carId) {
-                            boughtSpot = spot;
-                          }
-                        }
+                    Spot? boughtSpot = null;
+                    // Find which spot has carId in listCar
+                    for (var spot in response) {
+                      if (spot.carId == dropdownValue!.carId) {
+                        boughtSpot = spot;
                       }
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MapScreen(
-                            listSpot: response,
-                            boughtSpot: boughtSpot,
-                          ),
+                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MapScreen(
+                          listSpot: response,
+                          boughtSpot: boughtSpot,
                         ),
-                      );
-                    });
+                      ),
+                    );
                   });
                   // Navigator.pushNamed(context, viewSpotPage.routerName);
                 },
@@ -350,7 +352,23 @@ class HomePageState extends State<HomeScreen> {
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton.icon(
                 style: buttonPrimary,
-                onPressed: () {},
+                onPressed: () {
+                  // Check if car is selected
+                  if (dropdownValue == null) {
+                    _showMyDialog(
+                        context, "Error", "Please select a car to check spot");
+                    return;
+                  }
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CarInfoScreen(
+                        context,
+                        car: dropdownValue!,
+                      ),
+                    ),
+                  );
+                },
                 icon: Icon(
                   Icons.directions_car_outlined,
                   size: 50,

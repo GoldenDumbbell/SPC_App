@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
+import 'package:supercharged/supercharged.dart';
 
 import 'package:webspc/Api_service/spot_service.dart';
 import 'package:webspc/DTO/section.dart';
@@ -62,7 +63,9 @@ class _SpotScreenState extends State<SpotScreen> {
   void getListSpot() {
     SpotDetailService.getListSpot().then((response) => setState(() {
           // isLoading = false;
-          listSpot = response;
+          // Only get spot with owned is false
+          listSpot =
+              response.where((element) => element.owned == false).toList();
           if (listSpot.isNotEmpty) {
             detailSpot = listSpot.first;
             // for (int i = 0; i < listSpot.length; i++) {}
@@ -509,13 +512,22 @@ class _SpotScreenState extends State<SpotScreen> {
                   child: Align(
                     alignment: Alignment.center,
                     child: ElevatedButton(
-                        style: buttonPrimary,
-                        child: Text(
-                          'View Selected Spot',
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
+                      style: buttonPrimary,
+                      child: Text(
+                        'View Selected Spot',
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () async {
+                        // Check if carId exist in listSpot
+                        SpotDetailService.getAllListSpot().then((spots) {
+                          for (var spot in spots) {
+                            if (spot.carId == dropdownValueCar?.carId) {
+                              _showMyDialog(context, "failed booking!",
+                                  "Your car is already have a spot");
+                              return;
+                            }
+                          }
                           if (dropdownValue?.spotId == null) {
                             _showMyDialog(context, "failed booking!",
                                 "Please choose spot");
@@ -538,7 +550,9 @@ class _SpotScreenState extends State<SpotScreen> {
                               ),
                             );
                           }
-                        }),
+                        });
+                      },
+                    ),
                   ),
                 ),
               ],

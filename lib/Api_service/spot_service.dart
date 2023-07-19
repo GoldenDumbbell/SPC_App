@@ -13,13 +13,14 @@ class SpotDetailService {
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       for (int i = 0; i < data.length; i++) {
-        if (data[i]["available"] == true) {
+        if (data[i]["available"] == false) {
           listSpot.add(Spot(
             spotId: data[i]["sensorId"],
             available: data[i]["available"],
             location: data[i]["location"],
             blockId: data[i]["ablockId"],
             carId: data[i]["carId"],
+            owned: data[i]["owned"],
           ));
         }
       }
@@ -41,6 +42,7 @@ class SpotDetailService {
           location: data[i]["location"],
           blockId: data[i]["ablockId"],
           carId: data[i]["carId"],
+          owned: data[i]["owned"],
         ));
       }
     }
