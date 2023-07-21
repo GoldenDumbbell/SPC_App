@@ -38,7 +38,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
   void getAllListSpot() {
     SpotDetailService.getAllListSpot().then((response) {
       for (var i = 0; i < response.length; i++) {
-        if (response[i].spotId == widget.spotId) {
+        if (response[i].location == widget.spotId) {
           response[i].available = false;
         }
       }
@@ -101,17 +101,17 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
+                              handleBuildSpot(listSpot[7]),
+                              SizedBox(
+                                height: 16,
+                                width: 20,
+                              ),
+                              handleBuildSpot(listSpot[2]),
+                              SizedBox(
+                                height: 16,
+                                width: 20,
+                              ),
                               handleBuildSpot(listSpot[3]),
-                              SizedBox(
-                                height: 16,
-                                width: 20,
-                              ),
-                              handleBuildSpot(listSpot[5]),
-                              SizedBox(
-                                height: 16,
-                                width: 20,
-                              ),
-                              handleBuildSpot(listSpot[9]),
                             ],
                           ),
                         ),
@@ -126,11 +126,11 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              handleBuildSpot(listSpot[2]),
+                              handleBuildSpot(listSpot[0]),
                               SizedBox(
                                 width: 90,
                               ),
-                              handleBuildSpot(listSpot[8]),
+                              handleBuildSpot(listSpot[1]),
                             ],
                           ),
                         ),
@@ -141,7 +141,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              handleBuildSpot(listSpot[1]),
+                              handleBuildSpot(listSpot[6]),
                               SizedBox(
                                 height: 16,
                                 width: 20,
@@ -174,7 +174,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                               SizedBox(
                                 width: 20,
                               ),
-                              handleBuildSpot(listSpot[7]),
+                              handleBuildSpot(listSpot[9]),
                             ],
                           ),
                         ),
@@ -189,16 +189,16 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              handleBuildSpot(listSpot[0]),
+                              handleBuildSpot(listSpot[5]),
                               SizedBox(
                                 height: 16,
                                 width: 20,
                               ),
-                              handleBuildSpot(listSpot[4]),
+                              handleBuildSpot(listSpot[8]),
                               SizedBox(
                                 width: 20,
                               ),
-                              handleBuildSpot(listSpot[6]),
+                              handleBuildSpot(listSpot[4]),
                             ],
                           ),
                         ),
@@ -276,7 +276,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
         child: TextButton(
           onPressed: () {},
           child: Text(
-            spot.spotId ?? "",
+            spot.location ?? "",
             textAlign: TextAlign.start,
             overflow: TextOverflow.clip,
             style: TextStyle(
@@ -304,7 +304,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
         child: TextButton(
           onPressed: () {},
           child: Text(
-            spot!.spotId ?? "",
+            spot!.location ?? "",
             textAlign: TextAlign.start,
             overflow: TextOverflow.clip,
             style: TextStyle(

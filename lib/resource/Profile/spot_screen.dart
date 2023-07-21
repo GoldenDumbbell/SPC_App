@@ -174,7 +174,7 @@ class _SpotScreenState extends State<SpotScreen> {
                                       (Spot value) {
                                     return DropdownMenuItem<Spot>(
                                       value: value,
-                                      child: Text('${value.spotId}'),
+                                      child: Text('${value.location}'),
                                     );
                                   }).toList(),
                                   style: TextStyle(

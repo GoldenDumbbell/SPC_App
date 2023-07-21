@@ -12,7 +12,6 @@ import 'package:webspc/Api_service/car_service.dart';
 import 'package:webspc/Api_service/user_infor_service.dart';
 import 'package:webspc/DTO/Qr.dart';
 import 'package:webspc/DTO/spot.dart';
-import 'package:webspc/resource/Home/Parking_spot.dart';
 import 'package:webspc/navigationbar.dart';
 import 'package:webspc/resource/Home/BookingScreen.dart';
 import 'package:webspc/resource/Home/View_hisbooking.dart';

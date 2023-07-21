@@ -69,16 +69,16 @@ class _MapScreenState extends State<MapScreen> {
     end = MapObject(0, 0, 8, 6);
     spots = [
       // Row, col, width, height
-      MapObject(0, 0, 8, 6, "A04", handleSpotStatus(widget.listSpot[3])),
-      MapObject(0, 20, 6, 8, "B02", handleSpotStatus(widget.listSpot[5])),
-      MapObject(0, 42, 8, 6, "C04", handleSpotStatus(widget.listSpot[9])),
-      MapObject(13, 0, 8, 6, "A03", handleSpotStatus(widget.listSpot[2])),
-      MapObject(13, 42, 8, 6, "C03", handleSpotStatus(widget.listSpot[8])),
-      MapObject(22, 0, 8, 6, "A02", handleSpotStatus(widget.listSpot[1])),
-      MapObject(22, 42, 8, 6, "C02", handleSpotStatus(widget.listSpot[7])),
-      MapObject(35, 0, 8, 6, "A01", handleSpotStatus(widget.listSpot[0])),
-      MapObject(35, 20, 6, 8, "B01", handleSpotStatus(widget.listSpot[4])),
-      MapObject(35, 42, 8, 6, "C01", handleSpotStatus(widget.listSpot[6])),
+      MapObject(0, 0, 8, 6, "A04", handleSpotStatus(widget.listSpot[7])),
+      MapObject(0, 20, 6, 8, "B02", handleSpotStatus(widget.listSpot[2])),
+      MapObject(0, 42, 8, 6, "C04", handleSpotStatus(widget.listSpot[3])),
+      MapObject(13, 0, 8, 6, "A03", handleSpotStatus(widget.listSpot[0])),
+      MapObject(13, 42, 8, 6, "C03", handleSpotStatus(widget.listSpot[1])),
+      MapObject(22, 0, 8, 6, "A02", handleSpotStatus(widget.listSpot[6])),
+      MapObject(22, 42, 8, 6, "C02", handleSpotStatus(widget.listSpot[9])),
+      MapObject(35, 0, 8, 6, "A01", handleSpotStatus(widget.listSpot[5])),
+      MapObject(35, 20, 6, 8, "B01", handleSpotStatus(widget.listSpot[8])),
+      MapObject(35, 42, 8, 6, "C01", handleSpotStatus(widget.listSpot[4])),
     ];
 
     obstacles = [MapObject(12, 16, 20, 20, "Elevator")];
@@ -88,7 +88,7 @@ class _MapScreenState extends State<MapScreen> {
       // Find spot in spots list has the same spotId with boughtSpot
 
       for (int i = 0; i < spots.length; i++) {
-        if (spots[i].title == widget.boughtSpot!.spotId) {
+        if (spots[i].title == widget.boughtSpot!.location) {
           // Set start to the spot
           List<List<int>> newMap = mapPreHandle.findPossibleRoad();
           Grid grid = Grid(navigatedMap);

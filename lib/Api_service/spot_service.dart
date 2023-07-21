@@ -13,7 +13,7 @@ class SpotDetailService {
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
       for (int i = 0; i < data.length; i++) {
-        if (data[i]["available"] == false) {
+        if (data[i]["owned"] == false) {
           listSpot.add(Spot(
             spotId: data[i]["sensorId"],
             available: data[i]["available"],
