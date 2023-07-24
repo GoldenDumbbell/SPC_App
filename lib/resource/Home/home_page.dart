@@ -319,21 +319,31 @@ class HomePageState extends State<HomeScreen> {
                   }
                   SpotDetailService.getAllListSpot().then((response) {
                     Spot? boughtSpot = null;
+                    Car? ca = null;
                     // Find which spot has carId in listCar
                     for (var spot in response) {
                       if (spot.carId == dropdownValue!.carId) {
                         boughtSpot = spot;
                       }
                     }
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => MapScreen(
-                          listSpot: response,
-                          boughtSpot: boughtSpot,
+                    CarDetailService.getListCar().then((value) {
+                      for (var c in value) {
+                        if (c.carId == dropdownValue!.carId) {
+                          ca = c;
+                        }
+                      }
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MapScreen(
+                            listSpot: response,
+                            boughtSpot: boughtSpot,
+                            car: ca,
+                          ),
                         ),
-                      ),
-                    );
+                      );
+                    });
                   });
                   // Navigator.pushNamed(context, viewSpotPage.routerName);
                 },

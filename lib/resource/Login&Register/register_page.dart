@@ -193,7 +193,6 @@ class RegisterPageState extends State<RegisterScreen> {
   }
 
   _onRegisterPress() async {
-    
     if (email == null ||
         fullName == null ||
         password == null ||
@@ -312,6 +311,7 @@ class RegisterPageState extends State<RegisterScreen> {
           "fullname": fullName,
           "pass": pass,
           "phoneNumber": phoneNumber,
+          "wallet": "0",
         }),
       ).then((response) {
         debugPrint(response.statusCode.toString());

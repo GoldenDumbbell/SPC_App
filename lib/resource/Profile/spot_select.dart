@@ -62,7 +62,11 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
     if (spot.owned!) {
       return buildUnavailableSpot(spot);
     } else {
-      return buildAvailableSpot(spot);
+      if (spot.available!) {
+        return buildUnavailableSpot(spot);
+      } else {
+        return buildAvailableSpot(spot);
+      }
     }
   }
 
@@ -296,7 +300,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
       width: 50,
       height: 25,
       decoration: BoxDecoration(
-        color: Color(0x1f000000),
+        color: spot!.spotId == widget.spotId ? Colors.green : Color(0x1f000000),
         shape: BoxShape.rectangle,
       ),
       child: Align(
@@ -304,7 +308,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
         child: TextButton(
           onPressed: () {},
           child: Text(
-            spot!.location ?? "",
+            spot.location ?? "",
             textAlign: TextAlign.start,
             overflow: TextOverflow.clip,
             style: TextStyle(
@@ -342,9 +346,14 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                 // Navigator.of(context).pop();
                 // Check if account has enough money
                 if (widget.plan!.price > Session.loggedInUser.wallet!) {
+                  // Calculate top up amount
+                  String topUpAmount =
+                      (widget.plan!.price - Session.loggedInUser.wallet!)
+                          .ceil()
+                          .toString();
                   showDialog(
                       context: context,
-                      builder: (context) => _dialogTopUp(context));
+                      builder: (context) => _dialogTopUp(context, topUpAmount));
                 } else {
                   // Show loading
                   showDialog(
@@ -376,6 +385,10 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SpotScreen(context)));
                   _showMyDialog(
                     context,
                     "Success",
@@ -391,7 +404,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
         ]);
   }
 
-  AlertDialog _dialogTopUp(BuildContext context) {
+  AlertDialog _dialogTopUp(BuildContext context, String? topUpAmount) {
     return AlertDialog(
       title: Text("Not enough money"),
       content: Text("Do you want to top up your account?"),
@@ -409,7 +422,8 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SPCWalletScreen(context)));
+                    builder: (context) =>
+                        SPCWalletScreen(context, topUpAmount)));
           },
           child: Text("Yes"),
         ),

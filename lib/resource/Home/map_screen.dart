@@ -5,10 +5,14 @@ import 'package:webspc/path_finding/map_pre_handle.dart';
 import 'package:webspc/path_finding/path_finding_algorithm.dart';
 import 'package:webspc/resource/Home/home_page.dart';
 
+import '../../DTO/cars.dart';
+
 class MapScreen extends StatefulWidget {
-  const MapScreen({super.key, required this.listSpot, this.boughtSpot});
+  const MapScreen(
+      {super.key, required this.listSpot, this.boughtSpot, this.car});
   final List<Spot> listSpot;
   final Spot? boughtSpot;
+  final Car? car;
   @override
   State<MapScreen> createState() => _MapScreenState();
 }
@@ -58,7 +62,11 @@ class _MapScreenState extends State<MapScreen> {
       if (spot.owned!) {
         return false;
       } else {
-        return true;
+        if (spot.available!) {
+          return false;
+        } else {
+          return true;
+        }
       }
     }
   }
@@ -66,7 +74,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     start = MapObject(46, 0, 8, 4);
-    end = MapObject(0, 0, 8, 6);
+    end = MapObject(46, 42, 8, 6);
     spots = [
       // Row, col, width, height
       MapObject(0, 0, 8, 6, "A04", handleSpotStatus(widget.listSpot[7])),
@@ -119,7 +127,7 @@ class _MapScreenState extends State<MapScreen> {
         elevation: 4,
         // centerTitle: false,
         // automaticallyImplyLeading: false,
-        backgroundColor: Color(0xff3a57e8),
+        backgroundColor: Color.fromARGB(255, 178, 179, 187),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.zero,
         ),
@@ -171,6 +179,30 @@ class _MapScreenState extends State<MapScreen> {
                             child: const Center(
                               child: Text(
                                 'You',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          left: end.col * mapWidthOnScreen,
+                          top: end.row * mapHeightOnScreen,
+                          child: Container(
+                            width: 66,
+                            height: 30,
+                            decoration: BoxDecoration(
+                              color: Colors.green,
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(10.0),
+                              border: Border.all(
+                                  color: Color(0x4d9e9e9e), width: 1),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Exit',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 20,
@@ -273,6 +305,54 @@ class _MapScreenState extends State<MapScreen> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 4.4),
+                  Container(
+                      // margin: EdgeInsets.only(top: 10, left: 20),
+                      width: MediaQuery.of(context).size.width,
+                      height: 320,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('images/bga1png.png'),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40),
+                            topRight: Radius.circular(40)),
+                      ),
+                      child: Container(
+                        margin: EdgeInsets.only(
+                            top: 50, left: 20, bottom: 50, right: 20),
+                        decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 142, 137, 137)
+                                .withOpacity(0.8),
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(30),
+                            )),
+                        child: Column(children: [
+                          Align(
+                            // alignment: Alignment.topCenter,
+                            child: Text(
+                              'Your spot you was bought: ${widget.boughtSpot?.location ?? 'none'}',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Text(
+                              "${widget.car!.carName}   ${widget.car!.carPlate}",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            child: Stack(children: [
+                              Container(
+                                alignment: Alignment.center,
+                                child: Image.asset("images/ca.png"),
+                              )
+                            ]),
+                          )
+                        ]),
+                      ))
                   // Button to generate a random map
                 ],
               ),

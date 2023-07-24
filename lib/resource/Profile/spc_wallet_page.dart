@@ -7,9 +7,9 @@ import 'package:rounded_loading_button/rounded_loading_button.dart';
 
 class SPCWalletScreen extends StatefulWidget {
   final BuildContext context;
-
+  final String? topUpAmount;
   // ignore: use_key_in_widget_constructors
-  const SPCWalletScreen(this.context);
+  const SPCWalletScreen(this.context, [this.topUpAmount]);
 
   @override
   SPCWalletScreenState createState() => SPCWalletScreenState();
@@ -32,6 +32,9 @@ class SPCWalletScreenState extends State<SPCWalletScreen> {
 
   @override
   void initState() {
+    if (widget.topUpAmount != null) {
+      controller.text = widget.topUpAmount!;
+    }
     super.initState();
     setState(() {
       wallet = Session.loggedInUser.wallet ?? 0;
@@ -121,12 +124,26 @@ class SPCWalletScreenState extends State<SPCWalletScreen> {
                       width: 340,
                       child: TextField(
                         controller: controller,
+
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           labelText: 'Deposit amount (VNĐ)',
                           // suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
                         ),
                         // onChanged: (value) => controller.text = value,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 25,
+                        right: 10,
+                        top: 10,
+                      ),
+                      child: Text(
+                        widget.topUpAmount == null
+                            ? ''
+                            : '* ${widget.topUpAmount} s the amount you need to top up if you want to buy this package',
+                        style: TextStyle(color: Colors.red, fontSize: 20),
                       ),
                     ),
                     SizedBox(
