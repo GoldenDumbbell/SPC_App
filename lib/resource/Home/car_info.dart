@@ -1,17 +1,15 @@
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:webspc/Api_service/booking_services.dart';
+import 'package:webspc/Api_service/car_detail_service.dart';
 import 'package:webspc/Api_service/spot_service.dart';
-import 'package:webspc/DTO/booking.dart';
 import 'package:webspc/DTO/cars.dart';
 import 'package:webspc/DTO/section.dart';
 import 'package:webspc/DTO/spot.dart';
-import 'package:webspc/styles/button.dart';
 
 class CarInfoScreen extends StatefulWidget {
   final BuildContext? context;
-  final Car car;
-  const CarInfoScreen(this.context, {Key? key, required this.car})
-      : super(key: key);
+  //final Car car;
+  const CarInfoScreen(this.context, {Key? key}) : super(key: key);
 
   @override
   _CarInfoScreenState createState() => _CarInfoScreenState();
@@ -21,25 +19,30 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
   BuildContext? dialogContext;
   bool isLoading = true;
   String spotId = "No spot";
+  List<Car> listCar = [];
   // Get list of spot
   List<Spot> listSpot = [];
   void getListSpot() async {
-    String tempSpotId = "No spot";
-    listSpot = await SpotDetailService.getAllListSpot();
-    for (var spot in listSpot) {
-      if (spot.carId == widget.car.carId) {
-        tempSpotId = spot.spotId!;
-      }
-    }
-    setState(() {
-      isLoading = false;
-      spotId = tempSpotId;
+    SpotDetailService.getAllListSpot().then((value) {
+      setState(() {
+        listSpot = value;
+        isLoading = false;
+      });
+    });
+  }
+
+  void getListCar() async {
+    await CarDetailService.getListCar().then((res) {
+      setState(() {
+        listCar = res;
+      });
     });
   }
 
   @override
   void initState() {
     getListSpot();
+    getListCar();
     super.initState();
   }
 
@@ -48,133 +51,208 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     } else {
-      return Container(
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-          image: AssetImage('images/bga1png.png'),
-          fit: BoxFit.cover,
-        )),
-        // padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 50,
-            ),
-            Text(
-              "Your Car",
-              style: TextStyle(
-                fontSize: 40,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                decoration: TextDecoration.none,
+      return Scaffold(
+        body: Container(
+          width: double.infinity, height: double.infinity,
+          decoration: const BoxDecoration(
+              image: DecorationImage(
+            image: AssetImage('images/bga1png.png'),
+            fit: BoxFit.cover,
+          )),
+          // padding: const EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 50,
               ),
-            ),
-            SizedBox(
-              height: 200,
-            ),
-            // Show car info include Spot, car name, car plate, car color
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: Column(
-                children: [
-                  // Car name
-                  Row(
-                    children: [
-                      Text(
-                        "Spot: ",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                      Text(
-                        spotId,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Car name: ",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                      Text(
-                        widget.car.carName!,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                    ],
-                  ),
-                  // Car plate
-                  Row(
-                    children: [
-                      Text(
-                        "Car plate: ",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                      Text(
-                        widget.car.carPlate!,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                    ],
-                  ),
-                  // Car color
-                  Row(
-                    children: [
-                      Text(
-                        "Car color: ",
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                      Text(
-                        widget.car.carColor!,
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          decoration: TextDecoration.none,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+              Text(
+                "Your Car",
+                style: TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  decoration: TextDecoration.none,
+                ),
               ),
-            )
-          ],
+              Expanded(
+                child: listCar.length == 0
+                    ? Text("No car")
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: listCar.length,
+                        itemBuilder: (context, index) {
+                          return buildCarButton(listCar[index]);
+                        },
+                      ),
+              ),
+            ],
+          ),
         ),
       );
     }
+  }
+
+  Widget buildCarButton(Car car) {
+    String spotName = "No spot";
+    for (var spot in listSpot) {
+      if (spot.carId == car.carId) {
+        spotName = spot.location!;
+      }
+    }
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+      child: DottedBorder(
+        dashPattern: [8, 4],
+        color: Colors.white,
+        borderType: BorderType.RRect,
+        radius: Radius.circular(12),
+        padding: EdgeInsets.all(6),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+          child: SizedBox(
+            height: 280,
+            child: InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                    backgroundColor: Colors.transparent,
+                    context: context,
+                    builder: (context) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        height: 200,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Car owner: ${Session.loggedInUser.fullname}",
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "Car color: ${car.carColor}",
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  car.carName!,
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  car.carPlate!,
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Authentication status: ',
+                                  style: TextStyle(
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                car.verifyState1 ?? false
+                                    ? Icon(
+                                        Icons.check_circle,
+                                        color: Colors.green,
+                                      )
+                                    : Icon(
+                                        Icons.cancel,
+                                        color: Colors.red,
+                                      ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    });
+              },
+              child: Stack(
+                children: [
+                  Center(
+                    child: Container(
+                      width: 400,
+                      child: Image(
+                        image: AssetImage('images/car.png'),
+                        fit: BoxFit.scaleDown,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: Column(
+                      children: [
+                        Text(
+                          car.carName!,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          car.carPlate!.substring(0, 3),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          car.carPlate!.substring(4),
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Text(
+                      spotName,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

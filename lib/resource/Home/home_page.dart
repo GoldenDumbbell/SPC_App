@@ -322,13 +322,13 @@ class HomePageState extends State<HomeScreen> {
                     Car? ca = null;
                     // Find which spot has carId in listCar
                     for (var spot in response) {
-                      if (spot.carId == dropdownValue!.carId) {
+                      if (spot.carId == dropdownValue!.carPlate) {
                         boughtSpot = spot;
                       }
                     }
                     CarDetailService.getListCar().then((value) {
                       for (var c in value) {
-                        if (c.carId == dropdownValue!.carId) {
+                        if (c.carPlate == dropdownValue!.carPlate) {
                           ca = c;
                         }
                       }
@@ -362,18 +362,11 @@ class HomePageState extends State<HomeScreen> {
               child: ElevatedButton.icon(
                 style: buttonPrimary,
                 onPressed: () {
-                  // Check if car is selected
-                  if (dropdownValue == null) {
-                    _showMyDialog(
-                        context, "Error", "Please select a car to check spot");
-                    return;
-                  }
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => CarInfoScreen(
                         context,
-                        car: dropdownValue!,
                       ),
                     ),
                   );

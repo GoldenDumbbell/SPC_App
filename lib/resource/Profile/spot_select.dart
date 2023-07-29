@@ -377,7 +377,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
 
                   spot.owned = true;
                   if (widget.selectedCar != null) {
-                    spot.carId = widget.selectedCar!.carId;
+                    spot.carId = widget.selectedCar!.carPlate;
                   }
                   await SpotDetailService.updateSpot(spot);
                   await PaymentService.addPayment(

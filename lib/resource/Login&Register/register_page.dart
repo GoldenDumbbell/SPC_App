@@ -24,6 +24,7 @@ class RegisterPageState extends State<RegisterScreen> {
   String? confirmPassword;
   String? fullName;
   String? phoneNumber;
+  String? identityCard;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +59,6 @@ class RegisterPageState extends State<RegisterScreen> {
                 height: 20,
               ),
               Container(
-                height: 560,
                 width: 325,
                 decoration: BoxDecoration(
                     color: Colors.white,
@@ -133,6 +133,21 @@ class RegisterPageState extends State<RegisterScreen> {
                       child: TextField(
                         onChanged: ((value) {
                           setState(() {
+                            identityCard = value;
+                          });
+                        }),
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Identity Card',
+                          // suffixIcon: Icon(FontAwesomeIcons.eyeSlash,size: 17,),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 250,
+                      child: TextField(
+                        onChanged: ((value) {
+                          setState(() {
                             password = value;
                           });
                         }),
@@ -161,10 +176,8 @@ class RegisterPageState extends State<RegisterScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
                     Container(
+                      padding: const EdgeInsets.symmetric(vertical: 30.0),
                       margin: EdgeInsets.only(
                           left: MediaQuery.of(context).size.width * 0.02,
                           right: MediaQuery.of(context).size.width * 0.02),
@@ -197,7 +210,8 @@ class RegisterPageState extends State<RegisterScreen> {
         fullName == null ||
         password == null ||
         confirmPassword == null ||
-        phoneNumber == null) {
+        phoneNumber == null ||
+        identityCard == null) {
       _showMyDialog(context, "Error", "Please fill all fields");
       _btnRegister.error();
       Timer(const Duration(seconds: 2), () {
@@ -237,10 +251,18 @@ class RegisterPageState extends State<RegisterScreen> {
         _btnRegister.reset();
       });
       return;
+    } else if (identityCard!.length != 12 || identityCard!.length != 9) {
+      _showMyDialog(
+          context, "Error", "Identity Card must be 9 or 12 characters");
+      _btnRegister.error();
+      Timer(const Duration(seconds: 2), () {
+        _btnRegister.reset();
+      });
+      return;
     } else {
       _btnRegister.start();
       // Call register function
-      register(email!, fullName!, password!, phoneNumber!);
+      register(email!, fullName!, password!, phoneNumber!, identityCard!);
     }
   }
 
@@ -262,8 +284,8 @@ class RegisterPageState extends State<RegisterScreen> {
     );
   }
 
-  Future<void> register(
-      String email, String fullName, String pass, String phoneNumber) async {
+  Future<void> register(String email, String fullName, String pass,
+      String phoneNumber, String identityCard) async {
     final response = await get(
       Uri.parse('https://primaryapinew.azurewebsites.net/api/TbUsers'),
     );
@@ -312,6 +334,7 @@ class RegisterPageState extends State<RegisterScreen> {
           "pass": pass,
           "phoneNumber": phoneNumber,
           "wallet": "0",
+          "identitiCard": identityCard,
         }),
       ).then((response) {
         debugPrint(response.statusCode.toString());

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:webspc/Api_service/spot_service.dart';
 import 'package:webspc/DTO/spot.dart';
 import 'package:webspc/path_finding/map_painter.dart';
 import 'package:webspc/path_finding/map_pre_handle.dart';
@@ -20,8 +21,11 @@ class MapScreen extends StatefulWidget {
 class _MapScreenState extends State<MapScreen> {
   late MapObject end;
   late MapObject start;
+  final MapObject exit = MapObject(46, 42, 8, 6);
   late List<MapObject> spots;
   late List<MapObject> obstacles;
+  Spot? boughtSpot;
+  MapObject? selectedSpot;
   MapPreHandle mapPreHandle = MapPreHandle(
     mapWidth: 50,
     mapHeight: 50,
@@ -73,8 +77,11 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
+    setState(() {
+      boughtSpot = widget.boughtSpot;
+    });
     start = MapObject(46, 0, 8, 4);
-    end = MapObject(46, 42, 8, 6);
+    end = MapObject(0, 0, 8, 6);
     spots = [
       // Row, col, width, height
       MapObject(0, 0, 8, 6, "A04", handleSpotStatus(widget.listSpot[7])),
@@ -92,11 +99,11 @@ class _MapScreenState extends State<MapScreen> {
     obstacles = [MapObject(12, 16, 20, 20, "Elevator")];
     initialMap();
     // Check if boughtSpot is not null
-    if (mounted && widget.boughtSpot != null) {
+    if (mounted && boughtSpot != null) {
       // Find spot in spots list has the same spotId with boughtSpot
 
       for (int i = 0; i < spots.length; i++) {
-        if (spots[i].title == widget.boughtSpot!.location) {
+        if (spots[i].title == boughtSpot!.location) {
           // Set start to the spot
           List<List<int>> newMap = mapPreHandle.findPossibleRoad();
           Grid grid = Grid(navigatedMap);
@@ -149,87 +156,38 @@ class _MapScreenState extends State<MapScreen> {
           },
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.only(top: 50),
-        child: widget.listSpot.isEmpty
-            ? CircularProgressIndicator()
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).size.width,
-                    width: MediaQuery.of(context).size.width,
-                    child: Stack(
-                      // Draw the map on top of the stack
-                      children: [
-                        // Draw start point
-                        Positioned(
-                          left: start.col * mapWidthOnScreen,
-                          top: start.row * mapHeightOnScreen,
-                          child: Container(
-                            width: 66,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(
-                                  color: Color(0x4d9e9e9e), width: 1),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'You',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: end.col * mapWidthOnScreen,
-                          top: end.row * mapHeightOnScreen,
-                          child: Container(
-                            width: 66,
-                            height: 30,
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(10.0),
-                              border: Border.all(
-                                  color: Color(0x4d9e9e9e), width: 1),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                'Exit',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        // Draw spot and obstacles
-                        for (MapObject obstacle in obstacles)
+      body: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(top: 50),
+          child: widget.listSpot.isEmpty
+              ? CircularProgressIndicator()
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.width,
+                      width: MediaQuery.of(context).size.width,
+                      child: Stack(
+                        // Draw the map on top of the stack
+                        children: [
+                          // Draw start point
                           Positioned(
-                            left: obstacle.col * mapWidthOnScreen,
-                            top: 120,
+                            left: start.col * mapWidthOnScreen,
+                            top: start.row * mapHeightOnScreen,
                             child: Container(
-                              width: 150,
-                              height: 100,
+                              width: 66,
+                              height: 30,
                               decoration: BoxDecoration(
-                                color: Color(0x1f000000),
+                                color: Colors.green,
                                 shape: BoxShape.rectangle,
                                 borderRadius: BorderRadius.circular(10.0),
                                 border: Border.all(
                                     color: Color(0x4d9e9e9e), width: 1),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Text(
-                                  obstacle.title ?? 'Obstacle',
-                                  style: const TextStyle(
+                                  'You',
+                                  style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
                                   ),
@@ -237,62 +195,48 @@ class _MapScreenState extends State<MapScreen> {
                               ),
                             ),
                           ),
-                        CustomPaint(
-                          painter: MapPainter(
-                              navigatedMap,
-                              [start.row, start.col],
-                              [end.row, end.col]), // Provide the map data
-                          size: Size(
-                            MediaQuery.of(context).size.width,
-                            MediaQuery.of(context).size.width,
-                          ),
-                        ),
-                        for (MapObject spot in spots)
                           Positioned(
-                            left: spot.col * mapWidthOnScreen,
-                            top: spot.row * mapHeightOnScreen,
-                            child: GestureDetector(
-                              onTap: () {
-                                if (spot.available ||
-                                    spot.title == widget.boughtSpot!.spotId) {
-                                  initialMap();
-                                  List<List<int>> newMap =
-                                      mapPreHandle.findPossibleRoad();
-                                  Grid grid = Grid(navigatedMap);
-                                  PathFindingAlgorithm pathFindingV2 =
-                                      PathFindingAlgorithm(grid: grid);
-                                  List<List<int>> navMap =
-                                      pathFindingV2.findPath(start, spot);
-                                  if (newMap.isNotEmpty) {
-                                    setState(() {
-                                      navigatedMap = navMap;
-                                    });
-                                  }
-                                }
-                              },
+                            left: exit.col * mapWidthOnScreen,
+                            top: exit.row * mapHeightOnScreen,
+                            child: Container(
+                              width: 66,
+                              height: 30,
+                              decoration: BoxDecoration(
+                                color: Colors.green,
+                                shape: BoxShape.rectangle,
+                                borderRadius: BorderRadius.circular(10.0),
+                                border: Border.all(
+                                    color: Color(0x4d9e9e9e), width: 1),
+                              ),
+                              child: const Center(
+                                child: Text(
+                                  'Exit',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          // Draw spot and obstacles
+                          for (MapObject obstacle in obstacles)
+                            Positioned(
+                              left: obstacle.col * mapWidthOnScreen,
+                              top: 120,
                               child: Container(
-                                width: 80,
-                                height: 50,
+                                width: 150,
+                                height: 100,
                                 decoration: BoxDecoration(
+                                  color: Color(0x1f000000),
                                   shape: BoxShape.rectangle,
-                                  color: spot.available
-                                      ? const Color.fromARGB(255, 194, 190, 190)
-                                      : widget.boughtSpot != null
-                                          ? spot.title ==
-                                                  widget.boughtSpot!.spotId
-                                              ? const Color.fromARGB(
-                                                  255, 133, 186, 230)
-                                              : const Color.fromARGB(
-                                                  255, 234, 116, 107)
-                                          : Colors.red,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(5)),
+                                  borderRadius: BorderRadius.circular(10.0),
                                   border: Border.all(
                                       color: Color(0x4d9e9e9e), width: 1),
                                 ),
                                 child: Center(
                                   child: Text(
-                                    spot.title ?? 'Spot',
+                                    obstacle.title ?? 'Obstacle',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 20,
@@ -301,62 +245,235 @@ class _MapScreenState extends State<MapScreen> {
                                 ),
                               ),
                             ),
+                          CustomPaint(
+                            painter: MapPainter(
+                                navigatedMap,
+                                [start.row, start.col],
+                                [end.row, end.col]), // Provide the map data
+                            size: Size(
+                              MediaQuery.of(context).size.width,
+                              MediaQuery.of(context).size.width,
+                            ),
                           ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 4.4),
-                  Container(
-                      // margin: EdgeInsets.only(top: 10, left: 20),
-                      width: MediaQuery.of(context).size.width,
-                      height: 320,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('images/bga1png.png'),
-                          fit: BoxFit.cover,
-                        ),
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(40),
-                            topRight: Radius.circular(40)),
+                          for (MapObject spot in spots)
+                            Positioned(
+                              left: spot.col * mapWidthOnScreen,
+                              top: spot.row * mapHeightOnScreen,
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (spot.clickable ||
+                                      spot.title == boughtSpot!.location) {
+                                    bool showNavigator = true;
+                                    Spot? tempSpot;
+                                    for (var spotCar in widget.listSpot) {
+                                      if (spotCar.location == spot.title) {
+                                        tempSpot = spotCar;
+                                        break;
+                                      }
+                                    }
+                                    if (boughtSpot == null &&
+                                        tempSpot != null &&
+                                        (tempSpot.carId == null ||
+                                            tempSpot.carId!.isEmpty)) {
+                                      buildParkDialog(context, tempSpot);
+                                      // showNavigator = false;
+                                    }
+                                    if (tempSpot != null &&
+                                        tempSpot.carId != null &&
+                                        tempSpot.carId!.isNotEmpty) {
+                                      if (tempSpot.carId != boughtSpot!.carId) {
+                                        showTakenDialog(context);
+                                        showNavigator = false;
+                                      }
+                                    }
+                                    if (showNavigator) {
+                                      initialMap();
+                                      mapPreHandle.findPossibleRoad();
+                                      Grid grid = Grid(navigatedMap);
+                                      PathFindingAlgorithm pathFindingV2 =
+                                          PathFindingAlgorithm(grid: grid);
+                                      List<List<int>> mapWithNavigator =
+                                          pathFindingV2.findPath(start, spot);
+                                      if (mapWithNavigator.isNotEmpty) {
+                                        setState(() {
+                                          navigatedMap = mapWithNavigator;
+                                          selectedSpot = spot;
+                                        });
+                                      }
+                                    }
+                                  }
+                                },
+                                child: Container(
+                                  width: 80,
+                                  height: 50,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.rectangle,
+                                    color: spot == selectedSpot
+                                        ? Colors.green
+                                        : (boughtSpot != null &&
+                                                spot.title ==
+                                                    boughtSpot!.location)
+                                            ? const Color.fromARGB(
+                                                255, 133, 186, 230)
+                                            : spot.clickable
+                                                ? const Color.fromARGB(
+                                                    255, 194, 190, 190)
+                                                : Colors.red,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)),
+                                    border: Border.all(
+                                        color: Color(0x4d9e9e9e), width: 1),
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      spot.title ?? 'Spot',
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            top: 50, left: 20, bottom: 50, right: 20),
-                        decoration: BoxDecoration(
-                            color: Color.fromARGB(255, 142, 137, 137)
-                                .withOpacity(0.8),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(30),
-                            )),
-                        child: Column(children: [
-                          Align(
-                            // alignment: Alignment.topCenter,
-                            child: Text(
-                              'Your spot you was bought: ${widget.boughtSpot?.location ?? 'none'}',
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                        // margin: EdgeInsets.only(top: 10, left: 20),
+                        width: MediaQuery.of(context).size.width,
+                        height: 305,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('images/bga1png.png'),
+                            fit: BoxFit.cover,
                           ),
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Text(
-                              "${widget.car!.carName}   ${widget.car!.carPlate}",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              topRight: Radius.circular(40)),
+                        ),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              top: 40, left: 20, bottom: 40, right: 20),
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(255, 142, 137, 137)
+                                  .withOpacity(0.8),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(30),
+                              )),
+                          child: Column(children: [
+                            Align(
+                              // alignment: Alignment.topCenter,
+                              child: Text(
+                                'Your spot you was bought: ${boughtSpot?.location ?? 'none'}',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            child: Stack(children: [
-                              Container(
-                                alignment: Alignment.center,
-                                child: Image.asset("images/ca.png"),
-                              )
-                            ]),
-                          )
-                        ]),
-                      ))
-                  // Button to generate a random map
-                ],
-              ),
+                            Align(
+                              alignment: Alignment.topCenter,
+                              child: Text(
+                                "${widget.car!.carName}   ${widget.car!.carPlate}",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            SizedBox(
+                              child: Stack(children: [
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: Image.asset("images/ca.png"),
+                                )
+                              ]),
+                            )
+                          ]),
+                        ))
+                    // Button to generate a random map
+                  ],
+                ),
+        ),
       ),
+    );
+  }
+
+  Future<dynamic> showTakenDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'This spot has been taken by another car',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'OK',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<dynamic> buildParkDialog(BuildContext context, Spot spot) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(
+            'Do you want to park at ${spot.location}?',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.red,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                // Find the spot in listSpot with location is spot.title
+                spot.carId = widget.car!.carPlate;
+                SpotDetailService.updateSpot(spot).then((value) {
+                  if (value) {
+                    setState(() {
+                      boughtSpot = spot;
+                    });
+                  }
+                });
+              },
+              child: Text(
+                'Confirm',
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -86,10 +86,10 @@ class MapPreHandle {
                   map[i][map[i].length - 1] != 1;
               row++) {
             if (checkTouchingObstacle(row, middle)) {
-              print("Touching obstacle");
+              //  print("Touching obstacle");
             } else if (checkTouchingSpot(row + 1, middle, null) ||
                 checkTouchingSpot(row, middle, null)) {
-              print("Touching spot");
+              //  print("Touching spot");
             } else if (map[row][middle] != 0) {
               possibleRoad.add([row, middle]);
             }
@@ -120,10 +120,10 @@ class MapPreHandle {
           int middle = (temp[0] + temp[1]) ~/ 2;
           for (int col = 0; col < map[0].length; col++) {
             if (checkTouchingObstacle(middle, col)) {
-              print("Touching obstacle");
+              //  print("Touching obstacle");
             } else if (checkTouchingSpot(middle, col + 1, null) ||
                 checkTouchingSpot(middle, col, null)) {
-              print("Touching spot");
+              //  print("Touching spot");
             } else if (map[middle][col] != 0) {
               possibleRoad.add([middle, col]);
             }
@@ -145,10 +145,10 @@ class MapPreHandle {
         for (int row = 0; row < map.length; row++) {
           // If the road touch the obstacle, don't draw
           if (checkTouchingObstacle(row, middleCol)) {
-            print("Touching obstacle");
+            //  print("Touching obstacle");
           } else if (checkTouchingSpot(row + 1, middleCol, spot[i]) ||
               checkTouchingSpot(row, middleCol, spot[i])) {
-            print("Touching spot");
+            //  print("Touching spot");
           } else if (map[row][middleCol] != 0) {
             possibleRoad.add([row, middleCol]);
           }
@@ -158,10 +158,10 @@ class MapPreHandle {
       else {
         for (int col = 0; col < map[0].length; col++) {
           if (checkTouchingObstacle(middleRow, col)) {
-            print("Touching obstacle");
+            //  print("Touching obstacle");
           } else if (checkTouchingSpot(middleRow, col + 1, spot[i]) ||
               checkTouchingSpot(middleRow, col, spot[i])) {
-            print("Touching spot");
+            //  print("Touching spot");
           } else if (map[middleRow][col] != 0) {
             possibleRoad.add([middleRow, col]);
           }
@@ -174,19 +174,19 @@ class MapPreHandle {
     int startMiddleCol = start.col + start.width ~/ 2;
     for (int row = 0; row < map.length; row++) {
       if (checkTouchingObstacle(row, startMiddleCol)) {
-        print("Touching obstacle");
+        //  print("Touching obstacle");
       } else if (checkTouchingSpot(row + 1, startMiddleCol, null) ||
           checkTouchingSpot(row, startMiddleCol, null)) {
-        print("Touching spot");
+        //  print("Touching spot");
       } else if (map[row][startMiddleCol] != 0) {
         possibleRoad.add([row, startMiddleCol]);
       }
     }
     for (int col = 0; col < map[0].length; col++) {
       if (checkTouchingObstacle(startMiddleRow, col)) {
-        print("Touching obstacle");
+        //  print("Touching obstacle");
       } else if (checkTouchingSpot(startMiddleRow, col, null)) {
-        print("Touching spot");
+        //  print("Touching spot");
       } else if (map[startMiddleRow][col] != 0) {
         possibleRoad.add([startMiddleRow, col]);
       }
@@ -197,20 +197,20 @@ class MapPreHandle {
     int endMiddleCol = end.col + end.width ~/ 2;
     for (int row = 0; row < map.length; row++) {
       if (checkTouchingObstacle(row, endMiddleCol)) {
-        print("Touching obstacle");
+        //  print("Touching obstacle");
       } else if (checkTouchingSpot(row + 1, endMiddleCol, null) ||
           checkTouchingSpot(row, endMiddleCol, null)) {
-        print("Touching spot");
+        //  print("Touching spot");
       } else if (map[row][endMiddleCol] != 0) {
         possibleRoad.add([row, endMiddleCol]);
       }
     }
     for (int col = 0; col < map[0].length; col++) {
       if (checkTouchingObstacle(endMiddleRow, col)) {
-        print("Touching obstacle");
+        //  print("Touching obstacle");
       } else if (checkTouchingSpot(endMiddleRow, col + 1, null) ||
           checkTouchingSpot(endMiddleRow, col, null)) {
-        print("Touching spot");
+        //  print("Touching spot");
       } else if (map[endMiddleRow][col] != 0) {
         possibleRoad.add([endMiddleRow, col]);
       }
@@ -316,10 +316,10 @@ class MapObject {
   int height;
   late bool horizontal;
   late String? title;
-  late bool available;
+  late bool clickable;
 
   MapObject(this.row, this.col, this.width, this.height,
-      [this.title, this.available = true]) {
+      [this.title, this.clickable = true]) {
     horizontal = width > height;
   }
 }
