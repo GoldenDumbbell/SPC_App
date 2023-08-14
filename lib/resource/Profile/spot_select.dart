@@ -4,9 +4,10 @@ import 'package:webspc/Api_service/spot_service.dart';
 import 'package:webspc/DTO/cars.dart';
 import 'package:webspc/DTO/section.dart';
 import 'package:webspc/DTO/spot.dart';
-import 'package:webspc/DTO/user.dart';
 import 'package:webspc/resource/Profile/spc_wallet_page.dart';
 import 'package:webspc/styles/button.dart';
+import '../../Api_service/car_service.dart';
+import '../../DTO/bundle.dart';
 import 'spot_screen.dart';
 
 class SelectSpotDialog extends StatefulWidget {
@@ -15,16 +16,18 @@ class SelectSpotDialog extends StatefulWidget {
     required this.spotId,
     required this.showButton,
     required this.title,
-    this.plan,
+    this.bundle,
     required this.context,
     this.selectedCar,
+    required this.fee,
   });
-  final String spotId;
+  final String? spotId;
   final bool showButton;
   final String title;
-  final Plan? plan;
+  final Bundle? bundle;
   final BuildContext context;
   final Car? selectedCar;
+  final int fee;
   @override
   State<SelectSpotDialog> createState() => _SelectSpotDialogState();
 }
@@ -35,11 +38,17 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
   Spot? detailSpot;
   String currentPassword = Session.loggedInUser.pass!;
   String password = "";
+  Spot? selectedSpot;
   void getAllListSpot() {
     SpotDetailService.getAllListSpot().then((response) {
       for (var i = 0; i < response.length; i++) {
         if (response[i].location == widget.spotId) {
           response[i].available = false;
+        }
+        if (response[i].spotId == widget.spotId) {
+          setState(() {
+            selectedSpot = response[i];
+          });
         }
       }
       setState(() {
@@ -60,7 +69,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
 
   Widget handleBuildSpot(Spot spot) {
     if (spot.owned!) {
-      return buildUnavailableSpot(spot);
+      return buildOwnedSpot(spot);
     } else {
       if (spot.available!) {
         return buildUnavailableSpot(spot);
@@ -222,9 +231,9 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                                   context: context,
                                   builder: ((context) {
                                     return AlertDialog(
-                                      title: Text("Buy Spot"),
+                                      title: Text("Confirm"),
                                       content: Text(
-                                          "Are you sure you want to buy this spot?"),
+                                          "Are you sure you want to confirm this spot?"),
                                       actions: [
                                         ElevatedButton(
                                           onPressed: () {
@@ -248,7 +257,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                                   }));
                             },
                             child: Text(
-                              "Buy Spot Now",
+                              "Confirm Now",
                               textAlign: TextAlign.start,
                               overflow: TextOverflow.clip,
                               style: TextStyle(
@@ -272,7 +281,7 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
       width: 50,
       height: 25,
       decoration: BoxDecoration(
-        color: spot!.spotId == widget.spotId ? Colors.green : Colors.red,
+        color: spot!.spotId == widget.spotId ? Colors.green : Colors.yellow,
         shape: BoxShape.rectangle,
       ),
       child: Align(
@@ -281,6 +290,34 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
           onPressed: () {},
           child: Text(
             spot.location ?? "",
+            textAlign: TextAlign.start,
+            overflow: TextOverflow.clip,
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontStyle: FontStyle.normal,
+              fontSize: 10,
+              color: Color(0xff000000),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container buildOwnedSpot(Spot? spot) {
+    return Container(
+      width: 50,
+      height: 25,
+      decoration: BoxDecoration(
+        color: Colors.red,
+        shape: BoxShape.rectangle,
+      ),
+      child: Align(
+        alignment: Alignment(-0.1, 0.0),
+        child: TextButton(
+          onPressed: () {},
+          child: Text(
+            spot!.location ?? "",
             textAlign: TextAlign.start,
             overflow: TextOverflow.clip,
             style: TextStyle(
@@ -345,12 +382,15 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                 // Navigator.of(context).pop();
                 // Navigator.of(context).pop();
                 // Check if account has enough money
-                if (widget.plan!.price > Session.loggedInUser.wallet!) {
+                if ((widget.bundle!.price! +
+                        widget.bundle!.price! * widget.fee / 100) >
+                    Session.loggedInUser.wallet!) {
                   // Calculate top up amount
-                  String topUpAmount =
-                      (widget.plan!.price - Session.loggedInUser.wallet!)
-                          .ceil()
-                          .toString();
+                  String topUpAmount = ((widget.bundle!.price! +
+                              widget.bundle!.price! * widget.fee / 100) -
+                          Session.loggedInUser.wallet!)
+                      .ceil()
+                      .toString();
                   showDialog(
                       context: context,
                       builder: (context) => _dialogTopUp(context, topUpAmount));
@@ -370,30 +410,62 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
                       ),
                     ),
                   );
-                  // Update spot
-                  List<Spot> listSpot = await SpotDetailService.getListSpot();
-                  Spot spot = listSpot
-                      .firstWhere((element) => element.spotId == widget.spotId);
+                  if (widget.spotId != null) {
+                    // Update spot
+                    List<Spot> listSpot = await SpotDetailService.getListSpot();
+                    Spot spot = listSpot.firstWhere(
+                        (element) => element.spotId == widget.spotId);
 
-                  spot.owned = true;
-                  if (widget.selectedCar != null) {
-                    spot.carId = widget.selectedCar!.carPlate;
-                  }
-                  await SpotDetailService.updateSpot(spot);
-                  await PaymentService.addPayment(
-                      amount: -widget.plan!.price, purpose: "Buy spot");
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                  Navigator.of(context).pop();
-                  Navigator.pushReplacement(
+                    spot.owned = true;
+                    if (widget.selectedCar != null) {
+                      spot.carId = widget.selectedCar!.carPlate;
+                    }
+                    widget.selectedCar!.verifyState2 = true;
+                    await CarService.updateCar(
+                        widget.selectedCar!, widget.selectedCar!.carId!);
+                    await SpotDetailService.updateSpot(spot);
+                    await PaymentService.addPayment(
+                      amount: -widget.bundle!.price!,
+                      purpose:
+                          'Buy spot ${spot.location} for ${widget.selectedCar!.carPlate}',
+                      bundle: widget.bundle!,
+                    );
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => SpotScreen(context)));
-                  _showMyDialog(
-                    context,
-                    "Success",
-                    "You buy spot successfully",
-                  );
+                          builder: (context) => SpotScreen(context)),
+                    );
+                    _showMyDialog(
+                      context,
+                      "Success",
+                      "You buy spot successfully",
+                    );
+                  } else {
+                    // If park mode
+                    widget.selectedCar!.verifyState2 = true;
+                    await CarService.updateCar(
+                        widget.selectedCar!, widget.selectedCar!.carId!);
+                    await PaymentService.addPayment(
+                      amount: -widget.bundle!.price!,
+                      purpose: 'Buy park for ${widget.selectedCar!.carPlate}',
+                      bundle: widget.bundle!,
+                    );
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.of(context).pop();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SpotScreen(context)));
+                    _showMyDialog(
+                      context,
+                      "Success",
+                      "You park successfully",
+                    );
+                  }
                 }
               } else {
                 _showMyDialog(context, "Wrong password", "Please try again");
@@ -402,6 +474,16 @@ class _SelectSpotDialogState extends State<SelectSpotDialog> {
             child: Text("Ok"),
           ),
         ]);
+  }
+
+  AlertDialog _dialogChooseBundle(BuildContext context) {
+    return AlertDialog(
+      title: Text("Choose bundle"),
+      content: Container(
+        height: 200,
+        width: 200,
+      ),
+    );
   }
 
   AlertDialog _dialogTopUp(BuildContext context, String? topUpAmount) {

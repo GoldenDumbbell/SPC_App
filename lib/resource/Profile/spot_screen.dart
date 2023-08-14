@@ -4,7 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rounded_loading_button/rounded_loading_button.dart';
-import 'package:supercharged/supercharged.dart';
+import 'package:webspc/Api_service/bundle_services.dart';
 
 import 'package:webspc/Api_service/spot_service.dart';
 import 'package:webspc/DTO/section.dart';
@@ -13,6 +13,7 @@ import 'package:webspc/styles/button.dart';
 
 import '../../../DTO/spot.dart';
 import '../../Api_service/car_detail_service.dart';
+import '../../DTO/bundle.dart';
 import '../../DTO/cars.dart';
 
 class SpotScreen extends StatefulWidget {
@@ -25,19 +26,17 @@ class SpotScreen extends StatefulWidget {
 
 class _SpotScreenState extends State<SpotScreen> {
   bool isLoading = true;
+  bool isBuyMode = true;
   List<Spot> listSpot = [];
+  List<Bundle> listBundle = [];
   Spot? detailSpot;
   Spot? dropdownValue;
   List<Car> listCar = [];
   Car? carDetail;
   Car? dropdownValueCar;
-  List<Plan> listPlan = [
-    Plan(id: 1, month: 1, price: 1200000),
-    Plan(id: 2, month: 6, price: 7200000),
-    Plan(id: 3, month: 12, price: 14400000)
-  ];
+  List<Bundle> listBundleDropdown = [];
 
-  Plan? dropdownValuePlan;
+  Bundle? dropdownValueBundle;
   String formatCurrency(double n) {
     // Add comma to separate thousands
     var currency = NumberFormat("#,##0", "vi_VN");
@@ -48,20 +47,53 @@ class _SpotScreenState extends State<SpotScreen> {
   void initState() {
     getListSpot();
     getListCar();
+    getListBundle();
     super.initState();
   }
 
+  void toggleListBundleDropdown() {
+    dropdownValueBundle = null;
+    // if isBuyMode = true add Bundle id start with A..
+    // else add Bundle id start with B..
+    if (isBuyMode) {
+      setState(() {
+        listBundleDropdown = listBundle
+            .where((element) => element.bundleId!.startsWith("B"))
+            .toList();
+      });
+    } else {
+      setState(() {
+        listBundleDropdown = listBundle
+            .where((element) => element.bundleId!.startsWith("A"))
+            .toList();
+      });
+    }
+  }
+
+  void getListBundle() {
+    BundleServices.getAllBundle().then((response) {
+      setState(() {
+        listBundle = response;
+      });
+      toggleListBundleDropdown();
+    });
+  }
+
   void getListCar() {
-    CarDetailService.getListCar().then((response) => setState(() {
-          listCar = response;
-          if (listCar.isNotEmpty) {
-            carDetail = listCar.first;
-          }
-        }));
+    CarDetailService.getListCar().then(
+      (response) => setState(() {
+        listCar = response;
+        if (listCar.isNotEmpty) {
+          carDetail = listCar.first;
+        }
+      }),
+    );
   }
 
   void getListSpot() {
-    SpotDetailService.getListSpot().then((response) => setState(() {
+    SpotDetailService.getListSpot().then(
+      (response) => setState(
+        () {
           // isLoading = false;
           // Only get spot with owned is false
           listSpot =
@@ -70,11 +102,14 @@ class _SpotScreenState extends State<SpotScreen> {
             detailSpot = listSpot.first;
             // for (int i = 0; i < listSpot.length; i++) {}
           }
-        }));
+        },
+      ),
+    );
   }
 
   int selectedIndex = 0;
   int selectedCatIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     final RoundedLoadingButtonController _btnLogin =
@@ -82,6 +117,21 @@ class _SpotScreenState extends State<SpotScreen> {
     DateTime now = DateTime.now();
     String currentTime = DateFormat('yyyy-MM-dd').format(now);
     return Scaffold(
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   actions: [
+      //     Switch(
+      //       value: isBuyMode,
+      //       onChanged: (value) {
+      //         setState(() {
+      //           isBuyMode = value;
+      //           toggleListBundleDropdown();
+      //         });
+      //       },
+      //     ),
+      //   ],
+      // ),
+      extendBodyBehindAppBar: true,
       backgroundColor: Color(0xffffffff),
       body: Align(
         alignment: Alignment.topCenter,
@@ -103,10 +153,10 @@ class _SpotScreenState extends State<SpotScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 SizedBox(
-                  height: 50,
+                  height: 100,
                 ),
                 Text(
-                  "Buy Spot",
+                  isBuyMode ? "Buy Spot" : "Park",
                   style: TextStyle(
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
@@ -117,103 +167,203 @@ class _SpotScreenState extends State<SpotScreen> {
                 SizedBox(
                   height: 50,
                 ),
-                Container(
-                  padding: const EdgeInsets.only(left: 10),
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  decoration: BoxDecoration(
-                    color: Color(0x1f000000),
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.zero,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisSize: MainAxisSize.max,
+                SizedBox(
+                  height: 50,
+                  child: Stack(
                     children: [
-                      Text(
-                        "Spot:",
-                        textAlign: TextAlign.start,
-                        overflow: TextOverflow.clip,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w700,
-                          fontStyle: FontStyle.italic,
-                          fontSize: 24,
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 50,
+                        decoration: BoxDecoration(
                           color: Colors.white,
+                          shape: BoxShape.rectangle,
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      Expanded(
-                        flex: 1,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              height: MediaQuery.of(context).size.height * 0.07,
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 4, horizontal: 8),
-                              decoration: BoxDecoration(
-                                color: Color(0xffffffff),
-                                border: Border.all(
-                                    color: Color(0xfff2ebeb), width: 1),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton<Spot>(
-                                  borderRadius: BorderRadius.circular(30),
-                                  hint: Text(
-                                    'Select available spot',
-                                    style: TextStyle(fontSize: 17),
-                                  ),
-                                  onChanged: (Spot? newvalue) {
-                                    setState(() {
-                                      dropdownValue = newvalue!;
-                                    });
-                                  },
-                                  value: dropdownValue,
-                                  items: listSpot.map<DropdownMenuItem<Spot>>(
-                                      (Spot value) {
-                                    return DropdownMenuItem<Spot>(
-                                      value: value,
-                                      child: Text('${value.location}'),
-                                    );
-                                  }).toList(),
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.normal,
-                                  ),
-                                  elevation: 8,
-                                  isExpanded: true,
-                                ),
-                              )),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: IconButton(
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => SelectSpotDialog(
-                                title: "Spot map",
-                                showButton: false,
-                                spotId: "",
-                                context: context,
-                              ),
-                            );
-                          },
-                          icon: Icon(
-                            Icons.map,
-                            color: Colors.white,
-                            size: 40,
+                      // A rect with width is 50% of container width
+                      AnimatedPositioned(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeIn,
+                        top: 0,
+                        left: isBuyMode
+                            ? 0
+                            : MediaQuery.of(context).size.width * 0.4,
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.4,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(10),
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 10,
-                      )
+                      // Make a gesture detector to detect tap on the rect
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isBuyMode = !isBuyMode;
+                            dropdownValue = null;
+                            toggleListBundleDropdown();
+                          });
+                        },
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: 50,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: Center(
+                                  child: Text(
+                                    "Buy Spot",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: isBuyMode
+                                          ? Colors.white
+                                          : Colors.black,
+                                      decoration: TextDecoration.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: MediaQuery.of(context).size.width * 0.4,
+                                child: Center(
+                                  child: Text(
+                                    "Park",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: isBuyMode
+                                          ? Colors.black
+                                          : Colors.white,
+                                      decoration: TextDecoration.none,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Visibility(
+                  visible: isBuyMode,
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 10),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    decoration: BoxDecoration(
+                      color: Color(0x1f000000),
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.zero,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Text(
+                          "Spot:",
+                          textAlign: TextAlign.start,
+                          overflow: TextOverflow.clip,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.italic,
+                            fontSize: 24,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.07,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 8),
+                                decoration: BoxDecoration(
+                                  color: Color(0xffffffff),
+                                  border: Border.all(
+                                      color: Color(0xfff2ebeb), width: 1),
+                                  borderRadius: BorderRadius.circular(30),
+                                ),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<Spot>(
+                                    borderRadius: BorderRadius.circular(30),
+                                    hint: Text(
+                                      'Select available spot',
+                                      style: TextStyle(fontSize: 17),
+                                    ),
+                                    onChanged: (Spot? newvalue) {
+                                      if (newvalue != null &&
+                                          newvalue.available!) {
+                                        _showMyDialog(context, "Failed booking",
+                                            "This spot has been parked by someone else. Please select another spot.");
+                                        return;
+                                      } else if (newvalue != null &&
+                                          !newvalue.available!) {
+                                        setState(() {
+                                          dropdownValue = newvalue;
+                                        });
+                                      }
+                                    },
+                                    value: dropdownValue,
+                                    items: listSpot.map<DropdownMenuItem<Spot>>(
+                                        (Spot value) {
+                                      return DropdownMenuItem<Spot>(
+                                        value: value,
+                                        child: Text('${value.location}'),
+                                      );
+                                    }).toList(),
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w400,
+                                      fontStyle: FontStyle.normal,
+                                    ),
+                                    elevation: 8,
+                                    isExpanded: true,
+                                  ),
+                                )),
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: IconButton(
+                            onPressed: () {
+                              showDialog(
+                                context: context,
+                                builder: (context) => SelectSpotDialog(
+                                  title: "Spot map",
+                                  showButton: false,
+                                  spotId: dropdownValue?.spotId!,
+                                  context: context,
+                                  fee: 0,
+                                ),
+                              );
+                            },
+                            icon: Icon(
+                              Icons.map,
+                              color: Colors.white,
+                              size: 40,
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 10,
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -335,49 +485,50 @@ class _SpotScreenState extends State<SpotScreen> {
                         ),
                       ),
                       Expanded(
-                          flex: 1,
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.07,
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 4, horizontal: 8),
-                                decoration: BoxDecoration(
-                                  color: Color(0xffffffff),
-                                  border: Border.all(
-                                      color: Color(0xfff2ebeb), width: 1),
-                                  borderRadius: BorderRadius.circular(40),
+                        flex: 1,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 8),
+                            decoration: BoxDecoration(
+                              color: Color(0xffffffff),
+                              border: Border.all(
+                                  color: Color(0xfff2ebeb), width: 1),
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<Car>(
+                                hint: Text('Select carplate'),
+                                borderRadius: BorderRadius.circular(40),
+                                onChanged: (Car? newvalue) {
+                                  setState(() {
+                                    dropdownValueCar = newvalue!;
+                                  });
+                                },
+                                value: dropdownValueCar,
+                                items: listCar
+                                    .map<DropdownMenuItem<Car>>((Car value) {
+                                  return DropdownMenuItem<Car>(
+                                    value: value,
+                                    child: Text('${value.carPlate}'),
+                                  );
+                                }).toList(),
+                                style: TextStyle(
+                                  color: Color(0xff000000),
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w400,
+                                  fontStyle: FontStyle.normal,
                                 ),
-                                child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<Car>(
-                                    hint: Text('Select carplate'),
-                                    borderRadius: BorderRadius.circular(40),
-                                    onChanged: (Car? newvalue) {
-                                      setState(() {
-                                        dropdownValueCar = newvalue!;
-                                      });
-                                    },
-                                    value: dropdownValueCar,
-                                    items: listCar.map<DropdownMenuItem<Car>>(
-                                        (Car value) {
-                                      return DropdownMenuItem<Car>(
-                                        value: value,
-                                        child: Text('${value.carPlate}'),
-                                      );
-                                    }).toList(),
-                                    style: TextStyle(
-                                      color: Color(0xff000000),
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.normal,
-                                    ),
-                                    elevation: 8,
-                                    isExpanded: true,
-                                  ),
-                                )),
-                          )),
+                                elevation: 8,
+                                isExpanded: true,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -468,7 +619,7 @@ class _SpotScreenState extends State<SpotScreen> {
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<Object>(
-                                value: dropdownValuePlan,
+                                value: dropdownValueBundle,
                                 hint: Text('Select plan'),
                                 borderRadius: BorderRadius.circular(40),
                                 style: TextStyle(
@@ -479,18 +630,18 @@ class _SpotScreenState extends State<SpotScreen> {
                                 ),
                                 elevation: 8,
                                 isExpanded: true,
-                                items: listPlan.map((Plan value) {
+                                items: listBundleDropdown.map((Bundle bundle) {
                                   return DropdownMenuItem<Object>(
-                                    value: value,
+                                    value: bundle,
                                     child: Text(
-                                      '${value.id} ${value.month >= 2 ? 'months' : 'month'}: ${formatCurrency(value.price)} VND',
+                                      '${bundle.bundleId} ${bundle.bundleName}: ${formatCurrency(bundle.price!)} VND',
                                       style: TextStyle(fontSize: 14),
                                     ),
                                   );
                                 }).toList(),
                                 onChanged: (Object? value) {
                                   setState(() {
-                                    dropdownValuePlan = value! as Plan;
+                                    dropdownValueBundle = value! as Bundle;
                                   });
                                 },
                               ),
@@ -514,39 +665,113 @@ class _SpotScreenState extends State<SpotScreen> {
                     child: ElevatedButton(
                       style: buttonPrimary,
                       child: Text(
-                        'View Selected Spot',
+                        isBuyMode ? 'View Selected Spot' : "Buy Park",
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.bold),
                       ),
                       onPressed: () async {
+                        if (dropdownValueCar != null &&
+                            dropdownValueCar!.verifyState2 != null &&
+                            dropdownValueCar!.verifyState2! &&
+                            !isBuyMode) {
+                          _showMyDialog(context, "failed booking!",
+                              "Your car already has a spot to park");
+                          return;
+                        }
+                        if (isBuyMode && dropdownValue != null) {
+                          if (!dropdownValue!.owned! &&
+                              dropdownValue!.available!) {
+                            _showMyDialog(context, "Failed",
+                                "Please wait for the person to park out of the parking lot");
+                            return;
+                          }
+                        }
+
                         // Check if carId exist in listSpot
                         SpotDetailService.getAllListSpot().then((spots) {
                           for (var spot in spots) {
-                            if (spot.carId == dropdownValueCar?.carId) {
+                            if (spot.carId == dropdownValueCar?.carPlate &&
+                                isBuyMode) {
                               _showMyDialog(context, "failed booking!",
                                   "Your car is already have a spot");
                               return;
                             }
                           }
-                          if (dropdownValue?.spotId == null) {
+                          if (dropdownValueCar?.verifyState2 == true) {
+                            _showMyDialog(context, "failed booking!",
+                                "Your car is already have a park");
+                            return;
+                          }
+
+                          bool isBought1Spot = false;
+                          // Check if user has bought 1 spot already
+                          for (var spot in spots) {
+                            for (var car in listCar) {
+                              if (spot.carId == car.carPlate) {
+                                isBought1Spot = true;
+                                break;
+                              }
+                            }
+                          }
+                          int extraFee = 0;
+                          if (dropdownValue?.spotId == null && isBuyMode) {
                             _showMyDialog(context, "failed booking!",
                                 "Please choose spot");
                           } else if (dropdownValueCar?.carPlate == null) {
                             _showMyDialog(context, "failed booking!",
                                 "Please choose your car");
-                          } else if (dropdownValuePlan == null) {
+                          } else if (dropdownValueBundle == null) {
                             _showMyDialog(context, "failed booking!",
-                                "Please choose plan");
+                                "Please choose bundle");
+                          } else if (isBought1Spot && isBuyMode) {
+                            if (Session.loggedInUser.familyId == null) {
+                              _showMyDialog(context, "failed booking!",
+                                  "You have already bought 1 spot. Please join a family to buy more spots with extra fee 10%");
+                              return;
+                            } else {
+                              extraFee = 10;
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      title: Text("Extra fee"),
+                                      content: Text(
+                                          "You have already bought 1 spot. Buy more spots with extra fee 10%"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  SelectSpotDialog(
+                                                title: "Select spot",
+                                                showButton: true,
+                                                spotId: dropdownValue!.spotId!,
+                                                bundle: dropdownValueBundle!,
+                                                context: context,
+                                                selectedCar: dropdownValueCar,
+                                                fee: extraFee,
+                                              ),
+                                            );
+                                          },
+                                          child: Text("OK"),
+                                        ),
+                                      ],
+                                    );
+                                  });
+                            }
                           } else {
                             showDialog(
                               context: context,
                               builder: (context) => SelectSpotDialog(
                                 title: "Select spot",
                                 showButton: true,
-                                spotId: dropdownValue!.spotId!,
-                                plan: dropdownValuePlan!,
+                                spotId: dropdownValue?.spotId,
+                                bundle: dropdownValueBundle!,
                                 context: context,
                                 selectedCar: dropdownValueCar,
+                                fee: extraFee,
                               ),
                             );
                           }
@@ -579,15 +804,4 @@ class _SpotScreenState extends State<SpotScreen> {
       ),
     );
   }
-}
-
-class Plan {
-  int id;
-  int month;
-  double price;
-  Plan({
-    required this.id,
-    required this.month,
-    required this.price,
-  });
 }

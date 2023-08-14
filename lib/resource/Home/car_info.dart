@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:webspc/Api_service/car_detail_service.dart';
 import 'package:webspc/Api_service/spot_service.dart';
 import 'package:webspc/DTO/cars.dart';
+import 'package:webspc/DTO/payment.dart';
 import 'package:webspc/DTO/section.dart';
 import 'package:webspc/DTO/spot.dart';
+
+import '../../Api_service/payment_service.dart';
 
 class CarInfoScreen extends StatefulWidget {
   final BuildContext? context;
@@ -22,6 +25,8 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
   List<Car> listCar = [];
   // Get list of spot
   List<Spot> listSpot = [];
+  List<Payment> listPayment = [];
+
   void getListSpot() async {
     SpotDetailService.getAllListSpot().then((value) {
       setState(() {
@@ -39,10 +44,21 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
     });
   }
 
+  void getListPayment() {
+    PaymentService.getAllPayment().then((value) {
+      value.sort((a, b) => DateTime.parse(b.paymentdate ?? '')
+          .compareTo(DateTime.parse(a.paymentdate ?? '')));
+      setState(() {
+        listPayment = value;
+      });
+    });
+  }
+
   @override
   void initState() {
     getListSpot();
     getListCar();
+    getListPayment();
     super.initState();
   }
 
@@ -96,9 +112,29 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
 
   Widget buildCarButton(Car car) {
     String spotName = "No spot";
+    int dayRemain = 0;
     for (var spot in listSpot) {
-      if (spot.carId == car.carId) {
+      if (spot.carId == car.carPlate) {
         spotName = spot.location!;
+      }
+    }
+    for (var payment in listPayment) {
+      // Check if purpose contains car plate
+      if (payment.purpose!.contains(car.carPlate!) &&
+          (payment.purpose!.contains("Buy spot") ||
+              payment.purpose!.contains("Buy park"))) {
+        // Check if payment is expired
+        if (DateTime.parse(payment.paymentdate!)
+            .add(Duration(days: 30))
+            .isAfter(DateTime.now())) {
+          dayRemain = DateTime.parse(payment.paymentdate!)
+              .add(Duration(days: 30))
+              .difference(DateTime.now())
+              .inDays;
+        } else {
+          dayRemain = 0;
+        }
+        break;
       }
     }
     return Padding(
@@ -188,6 +224,13 @@ class _CarInfoScreenState extends State<CarInfoScreen> {
                                         color: Colors.red,
                                       ),
                               ],
+                            ),
+                            Text(
+                              'Day remain: ${dayRemain.toString()} ${dayRemain == 1 ? 'day' : 'days'}',
+                              style: TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),

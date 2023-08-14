@@ -63,8 +63,8 @@ dependencies:
   firebase_auth: ^4.6.3
   webview_flutter: ^4.2.2
   dotted_border: ^2.0.0+3
-  
-
+  workmanager: ^0.5.1
+  flutter_local_notifications: ^15.1.0+1
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

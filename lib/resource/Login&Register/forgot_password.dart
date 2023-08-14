@@ -56,11 +56,17 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                Image.asset(
+                  'images/iconn.png',
+                ),
+                // SizedBox(
+                //   height: 300,
+                // ),
                 Card(
                   elevation: 5,
                   color: Color.fromARGB(255, 171, 211, 250).withOpacity(0.4),
                   child: Container(
-                    width: 400,
+                    width: 700,
                     padding: EdgeInsets.all(40.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
@@ -68,10 +74,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SizedBox(
-                          height: 80,
-                        ),
-                        Image.asset('images/logo.png'),
                         const SizedBox(
                           height: 15,
                         ),

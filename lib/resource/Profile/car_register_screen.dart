@@ -11,6 +11,7 @@ import '../../DTO/cars.dart';
 import '../../DTO/section.dart';
 import '../../styles/button.dart';
 import '../../styles/fadeanimation.dart';
+import 'car_detail_screen.dart';
 
 enum FormData { Name, Plate, Color, PpFront, PpBack }
 
@@ -443,6 +444,8 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                   colorController.clear();
                                   _btnRegisterCar.reset();
                                 });
+                                _showdiaglogCardetail(context, "Success",
+                                    "Your car has been successfully registered, please wait for the Management Board staff to confirm, \n click Ok to see the information you have just registered.");
                               }
                             },
                             child: const Text("Create",
@@ -508,6 +511,28 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
         actions: <Widget>[
           TextButton(
             onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future _showdiaglogCardetail(
+      BuildContext context, String title, String description) async {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(description),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CarDetailScreen()));
+            },
             child: const Text('OK'),
           ),
         ],

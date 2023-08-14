@@ -38,9 +38,7 @@ class _VnPaymentWebViewScreenState extends State<VnPaymentWebViewScreen> {
                     100;
                 // Update wallet
                 await PaymentService.addPayment(
-                  amount: amount,
-                  purpose: 'Top up',
-                );
+                    amount: amount, purpose: 'Top up', bundle: null);
                 // Show a dialog to notify the user that the payment is successful.
                 showDialog(
                   context: context,

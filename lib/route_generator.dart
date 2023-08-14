@@ -2,9 +2,9 @@ import 'package:webspc/resource/Home/BookingScreen.dart';
 import 'package:webspc/resource/Home/View_hisbooking.dart';
 import 'package:webspc/resource/Profile/family_screen.dart';
 import 'package:webspc/resource/Profile/family_share_car.dart';
+import 'package:webspc/resource/Profile/history_payment.dart';
 import 'package:webspc/resource/Profile/view_history.dart';
 import 'package:webspc/resource/Login&Register/login_page.dart';
-import 'package:webspc/resource/Profile/topup_page.dart';
 import 'package:webspc/styles/plash_screen.dart';
 import 'package:webspc/undefined_view.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +24,6 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     //   return MaterialPageRoute(builder: (context) => AccountPage(context));
     // case "/userScreen":
     //   return MaterialPageRoute(builder: (context) => UserInforScreen(context));
-    case TopupScreen.routeName:
-      return MaterialPageRoute(builder: (context) => TopupScreen(context));
     case Booking1Screen.routerName:
       return MaterialPageRoute(builder: (context) => Booking1Screen(context));
     case ViewHistoryPage.routerName:
@@ -39,6 +37,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
           builder: (context) => ShareCarFamilyScreen(context));
     case FamilyScreen.routerName:
       return MaterialPageRoute(builder: (context) => FamilyScreen(context));
+    case ViewHistoryPaymentPage.routeName:
+      return MaterialPageRoute(builder: (context) => ViewHistoryPaymentPage());
     // case ForgotPasswordScreen.routeName:
     // return MaterialPageRoute(builder: (context) => ForgotPasswordScreen(context));
     default:

@@ -2,9 +2,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
+import 'package:supercharged/supercharged.dart';
 import 'package:webspc/DTO/payment.dart';
 import 'package:webspc/DTO/section.dart';
 import 'package:webspc/DTO/user.dart';
+
+import '../DTO/bundle.dart';
 
 class PaymentService {
   static Future<List<Payment>> getAllPayment() async {
@@ -22,6 +25,13 @@ class PaymentService {
           status: data[i]['status'],
           userId: data[i]['userId'],
           purpose: data[i]['purpose'],
+          bundleId: data[i]['joinDay'] == null ? null : data[i]['bundleId'],
+          joinDay: data[i]['joinDay'] == null
+              ? null
+              : DateTime.parse(data[i]['joinDay']),
+          expiredDay: data[i]['expiredDay'] == null
+              ? null
+              : DateTime.parse(data[i]['expiredDay']),
         ));
       }
       return listPayment;
@@ -32,6 +42,7 @@ class PaymentService {
   static Future<bool> addPayment({
     required double amount,
     required String purpose,
+    required Bundle? bundle,
   }) async {
     // Get all payment
     final paymentList = await getAllPayment();
@@ -42,20 +53,31 @@ class PaymentService {
         maxPaymentId = int.parse(paymentList[i].paymentId!);
       }
     }
-    final body = jsonEncode(<dynamic, dynamic>{
+    final Map<String, dynamic> body = {
       "paymentId": (maxPaymentId + 1).toString(),
       "paymentdate": DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now()),
       "status": true,
       "amount": amount,
       "userId": Session.loggedInUser.userId,
       "purpose": purpose,
-    });
+    };
+
+    // Add bundle details if bundle is not null
+    if (bundle != null) {
+      final int bundleDays = bundle.bundleName!.split(" ")[0].toInt()! * 30;
+      body["bundleId"] = bundle.bundleId;
+      body["joinDay"] =
+          DateFormat("yyyy-MM-dd'T'HH:mm:ss").format(DateTime.now());
+      body["expiredDay"] = DateFormat("yyyy-MM-dd'T'HH:mm:ss")
+          .format(DateTime.now().add(Duration(days: bundleDays)));
+    }
+
     final response = await post(
       Uri.parse("https://primaryapinew.azurewebsites.net/api/TbPayments"),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: body,
+      body: jsonEncode(body),
     );
     if (response.statusCode == 201) {
       // Save to session

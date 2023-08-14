@@ -1,6 +1,10 @@
+// ignore_for_file: unused_import
+
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:webspc/Api_service/familyshare_service.dart';
 import 'package:webspc/DTO/spot.dart';
 import 'package:http/http.dart';
@@ -11,16 +15,17 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:webspc/Api_service/car_service.dart';
 import 'package:webspc/Api_service/user_infor_service.dart';
 import 'package:webspc/DTO/Qr.dart';
-import 'package:webspc/DTO/spot.dart';
 import 'package:webspc/navigationbar.dart';
 import 'package:webspc/resource/Home/BookingScreen.dart';
 import 'package:webspc/resource/Home/View_hisbooking.dart';
 import 'package:webspc/resource/Home/use_car_in_family.dart';
 import 'package:webspc/styles/button.dart';
 import '../../Api_service/car_detail_service.dart';
+import '../../Api_service/payment_service.dart';
 import '../../Api_service/spot_service.dart';
 import '../../DTO/cars.dart';
 import '../../DTO/familycar.dart';
+import '../../DTO/payment.dart';
 import '../../DTO/section.dart';
 import 'dart:math';
 
@@ -49,10 +54,23 @@ class HomePageState extends State<HomeScreen> {
   List<familyshare> listfamcar = [];
   List<familyshare> listfamcar1 = [];
   List<Car> listCarinfam = [];
+  List<Payment> nearExpirePayment = [];
+  FlutterLocalNotificationsPlugin notificationPlugin =
+      FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
+    // Initialize the local notification plugin
+    var initializationSettingsAndroid =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
+    var initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+    );
+    notificationPlugin.initialize(
+      initializationSettings,
+    );
     getListCar();
+    getNearExpirePayment();
     super.initState();
   }
 
@@ -68,9 +86,73 @@ class HomePageState extends State<HomeScreen> {
   // }
 
   void getListCar() {
-    CarDetailService.getListCar().then((response) => setState(() {
-          listCar = response;
-        }));
+    CarDetailService.getListCar().then(
+      (response) => setState(() {
+        listCar = response;
+      }),
+    );
+  }
+
+  void getNearExpirePayment() {
+    PaymentService.getAllPayment().then((response) {
+      for (Payment payment in response) {
+        if (payment.userId == Session.loggedInUser.userId &&
+            payment.expiredDay != null) {
+          // if expiring in 2 days or less
+          if (payment.expiredDay!.difference(DateTime.now()).inDays <= 2) {
+            setState(() {
+              nearExpirePayment.add(payment);
+            });
+          }
+        }
+      }
+      // if (nearExpirePayment.isNotEmpty) {
+      //   tz.initializeTimeZones(); // Initialize timezone data
+
+      //   final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      //     'your_channel_id',
+      //     'your_channel_name',
+      //     importance: Importance.max,
+      //     priority: Priority.high,
+      //   );
+      //   final platformChannelSpecifics =
+      //       NotificationDetails(android: androidPlatformChannelSpecifics);
+
+      //   final title = 'Payment Expiring Soon';
+      //   final body =
+      //       'Your payment is about to expire in less than 2 days. Please renew your payment.';
+
+      //   // Get the current timezone
+      //   final currentTimeZone = tz.getLocation(DateTime.now().timeZoneName);
+
+      //   // Loop through nearExpirePayment to schedule notifications
+      //   for (Payment payment in nearExpirePayment) {
+      //     // Calculate the difference between the expiration date and the current date
+      //     final diff = payment.expiredDay!.difference(DateTime.now());
+
+      //     // If the difference is less than 2 days
+      //     if (diff.inDays < 2) {
+      //       // Calculate the scheduled date and time for the notification
+      //       final scheduledDateTime =
+      //           tz.TZDateTime.from(payment.expiredDay!, currentTimeZone)
+      //               .subtract(Duration(days: 1));
+
+      //       // Schedule the notification
+      //       notificationPlugin.zonedSchedule(
+      //         0, // Use a unique ID for each notification
+      //         title,
+      //         body,
+      //         scheduledDateTime,
+      //         platformChannelSpecifics,
+      //         uiLocalNotificationDateInterpretation:
+      //             UILocalNotificationDateInterpretation.absoluteTime,
+      //         payload: 'near_payment',
+      //         matchDateTimeComponents: DateTimeComponents.time,
+      //       );
+      //     }
+      //   }
+      // }
+    });
   }
 
   // void getListfamCar() {
@@ -94,6 +176,41 @@ class HomePageState extends State<HomeScreen> {
     String currentTime = DateFormat('yyyy-MM-dd  kk:mm').format(now);
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              nearExpirePayment.length > 0
+                  ? Icons.notifications_active
+                  : Icons.notifications_none,
+            ),
+            onPressed: () {
+              if (nearExpirePayment.length == 0) {
+                return;
+              }
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: Text('Notification'),
+                      content: Text(
+                          'Your payment is about to expire in less than 2 days. Please renew your payment.'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('Close'),
+                        ),
+                      ],
+                    );
+                  });
+            },
+          )
+        ],
+      ),
+      extendBodyBehindAppBar: true,
       body: Container(
         padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
         constraints: BoxConstraints.expand(),

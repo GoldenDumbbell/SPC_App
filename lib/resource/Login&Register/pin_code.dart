@@ -87,7 +87,7 @@ class _PinCodeVerificationScreenState extends State<PinCodeVerificationScreen> {
                         SizedBox(
                           height: 80,
                         ),
-                        Image.asset('images/logo.png'),
+                        Image.asset('images/iconn.png'),
                         const SizedBox(
                           height: 15,
                         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:webspc/Api_service/car_service.dart';
 import 'package:webspc/Api_service/spot_service.dart';
+import 'package:webspc/DTO/section.dart';
 import 'package:webspc/DTO/spot.dart';
 import 'package:webspc/path_finding/map_painter.dart';
 import 'package:webspc/path_finding/map_pre_handle.dart';
@@ -22,7 +24,7 @@ class _MapScreenState extends State<MapScreen> {
   late MapObject end;
   late MapObject start;
   final MapObject exit = MapObject(46, 42, 8, 6);
-  late List<MapObject> spots;
+  late List<SpotMapObject> spots;
   late List<MapObject> obstacles;
   Spot? boughtSpot;
   MapObject? selectedSpot;
@@ -30,6 +32,7 @@ class _MapScreenState extends State<MapScreen> {
     mapWidth: 50,
     mapHeight: 50,
   );
+  String? password;
 
   List<List<int>> navigatedMap = [];
   void initialMap() {
@@ -66,11 +69,7 @@ class _MapScreenState extends State<MapScreen> {
       if (spot.owned!) {
         return false;
       } else {
-        if (spot.available!) {
-          return false;
-        } else {
-          return true;
-        }
+        return true;
       }
     }
   }
@@ -84,16 +83,26 @@ class _MapScreenState extends State<MapScreen> {
     end = MapObject(0, 0, 8, 6);
     spots = [
       // Row, col, width, height
-      MapObject(0, 0, 8, 6, "A04", handleSpotStatus(widget.listSpot[7])),
-      MapObject(0, 20, 6, 8, "B02", handleSpotStatus(widget.listSpot[2])),
-      MapObject(0, 42, 8, 6, "C04", handleSpotStatus(widget.listSpot[3])),
-      MapObject(13, 0, 8, 6, "A03", handleSpotStatus(widget.listSpot[0])),
-      MapObject(13, 42, 8, 6, "C03", handleSpotStatus(widget.listSpot[1])),
-      MapObject(22, 0, 8, 6, "A02", handleSpotStatus(widget.listSpot[6])),
-      MapObject(22, 42, 8, 6, "C02", handleSpotStatus(widget.listSpot[9])),
-      MapObject(35, 0, 8, 6, "A01", handleSpotStatus(widget.listSpot[5])),
-      MapObject(35, 20, 6, 8, "B01", handleSpotStatus(widget.listSpot[8])),
-      MapObject(35, 42, 8, 6, "C01", handleSpotStatus(widget.listSpot[4])),
+      SpotMapObject(0, 0, 8, 6, widget.listSpot[7].available!, "A04",
+          handleSpotStatus(widget.listSpot[7])),
+      SpotMapObject(0, 20, 6, 8, widget.listSpot[2].available!, "B02",
+          handleSpotStatus(widget.listSpot[2])),
+      SpotMapObject(0, 42, 8, 6, widget.listSpot[3].available!, "C04",
+          handleSpotStatus(widget.listSpot[3])),
+      SpotMapObject(13, 0, 8, 6, widget.listSpot[0].available!, "A03",
+          handleSpotStatus(widget.listSpot[0])),
+      SpotMapObject(13, 42, 8, 6, widget.listSpot[1].available!, "C03",
+          handleSpotStatus(widget.listSpot[1])),
+      SpotMapObject(22, 0, 8, 6, widget.listSpot[6].available!, "A02",
+          handleSpotStatus(widget.listSpot[6])),
+      SpotMapObject(22, 42, 8, 6, widget.listSpot[9].available!, "C02",
+          handleSpotStatus(widget.listSpot[9])),
+      SpotMapObject(35, 0, 8, 6, widget.listSpot[5].available!, "A01",
+          handleSpotStatus(widget.listSpot[5])),
+      SpotMapObject(35, 20, 6, 8, widget.listSpot[8].available!, "B01",
+          handleSpotStatus(widget.listSpot[8])),
+      SpotMapObject(35, 42, 8, 6, widget.listSpot[4].available!, "C01",
+          handleSpotStatus(widget.listSpot[4])),
     ];
 
     obstacles = [MapObject(12, 16, 20, 20, "Elevator")];
@@ -255,50 +264,50 @@ class _MapScreenState extends State<MapScreen> {
                               MediaQuery.of(context).size.width,
                             ),
                           ),
-                          for (MapObject spot in spots)
+                          for (SpotMapObject spot in spots)
                             Positioned(
                               left: spot.col * mapWidthOnScreen,
                               top: spot.row * mapHeightOnScreen,
                               child: GestureDetector(
                                 onTap: () {
-                                  if (spot.clickable ||
-                                      spot.title == boughtSpot!.location) {
-                                    bool showNavigator = true;
-                                    Spot? tempSpot;
-                                    for (var spotCar in widget.listSpot) {
-                                      if (spotCar.location == spot.title) {
-                                        tempSpot = spotCar;
-                                        break;
+                                  if (boughtSpot == null) {
+                                    if (spot.clickable ||
+                                        spot.title == boughtSpot!.location) {
+                                      bool showNavigator = true;
+                                      Spot? tempSpot;
+                                      for (var spotCar in widget.listSpot) {
+                                        if (spotCar.location == spot.title) {
+                                          tempSpot = spotCar;
+                                          break;
+                                        }
                                       }
-                                    }
-                                    if (boughtSpot == null &&
-                                        tempSpot != null &&
-                                        (tempSpot.carId == null ||
-                                            tempSpot.carId!.isEmpty)) {
-                                      buildParkDialog(context, tempSpot);
-                                      // showNavigator = false;
-                                    }
-                                    if (tempSpot != null &&
-                                        tempSpot.carId != null &&
-                                        tempSpot.carId!.isNotEmpty) {
-                                      if (tempSpot.carId != boughtSpot!.carId) {
-                                        showTakenDialog(context);
-                                        showNavigator = false;
+                                      if (tempSpot != null &&
+                                          !tempSpot.available! &&
+                                          (tempSpot.carId == null ||
+                                              tempSpot.carId!.isEmpty)) {
+                                        buildParkDialog(context, tempSpot);
+                                        // showNavigator = false;
                                       }
-                                    }
-                                    if (showNavigator) {
-                                      initialMap();
-                                      mapPreHandle.findPossibleRoad();
-                                      Grid grid = Grid(navigatedMap);
-                                      PathFindingAlgorithm pathFindingV2 =
-                                          PathFindingAlgorithm(grid: grid);
-                                      List<List<int>> mapWithNavigator =
-                                          pathFindingV2.findPath(start, spot);
-                                      if (mapWithNavigator.isNotEmpty) {
-                                        setState(() {
-                                          navigatedMap = mapWithNavigator;
-                                          selectedSpot = spot;
-                                        });
+                                      // if (tempSpot != null &&
+                                      //     tempSpot.carId != null &&
+                                      //     tempSpot.carId!.isNotEmpty) {
+                                      //   showTakenDialog(context);
+                                      //   showNavigator = false;
+                                      // }
+                                      if (showNavigator) {
+                                        initialMap();
+                                        mapPreHandle.findPossibleRoad();
+                                        Grid grid = Grid(navigatedMap);
+                                        PathFindingAlgorithm pathFindingV2 =
+                                            PathFindingAlgorithm(grid: grid);
+                                        List<List<int>> mapWithNavigator =
+                                            pathFindingV2.findPath(start, spot);
+                                        if (mapWithNavigator.isNotEmpty) {
+                                          setState(() {
+                                            navigatedMap = mapWithNavigator;
+                                            selectedSpot = spot;
+                                          });
+                                        }
                                       }
                                     }
                                   }
@@ -315,10 +324,12 @@ class _MapScreenState extends State<MapScreen> {
                                                     boughtSpot!.location)
                                             ? const Color.fromARGB(
                                                 255, 133, 186, 230)
-                                            : spot.clickable
-                                                ? const Color.fromARGB(
-                                                    255, 194, 190, 190)
-                                                : Colors.red,
+                                            : !spot.clickable
+                                                ? Colors.red
+                                                : spot.available
+                                                    ? Colors.yellow
+                                                    : const Color.fromARGB(
+                                                        255, 194, 190, 190),
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(5)),
                                     border: Border.all(
@@ -452,15 +463,20 @@ class _MapScreenState extends State<MapScreen> {
               ),
             ),
             TextButton(
-              onPressed: () {
-                // Find the spot in listSpot with location is spot.title
+              onPressed: () async {
                 spot.carId = widget.car!.carPlate;
-                SpotDetailService.updateSpot(spot).then((value) {
+                await SpotDetailService.updateSpot(spot).then((value) {
                   if (value) {
                     setState(() {
                       boughtSpot = spot;
                     });
                   }
+                  Navigator.pop(context);
+                  _showMyDialog(
+                    context,
+                    "Success",
+                    "You park successfully",
+                  );
                 });
               },
               child: Text(
@@ -476,4 +492,30 @@ class _MapScreenState extends State<MapScreen> {
       },
     );
   }
+
+  Future _showMyDialog(
+      BuildContext context, String title, String description) async {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text(title),
+        content: Text(description),
+        actions: <Widget>[
+          TextButton(
+            onPressed: () => Navigator.pop(context, 'OK'),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SpotMapObject extends MapObject {
+  bool available;
+
+  SpotMapObject(int row, int col, int width, int height, bool available,
+      [String? title, bool clickable = true])
+      : available = available,
+        super(row, col, width, height, title, clickable);
 }

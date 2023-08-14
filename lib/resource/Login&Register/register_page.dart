@@ -44,7 +44,7 @@ class RegisterPageState extends State<RegisterScreen> {
               const SizedBox(
                 height: 60,
               ),
-              Image.asset('images/logo.png'),
+              Image.asset('images/iconn.png'),
               const SizedBox(
                 height: 15,
               ),
@@ -136,7 +136,7 @@ class RegisterPageState extends State<RegisterScreen> {
                             identityCard = value;
                           });
                         }),
-                        obscureText: true,
+                        // obscureText: true,
                         decoration: const InputDecoration(
                           labelText: 'Identity Card',
                           // suffixIcon: Icon(FontAwesomeIcons.eyeSlash,size: 17,),
@@ -251,15 +251,17 @@ class RegisterPageState extends State<RegisterScreen> {
         _btnRegister.reset();
       });
       return;
-    } else if (identityCard!.length != 12 || identityCard!.length != 9) {
-      _showMyDialog(
-          context, "Error", "Identity Card must be 9 or 12 characters");
-      _btnRegister.error();
-      Timer(const Duration(seconds: 2), () {
-        _btnRegister.reset();
-      });
-      return;
-    } else {
+    }
+    //  else if (identityCard!.length != 12 || identityCard!.length != 9) {
+    //   _showMyDialog(
+    //       context, "Error", "Identity Card must be 9 or 12 characters");
+    //   _btnRegister.error();
+    //   Timer(const Duration(seconds: 2), () {
+    //     _btnRegister.reset();
+    //   });
+    //   return;
+    // }
+    else {
       _btnRegister.start();
       // Call register function
       register(email!, fullName!, password!, phoneNumber!, identityCard!);

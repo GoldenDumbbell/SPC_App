@@ -47,7 +47,7 @@ class RegisterPageState extends State<ResetPasswordScreen> {
                 const SizedBox(
                   height: 60,
                 ),
-                Image.asset('images/iconsy.png'),
+                Image.asset('images/iconn.png'),
                 const SizedBox(
                   height: 15,
                 ),

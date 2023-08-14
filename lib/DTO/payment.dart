@@ -13,6 +13,9 @@ class Payment {
   double? amount;
   String? userId;
   String? purpose;
+  String? bundleId;
+  DateTime? joinDay;
+  DateTime? expiredDay;
 
   Payment({
     required this.paymentId,
@@ -21,6 +24,9 @@ class Payment {
     required this.amount,
     required this.userId,
     required this.purpose,
+    required this.bundleId,
+    required this.joinDay,
+    required this.expiredDay,
   });
 
   factory Payment.fromJson(Map<String, dynamic> json) => Payment(
@@ -30,5 +36,8 @@ class Payment {
         amount: json["amount"],
         userId: json["userId"],
         purpose: json["purpose"],
+        bundleId: json["bundleId"],
+        joinDay: DateTime.parse(json["joinDay"]),
+        expiredDay: DateTime.parse(json["expiredDay"]),
       );
 }
