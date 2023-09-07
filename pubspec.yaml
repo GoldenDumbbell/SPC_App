@@ -65,6 +65,9 @@ dependencies:
   dotted_border: ^2.0.0+3
   workmanager: ^0.5.1
   flutter_local_notifications: ^15.1.0+1
+  animation_wrappers: ^3.0.0
+  cached_network_image: ^3.2.3
+
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1

@@ -433,8 +433,8 @@ class _CarRegisterScreenState extends State<CarRegisterScreen> {
                                     carColor: colorController.text,
                                     carPaperFront: imageUrlFront,
                                     carPaperBack: imageUrlBack,
-                                    verifyState1: null,
-                                    verifyState2: null,
+                                    verifyState1: false,
+                                    verifyState2: false,
                                     securityCode: "",
                                     userId: Session.loggedInUser.userId);
                                 CarService.registerCar(newCar).then((value) {

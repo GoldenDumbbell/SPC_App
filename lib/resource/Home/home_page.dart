@@ -29,6 +29,7 @@ import '../../DTO/payment.dart';
 import '../../DTO/section.dart';
 import 'dart:math';
 
+import '../Profile/family_screen.dart';
 import 'car_info.dart';
 import 'map_screen.dart';
 
@@ -353,37 +354,66 @@ class HomePageState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Container(
-                  height: 200,
+                  height: 100,
                   width: 420,
                   decoration: BoxDecoration(
                       color: Colors.black,
                       border: Border.all(
                           width: 2.0, color: Color.fromARGB(100, 161, 125, 17)),
                       borderRadius: BorderRadius.circular(10)),
-                  child: Column(
+                  child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: 30,
-                      ),
-                      Text(
-                        'Balance',
-                        style: TextStyle(
+                        width: 50,
+                        child: Icon(
+                          Icons.home,
+                          size: 40,
                           color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
                         ),
                       ),
                       SizedBox(
-                        height: 20,
+                        width: 30,
                       ),
-                      Text(
-                        '${formatCurrency(Session.loggedInUser.wallet!)} VND',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      Column(
+                        // crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Session.loggedInUser.familyId == null
+                              ? TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'None',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))
+                              : TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                        context, FamilyScreen.routerName);
+                                  },
+                                  child: Text(
+                                    '${Session.loggedInUser.familyId}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )),
+                          Text(
+                            'Amagazing home',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w100,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   )),

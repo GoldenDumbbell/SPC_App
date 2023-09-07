@@ -315,6 +315,25 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
                   ],
                 ),
                 const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    const Text(
+                      "Authentication Status:",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
+                    carDetail?.verifyState1 == true
+                        ? Icon(
+                            Icons.check_circle,
+                            color: Colors.green,
+                          )
+                        : Icon(
+                            Icons.cancel,
+                            color: Colors.red,
+                          ),
+                  ],
+                ),
                 const SizedBox(height: 10),
               ],
             ),
