@@ -34,6 +34,7 @@ class _SpotScreenState extends State<SpotScreen> {
   List<Car> listCar = [];
   Car? carDetail;
   Car? dropdownValueCar;
+  bool acceptTerm = false;
   List<Bundle> listBundleDropdown = [];
 
   Bundle? dropdownValueBundle;
@@ -762,18 +763,22 @@ class _SpotScreenState extends State<SpotScreen> {
                                   });
                             }
                           } else {
-                            showDialog(
-                              context: context,
-                              builder: (context) => SelectSpotDialog(
-                                title: "Select spot",
-                                showButton: true,
-                                spotId: dropdownValue?.spotId,
-                                bundle: dropdownValueBundle!,
-                                context: context,
-                                selectedCar: dropdownValueCar,
-                                fee: extraFee,
-                              ),
-                            );
+                            _showTermDialog(context).then((_) {
+                              if (acceptTerm) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => SelectSpotDialog(
+                                    title: "Select spot",
+                                    showButton: true,
+                                    spotId: dropdownValue?.spotId,
+                                    bundle: dropdownValueBundle!,
+                                    context: context,
+                                    selectedCar: dropdownValueCar,
+                                    fee: extraFee,
+                                  ),
+                                );
+                              }
+                            });
                           }
                         });
                       },
@@ -800,6 +805,42 @@ class _SpotScreenState extends State<SpotScreen> {
             onPressed: () => Navigator.pop(context, 'OK'),
             child: const Text('OK'),
           ),
+        ],
+      ),
+    );
+  }
+
+  Future _showTermDialog(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: Text("Term of service"),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text("1. Term 1"),
+            Text("2. Term 2"),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              setState(() {
+                acceptTerm = false;
+              });
+              Navigator.pop(context);
+            },
+            child: Text("Decline"),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                acceptTerm = true;
+              });
+              Navigator.pop(context);
+            },
+            child: Text("Accept"),
+          )
         ],
       ),
     );

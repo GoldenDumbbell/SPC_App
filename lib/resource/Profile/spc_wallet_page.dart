@@ -85,7 +85,7 @@ class SPCWalletScreenState extends State<SPCWalletScreen> {
                         height: 110,
                         width: 350,
                         decoration: BoxDecoration(
-                            color: Colors.black54,
+                            color: Colors.white,
                             border: Border.all(
                                 width: 2.0,
                                 color: Color.fromARGB(100, 161, 125, 17)),
@@ -99,7 +99,7 @@ class SPCWalletScreenState extends State<SPCWalletScreen> {
                             Text(
                               'Wallet Balance',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -110,7 +110,7 @@ class SPCWalletScreenState extends State<SPCWalletScreen> {
                             Text(
                               formatCurrency(wallet) + ' VNĐ',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Colors.black,
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
                               ),

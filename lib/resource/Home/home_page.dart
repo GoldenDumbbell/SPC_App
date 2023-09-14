@@ -2,6 +2,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'package:animation_wrappers/animations/faded_scale_animation.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -20,7 +21,9 @@ import 'package:webspc/resource/Home/BookingScreen.dart';
 import 'package:webspc/resource/Home/View_hisbooking.dart';
 import 'package:webspc/resource/Home/use_car_in_family.dart';
 import 'package:webspc/styles/button.dart';
+import 'package:webspc/widget/sizer.dart';
 import '../../Api_service/car_detail_service.dart';
+import '../../Api_service/local_notification_service.dart';
 import '../../Api_service/payment_service.dart';
 import '../../Api_service/spot_service.dart';
 import '../../DTO/cars.dart';
@@ -29,7 +32,9 @@ import '../../DTO/payment.dart';
 import '../../DTO/section.dart';
 import 'dart:math';
 
+import '../../widget/colors.dart';
 import '../Profile/family_screen.dart';
+import 'bill_screen.dart';
 import 'car_info.dart';
 import 'map_screen.dart';
 
@@ -39,6 +44,14 @@ class HomeScreen extends StatefulWidget {
 
   @override
   State<HomeScreen> createState() => HomePageState();
+}
+
+class MenuTile {
+  String? title;
+  String? subtitle;
+  IconData iconData;
+  Function onTap;
+  MenuTile(this.title, this.subtitle, this.iconData, this.onTap);
 }
 
 class HomePageState extends State<HomeScreen> {
@@ -55,6 +68,7 @@ class HomePageState extends State<HomeScreen> {
   List<familyshare> listfamcar = [];
   List<familyshare> listfamcar1 = [];
   List<Car> listCarinfam = [];
+  List<String> localNotifications = [];
   List<Payment> nearExpirePayment = [];
   FlutterLocalNotificationsPlugin notificationPlugin =
       FlutterLocalNotificationsPlugin();
@@ -71,6 +85,7 @@ class HomePageState extends State<HomeScreen> {
       initializationSettings,
     );
     getListCar();
+    getListLocalNotification();
     getNearExpirePayment();
     super.initState();
   }
@@ -92,6 +107,14 @@ class HomePageState extends State<HomeScreen> {
         listCar = response;
       }),
     );
+  }
+
+  void getListLocalNotification() async {
+    LocalNotificationService.getNotifications().then((value) {
+      setState(() {
+        localNotifications = value;
+      });
+    });
   }
 
   void getNearExpirePayment() {
@@ -175,7 +198,55 @@ class HomePageState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
     String currentTime = DateFormat('yyyy-MM-dd  kk:mm').format(now);
+    List<MenuTile> menu = [
+      MenuTile('QR BY CAR IN FAMILY', 'Use car in family', Icons.qr_code, () {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => Usecarinshare()));
+      }),
+      MenuTile('CHECK SPOT', 'check spot', Icons.location_on_outlined, () {
+        if (dropdownValue == null) {
+          _showMyDialog(context, "Error", "Please select a car to check spot");
+          return;
+        }
+        SpotDetailService.getAllListSpot().then((response) {
+          Spot? boughtSpot = null;
+          Car? ca = null;
+          // Find which spot has carId in listCar
+          for (var spot in response) {
+            if (spot.carId == dropdownValue!.carPlate) {
+              boughtSpot = spot;
+            }
+          }
+          CarDetailService.getListCar().then((value) {
+            for (var c in value) {
+              if (c.carPlate == dropdownValue!.carPlate) {
+                ca = c;
+              }
+            }
 
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => MapScreen(
+                  listSpot: response,
+                  boughtSpot: boughtSpot,
+                  car: ca,
+                ),
+              ),
+            );
+          });
+        });
+      }),
+      MenuTile('CHECK YOUR CAR', 'check your car', Icons.car_rental_rounded,
+          () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => CarInfoScreen(context)));
+      }),
+      MenuTile('BILL', 'bill', Icons.call_to_action_rounded, () {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => BillInfoScreen(context)));
+      }),
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -187,26 +258,61 @@ class HomePageState extends State<HomeScreen> {
                   : Icons.notifications_none,
             ),
             onPressed: () {
-              if (nearExpirePayment.length == 0) {
+              if (nearExpirePayment.length == 0 &&
+                  localNotifications.length == 0) {
                 return;
               }
               showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AlertDialog(
-                      title: Text('Notification'),
-                      content: Text(
-                          'Your payment is about to expire in less than 2 days. Please renew your payment.'),
-                      actions: [
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    title: Row(
+                      children: [
+                        Text('Notification'),
+                        Spacer(),
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            // Add code here to clear notifications
+                            // For example, you can call a function to clear notifications.
+                            setState(() {
+                              localNotifications = [];
+                            });
+                            await LocalNotificationService.clearNotifications();
                             Navigator.of(context).pop();
                           },
-                          child: Text('Close'),
-                        ),
+                          child: Text('Clear All'),
+                        )
                       ],
-                    );
-                  });
+                    ),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        if (nearExpirePayment.length > 0)
+                          for (Payment payment in nearExpirePayment) ...[
+                            SizedBox(height: 20),
+                            Text(
+                                '${payment.purpose} is about to expire in less than 2 days. Please renew your payment.'),
+                          ],
+                        // If there are local notifications, show them
+                        if (localNotifications.length > 0)
+                          for (String notification in localNotifications) ...[
+                            SizedBox(height: 20),
+                            Text(notification),
+                          ],
+                      ],
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           )
         ],
@@ -280,7 +386,7 @@ class HomePageState extends State<HomeScreen> {
               height: 50,
               width: 390,
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 143, 146, 146).withOpacity(0.4),
+                color: Color.fromARGB(255, 37, 38, 47),
                 border: Border.all(color: Colors.black38, width: 3),
                 borderRadius: BorderRadius.circular(50),
               ),
@@ -298,8 +404,7 @@ class HomePageState extends State<HomeScreen> {
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<Car>(
                                 alignment: Alignment.center,
-                                dropdownColor:
-                                    Color.fromARGB(255, 143, 146, 146),
+                                dropdownColor: Color.fromARGB(255, 37, 38, 47),
                                 underline: Container(),
                                 borderRadius: BorderRadius.circular(30),
                                 hint: const Text(
@@ -357,7 +462,7 @@ class HomePageState extends State<HomeScreen> {
                   height: 100,
                   width: 420,
                   decoration: BoxDecoration(
-                      color: Colors.black,
+                      color: Color.fromARGB(255, 37, 38, 47).withOpacity(0.09),
                       border: Border.all(
                           width: 2.0, color: Color.fromARGB(100, 161, 125, 17)),
                       borderRadius: BorderRadius.circular(10)),
@@ -418,6 +523,78 @@ class HomePageState extends State<HomeScreen> {
                     ],
                   )),
             ),
+            Container(
+              color: Colors.transparent,
+              child: GridView.builder(
+                  itemCount: menu.length,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  padding: const EdgeInsets.all(8.0),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      childAspectRatio: 1.6,
+                      crossAxisCount: 2,
+                      mainAxisExtent: 102),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: menu[index].onTap as void Function()?,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 6, horizontal: 6),
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 12, horizontal: 12),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: kButtonBorderColor,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            FadedScaleAnimation(
+                              scaleDuration: const Duration(milliseconds: 400),
+                              fadeDuration: const Duration(milliseconds: 400),
+                              child: Text(
+                                menu[index].title!,
+                                // style: Theme.of(context)
+                                //     .textTheme
+                                //     .bodyLarge!
+                                //     .copyWith(fontWeight: FontWeight.bold),
+                                // overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    overflow: TextOverflow.ellipsis),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    menu[index].subtitle!,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleSmall!
+                                        .copyWith(
+                                            fontSize: 12,
+                                            color: lightGreyColor),
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                                Icon(
+                                  menu[index].iconData,
+                                  size: 30.sp,
+                                  color: kContainerTextColor.withOpacity(0.8),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+            ),
             // Padding(
             //   padding: const EdgeInsets.all(10.0),
             //   child: ElevatedButton(
@@ -431,103 +608,127 @@ class HomePageState extends State<HomeScreen> {
             //     ),
             //   ),
             // ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton.icon(
-                style: buttonPrimary,
-                onPressed: () {
-                  Session.loggedInUser.familyId == null
-                      ? _showMyDialog(context, "Error",
-                          "Sorry for the inconvenience, you must join a family group to use this funtion")
-                      : Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Usecarinshare()));
-                },
-                icon: Icon(
-                  Icons.directions_car_outlined,
-                  size: 50,
-                ),
-                label: Text(
-                  'GENERATE QR BY CAR IN FAMILY',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton.icon(
-                style: buttonPrimary,
-                onPressed: () async {
-                  if (dropdownValue == null) {
-                    _showMyDialog(
-                        context, "Error", "Please select a car to check spot");
-                    return;
-                  }
-                  SpotDetailService.getAllListSpot().then((response) {
-                    Spot? boughtSpot = null;
-                    Car? ca = null;
-                    // Find which spot has carId in listCar
-                    for (var spot in response) {
-                      if (spot.carId == dropdownValue!.carPlate) {
-                        boughtSpot = spot;
-                      }
-                    }
-                    CarDetailService.getListCar().then((value) {
-                      for (var c in value) {
-                        if (c.carPlate == dropdownValue!.carPlate) {
-                          ca = c;
-                        }
-                      }
+            // Padding(
+            //   padding: const EdgeInsets.all(10.0),
+            //   child: ElevatedButton.icon(
+            //     style: buttonPrimary,
+            //     onPressed: () {
+            //       Session.loggedInUser.familyId == null
+            //           ? _showMyDialog(context, "Error",
+            //               "Sorry for the inconvenience, you must join a family group to use this funtion")
+            //           : Navigator.push(
+            //               context,
+            //               MaterialPageRoute(
+            //                   builder: (context) => const Usecarinshare()));
+            //     },
+            //     icon: Icon(
+            //       Icons.directions_car_outlined,
+            //       size: 50,
+            //     ),
+            //     label: Text(
+            //       'GENERATE QR BY CAR IN FAMILY',
+            //       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.all(10.0),
+            //   child: ElevatedButton.icon(
+            //     style: buttonPrimary,
+            //     onPressed: () async {
+            //       if (dropdownValue == null) {
+            //         _showMyDialog(
+            //             context, "Error", "Please select a car to check spot");
+            //         return;
+            //       }
+            //       SpotDetailService.getAllListSpot().then((response) {
+            //         Spot? boughtSpot = null;
+            //         Car? ca = null;
+            //         // Find which spot has carId in listCar
+            //         for (var spot in response) {
+            //           if (spot.carId == dropdownValue!.carPlate) {
+            //             boughtSpot = spot;
+            //           }
+            //         }
+            //         CarDetailService.getListCar().then((value) {
+            //           for (var c in value) {
+            //             if (c.carPlate == dropdownValue!.carPlate) {
+            //               ca = c;
+            //             }
+            //           }
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => MapScreen(
-                            listSpot: response,
-                            boughtSpot: boughtSpot,
-                            car: ca,
-                          ),
-                        ),
-                      );
-                    });
-                  });
-                  // Navigator.pushNamed(context, viewSpotPage.routerName);
-                },
-                icon: Icon(
-                  Icons.directions_car_outlined,
-                  size: 50,
-                ),
-                label: Text(
-                  'CHECK SPOT',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ElevatedButton.icon(
-                style: buttonPrimary,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CarInfoScreen(
-                        context,
-                      ),
-                    ),
-                  );
-                },
-                icon: Icon(
-                  Icons.directions_car_outlined,
-                  size: 50,
-                ),
-                label: Text(
-                  'CHECK YOUR CAR',
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ),
+            //           Navigator.push(
+            //             context,
+            //             MaterialPageRoute(
+            //               builder: (context) => MapScreen(
+            //                 listSpot: response,
+            //                 boughtSpot: boughtSpot,
+            //                 car: ca,
+            //               ),
+            //             ),
+            //           );
+            //         });
+            //       });
+            //       // Navigator.pushNamed(context, viewSpotPage.routerName);
+            //     },
+            //     icon: Icon(
+            //       Icons.directions_car_outlined,
+            //       size: 50,
+            //     ),
+            //     label: Text(
+            //       'CHECK SPOT',
+            //       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.all(10.0),
+            //   child: ElevatedButton.icon(
+            //     style: buttonPrimary,
+            //     onPressed: () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => CarInfoScreen(
+            //             context,
+            //           ),
+            //         ),
+            //       );
+            //     },
+            //     icon: Icon(
+            //       Icons.directions_car_outlined,
+            //       size: 50,
+            //     ),
+            //     label: Text(
+            //       'CHECK YOUR CAR',
+            //       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // ),
+            // Padding(
+            //   padding: const EdgeInsets.all(10.0),
+            //   child: ElevatedButton.icon(
+            //     style: buttonPrimary,
+            //     onPressed: () {
+            //       Navigator.push(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => BillInfoScreen(
+            //             context,
+            //           ),
+            //         ),
+            //       );
+            //     },
+            //     icon: Icon(
+            //       Icons.payment,
+            //       size: 50,
+            //     ),
+            //     label: Text(
+            //       'BILL',
+            //       style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
@@ -598,6 +799,31 @@ class HomePageState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(10)),
                           child: const Text(
                             "*Your car is not authenticated state 1!\n*Please waiting for admin to authenticated state 1",
+                            style: TextStyle(
+                                fontSize: 20,
+                                decoration: TextDecoration.none,
+                                color: Colors.black),
+                          ),
+                        ),
+                      )));
+            } else if (dropdownValue?.verifyState2 == null ||
+                dropdownValue?.verifyState2 == false) {
+              showDialog(
+                  context: context,
+                  builder: (context) => Form(
+                          child: Padding(
+                        padding: const EdgeInsets.only(
+                            left: 40, right: 40, top: 350, bottom: 390),
+                        child: Container(
+                          padding: EdgeInsets.only(left: 9),
+                          decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.8),
+                              border: Border.all(
+                                  width: 2.0,
+                                  color: Color.fromARGB(100, 161, 125, 17)),
+                              borderRadius: BorderRadius.circular(10)),
+                          child: const Text(
+                            "*Your car has not registered for the apartment's parking package \n*Please subscribe to the package and try again",
                             style: TextStyle(
                                 fontSize: 20,
                                 decoration: TextDecoration.none,

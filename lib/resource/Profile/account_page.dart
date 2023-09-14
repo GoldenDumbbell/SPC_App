@@ -229,11 +229,10 @@ class AccountPageState extends State<AccountPage> {
                                 fadeDuration: const Duration(milliseconds: 400),
                                 child: Text(
                                   menu[index].title!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(fontWeight: FontWeight.bold),
-                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      overflow: TextOverflow.ellipsis),
                                 ),
                               ),
                               const SizedBox(
