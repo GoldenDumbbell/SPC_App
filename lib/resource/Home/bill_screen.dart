@@ -131,21 +131,26 @@ class _BillInfoScreenState extends State<BillInfoScreen> {
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
-      child: Text(
-        payment.purpose! +
-            "\n" +
-            "Bundle - " +
-            payment.bundleId! +
-            " : " +
-            "\n" +
-            dayRemain.toString() +
-            " days remain",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 20,
-        ),
-      ),
-    );
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Container(
+          padding: EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
+          decoration: BoxDecoration(
+              color: Color.fromARGB(255, 37, 38, 47),
+              borderRadius: BorderRadius.circular(10)),
+          child: Text(
+            payment.purpose! +
+                "\n" +
+                "Bundle - " +
+                payment.bundleId! +
+                " : " +
+                "\n" +
+                dayRemain.toString() +
+                " days remain",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+          ),
+        ));
   }
 }

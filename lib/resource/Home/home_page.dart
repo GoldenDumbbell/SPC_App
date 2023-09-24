@@ -268,7 +268,11 @@ class HomePageState extends State<HomeScreen> {
                   return AlertDialog(
                     title: Row(
                       children: [
-                        Text('Notification'),
+                        Text(
+                          'Notification',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 25),
+                        ),
                         Spacer(),
                         TextButton(
                           onPressed: () async {
@@ -290,15 +294,29 @@ class HomePageState extends State<HomeScreen> {
                       children: [
                         if (nearExpirePayment.length > 0)
                           for (Payment payment in nearExpirePayment) ...[
-                            SizedBox(height: 20),
-                            Text(
-                                '${payment.purpose} is about to expire in less than 2 days. Please renew your payment.'),
+                            SizedBox(height: 10),
+                            Container(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 10, bottom: 10),
+                              decoration: BoxDecoration(
+                                  color: Colors.red.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Text(
+                                  '${payment.purpose} is about to expire in less than 2 days. Please renew your payment.'),
+                            )
                           ],
                         // If there are local notifications, show them
                         if (localNotifications.length > 0)
                           for (String notification in localNotifications) ...[
-                            SizedBox(height: 20),
-                            Text(notification),
+                            SizedBox(height: 10),
+                            Container(
+                              padding: EdgeInsets.only(
+                                  left: 10, right: 10, top: 10, bottom: 10),
+                              decoration: BoxDecoration(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Text(notification),
+                            )
                           ],
                       ],
                     ),
@@ -813,7 +831,7 @@ class HomePageState extends State<HomeScreen> {
                   builder: (context) => Form(
                           child: Padding(
                         padding: const EdgeInsets.only(
-                            left: 40, right: 40, top: 350, bottom: 390),
+                            left: 40, right: 40, top: 350, bottom: 330),
                         child: Container(
                           padding: EdgeInsets.only(left: 9),
                           decoration: BoxDecoration(

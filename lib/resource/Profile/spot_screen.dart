@@ -818,8 +818,9 @@ class _SpotScreenState extends State<SpotScreen> {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text("1. Term 1"),
-            Text("2. Term 2"),
+            Text(
+                "1. You will not be able to cancel the package you purchased until it expires, at which point you can choose other packages."),
+            Text("2. Are you sure with this choice?"),
           ],
         ),
         actions: [
