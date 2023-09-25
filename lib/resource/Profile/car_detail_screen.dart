@@ -9,6 +9,7 @@ import 'package:webspc/DTO/section.dart';
 import 'package:webspc/styles/button.dart';
 import '../../Api_service/car_detail_service.dart';
 import '../../DTO/cars.dart';
+import '../Home/home_page.dart';
 
 // ignore: depend_on_referenced_packages
 
@@ -89,13 +90,18 @@ class _CarDetailScreenState extends State<CarDetailScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            const Text(
-              "User's Car",
-              style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            ),
+            TextButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()));
+                },
+                child: Text(
+                  "User's Car",
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                )),
             SizedBox(
               height: 30,
               width: 30,
